@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Abstract - ECRTS'20 Artifact Evaluation</title>
+	<link type="text/css" rel="stylesheet" href="style.css">
+</head>
+  <body>
+
+    <h1 id="abstractrtaecrts20artifactevaluation">AbstractRTA - ECRTS'20 Artifact Evaluation</h1>
+
+<p>As part of the artifact evaluation of AbstractRTA, we will demonstrate how to compile the source code and automatically check the proofs of each theorem. In addition, we will provide references to the important results claimed to be proven in the paper, so that readers can confirm that no proofs have been omitted. </p>
+
+<p><em>Note: if the specification appears to be missing all comments, try reloading the page with your ad-blocker disabled; there are some false-positive issues with coqdoc and certain blockers.</em></p>
+
+<p>This document is organized as follows.</p>
+
+<ol>
+<li><p><a href="#1.installingtheproofframework">Installing the Proof Framework</a></p></li>
+
+<li><p><a href="#2.compilingabstractrta">Compiling AbstractRTA</a></p></li>
+
+<li><p><a href="#3.verifyingthecorrectnessoftheproofs">Verifying the Correctness of the Proofs</a></p></li>
+
+<li><p><a href="#4.locatingthemainresultsofthepaper">Locating the Main Results of the Paper</a></p></li>
+</ol>
+
+<h1 id="1installingtheproofframework">1. Installing the Proof Framework</h1>
+
+<p><em>Note: this step can be omitted if you use Docker.</em></p>
+
+<p>In order to compile AbstractRTA, the first step is to install (1) the <code>Coq</code> proof assistant and (2) the <code>Mathematical Components</code> extension library, which contains simplified notations and lemmas used in our formalization. </p>
+
+<ul>
+<li><a href="https://github.com/coq/coq/releases/tag/V8.10.0">Coq 8.10.0</a></li>
+
+<li><a href="https://github.com/math-comp/math-comp/releases">Mathematical Components 1.9</a></li>
+</ul>
+
+<p>One can also use <a href="http://prosa.mpi-sws.org/setup-instructions.html">this guide</a> for simple step-by-step instructions for setting up a Coq environment that is suitable for working with AbstractRTA.</p>
+
+<h1 id="2compilingabstractrta">2. Compiling AbstractRTA</h1>
+
+<p>Clone the repository with the source code. Next, move into AbstractRTA's directory and compile the entire source code.</p>
+
+<pre><code>$ git clone -b ecrts20 https://gitlab.mpi-sws.org/sbozhko/rt-proofs.git AbstractRTA
+$ cd AbstractRTA/specification
+$ ./create_makefile.sh
+$ make -j 4
+</code></pre>
+
+For Docker users:
+<pre><code>$ git clone -b ecrts20 https://gitlab.mpi-sws.org/sbozhko/rt-proofs.git AbstractRTA
+$ cd AbstractRTA/specification
+$ docker run --rm -v $(pwd):/prosa -w /prosa mathcomp/mathcomp:1.9.0-coq-8.10 ./create_makefile.sh
+$ docker run --rm -v $(pwd):/prosa -w /prosa mathcomp/mathcomp:1.9.0-coq-8.10 make -j4
+</code></pre>
+
+<p>The compilation should take only a few minutes and return no errors.</p>
+
+<h1 id="3verifyingthecorrectnessoftheproofs">3. Verifying the Correctness of the Proofs</h1>
+
+<p>To simplify the proof development, Coq allows users to temporarily admit unproven results, which can be done in two ways:</p>
+
+<ol>
+<li><p>incomplete proofs can be assumed to hold by calling the <code>admit</code> or <code>Admitted</code> commands, and</p></li>
+
+<li><p>unproven facts can be blindly assumed to be true if they are declared as an <code>Axiom</code>.</p></li>
+</ol>
+
+<p>As part of validating any mechanized proof in Coq, we need to ensure that there are no theorems that are "proven" using <code>admit</code>, <code>Admitted</code> or <code>Axiom</code>.</p>
+
+<p>To facilitate this check, Coq already offers a tool called <code>coqchk</code>, which is a lightweight proof checker that is more reliable than the Coq compiler <code>coqc</code> (which we used during compilation), since it has a small code footprint and does not implement optimizations and optional features. Apart from checking for correctness, <code>coqchk</code> also prints the list of axioms and admitted proofs, as shown next.</p>
+
+<p>In order to run <code>coqchk</code>, please run the following commands on the terminal.</p>
+
+<pre><code>$ make validate
+</code></pre>
+
+For Docker users:
+<pre><code>$ docker run --rm -v $(pwd):/prosa -w /prosa mathcomp/mathcomp:1.9.0-coq-8.10 make validate
+</code></pre>
+
+
+<p>The verification process is different from the compilation since it does not import pre-compiled binaries but completely checks AbstractRTA and all of its dependencies, including the libraries from <code>Mathcomp</code> and basic theories from <code>Coq</code>. In fact, it checks every proof up to the foundations of the logic.</p>
+
+<p>After a couple minutes, <code>coqchk</code> should produce the following output, which we will analyze next.</p>
+
+<pre><code>CONTEXT SUMMARY
+  ===============
+  
+  * Theory: Set is predicative
+    
+  * Axioms:
+      mathcomp.ssreflect.finset.Imset.imsetE
+      mathcomp.ssreflect.finset.Imset.imset2
+      Coq.ssr.ssreflect.Under_eq.Under_eq
+      mathcomp.ssreflect.finfun.FinfunDef.finfunE
+      mathcomp.ssreflect.fintype.SubsetDef.subsetEdef
+      Coq.ssr.ssreflect.Under_iff.Under_iff
+      Coq.ssr.ssreflect.Under_eq.Over_eq
+      mathcomp.ssreflect.generic_quotient.MPi.f
+      mathcomp.ssreflect.generic_quotient.MPi.E
+      Coq.ssr.ssreflect.Under_eq.Under_eq_from_eq
+      mathcomp.ssreflect.fintype.Finite.EnumDef.enumDef
+      mathcomp.ssreflect.generic_quotient.Repr.f
+      mathcomp.ssreflect.generic_quotient.Repr.E
+      mathcomp.ssreflect.finset.Imset.imset
+      mathcomp.ssreflect.finset.Imset.imset2E
+      mathcomp.ssreflect.finset.SetDef.pred_of_set
+      mathcomp.ssreflect.finset.SetDef.finset
+      Coq.ssr.ssreflect.Under_eq.under_eq_done
+      mathcomp.ssreflect.tuple.FinTuple.enumP
+      Coq.ssr.ssreflect.Under_iff.over_iff_done
+      mathcomp.ssreflect.tuple.FinTuple.enum
+      mathcomp.ssreflect.bigop.BigOp.bigopE
+      mathcomp.ssreflect.tuple.FinTuple.size_enum
+      mathcomp.ssreflect.finfun.FinfunDef.finfun
+      Coq.ssr.ssreflect.Under_iff.Over_iff
+      mathcomp.ssreflect.fintype.CardDef.card
+      mathcomp.ssreflect.fintype.CardDef.cardEdef
+      mathcomp.ssreflect.finset.SetDef.pred_of_setE
+      Coq.ssr.ssreflect.Under_eq.over_eq
+      mathcomp.ssreflect.bigop.BigOp.bigop
+      mathcomp.ssreflect.fintype.SubsetDef.subset
+      Coq.ssr.ssreflect.Under_eq.over_eq_done
+      mathcomp.ssreflect.generic_quotient.Pi.f
+      mathcomp.ssreflect.generic_quotient.Pi.E
+      Coq.ssr.ssreflect.Under_iff.under_iff_done
+      mathcomp.ssreflect.fintype.Finite.EnumDef.enum
+      Coq.ssr.ssreflect.Under_iff.over_iff
+      Coq.ssr.ssreflect.Under_iff.Under_iff_from_iff
+      mathcomp.ssreflect.finset.SetDef.finsetE
+</code></pre>
+
+
+<p>In the output above, note that there are no references to <code>admit</code> or <code>admitted</code> proofs, but only to <code>Axioms</code>. With regard to these axioms, we make two observations:</p>
+
+<ol>
+<li><p>The <code>Axioms</code> starting with <code>mathcomp.*</code>are part of the Mathematical Components library. They are not axioms in the usual sense but interfaces of Module Types, a Coq facility for generating generic modules (see <a href="https://coq.inria.fr/cocorico/ModuleSystemTutorial">this tutorial</a> for an introduction). Note, however, that the concrete instantiations of these modules are based on correct, <code>Axiom</code>-free proofs.</p></li>
+
+<li><p>Most importantly, there are no entries starting with <code>prosa.*</code> (the logical base directory of AbstractRTA), which implies that <strong>there are no axioms or admitted proofs in our proof</strong>.</p></li>
+</ol>
+
+<p>The result of <code>coqchk</code> confirms that every proof in AbstractRTA is correct.</p>
+
+<h1 id="4locatingthemainresultsofthepaper">4. Locating the Main Results of the Paper</h1>
+
+<p>The paper introduces the first general and rigorous formalization of the busy-window principle. The essence of the principle is identified as a minimal set of generic, high-level assumptions that allow for a unified and general abstract response-time analysis, which is independent of specific scheduling policies, workload models, and preemption policy details. From this abstract core, the paper shows how to obtain concrete analysis instantiations for specific schedulers via a sequence of refinement steps, and provides formally verified response-time bounds for eight common schedulers and workloads, including the widely used fixed-priority (FP) and earliest-deadline first (EDF) scheduling of fully, limited-, and non-preemptive sporadic tasks. </p>
+
+<p>If you would like to see more of how the AbstractRTA is organized, have a look at the <a href="html/toc.html">table of contents</a>.</p>
+
+<h2 id="abstractfoundation">Abstract Foundation</h2>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.interference">Abstract Interference</a></li>
+
+<li><a href="html/prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.interfering_workload">Abstract Interfering Workload</a></li>
+</ul>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.definitions.html#quiet_time">Quiet time (Definition 5)</a></li>
+
+<li><a href="html/prosa.analysis.abstract.definitions.html#busy_interval">Busy interval (Definition 6)</a></li>
+</ul>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.definitions.html#busy_intervals_are_bounded_by">Busy Intervals Are Bounded By A Constant (Precondition 7)</a></li>
+
+<li><a href="html/prosa.analysis.abstract.definitions.html#work_conserving">Work-Conserving In The Abstract Sense (Precondition 8)</a></li>
+
+<li><a href="html/prosa.analysis.abstract.definitions.html#job_interference_is_bounded_by">Interference-Bound Function (Precondition 10)</a></li>
+</ul>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.search_space.html#is_in_search_space">Search Space (Definition 12)</a></li>
+
+<li><a href="html/prosa.analysis.abstract.abstract_rta.html#Abstract_RTA.H_R_is_maximum">Response-time recurrence (Precondition 13)</a></li>
+</ul>
+
+<h2 id="abstractreponsetimeanalysis">Abstract Reponse-Time Analysis</h2>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.run_to_completion.html#interference_is_complement_to_schedule">Lemma 14</a></li>
+
+<li><a href="html/prosa.analysis.abstract.run_to_completion.html#j_receives_at_least_run_to_completion_threshold">Theorem 15</a></li>
+
+<li><a href="html/prosa.analysis.abstract.search_space.html#representative_exists">Lemma 16</a></li>
+
+<li><a href="html/prosa.analysis.abstract.search_space.html#solution_for_A_exists">Theorem 17</a></li>
+
+<li><a href="html/prosa.analysis.abstract.abstract_rta.html#uniprocessor_response_time_bound">Theorem 18 (Abstract RTA)</a></li>
+</ul>
+
+<h2 id="abstractsequentialreponsetimeanalysis">Abstract Sequential Reponse-Time Analysis</h2>
+
+<ul>
+<li><a href="html/prosa.model.task.sequentiality.html#sequential_tasks">Tasks are sequential (Precondition 22)</a></li>
+<li><a href="html/prosa.analysis.abstract.abstract_seq_rta.html#interference_and_workload_consistent_with_sequential_tasks">Consistent I and W (Precondition 23)</a></li>
+<li><a href="html/prosa.analysis.abstract.abstract_seq_rta.html#task_interference_is_bounded_by">Sequential Interference-Bound Function (Precondition 24)</a></li>
+</ul>
+
+<ul>
+<li><a href="html/prosa.analysis.abstract.abstract_seq_rta.html#cumulative_job_interference_bound">Lemma 26</a></li>
+
+<li><a href="html/prosa.analysis.abstract.abstract_seq_rta.html#uniprocessor_response_time_bound_seq">Theorem 27</a></li>
+</ul>
+
+<h2 id="preemptionmodel">Preemption model</h2>
+
+<ul>
+<li><a href="html/prosa.model.preemption.parameter.html">Preemption-model compliant (Precondition 28)</a></li>
+<li><a href="html/prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point">Respects priority policy at preemption points (Precondition 28)</a></li>
+<li><a href="html/prosa.model.schedule.work_conserving.html#work_conserving">Work-conserving in classical sense (Precondition 29)</a></li>
+<li><a href="html/prosa.analysis.definitions.priority_inversion.html#is_priority_inversion">Priority Inversion</a></li>
+<li><a href="html/prosa.analysis.definitions.priority_inversion.html#cumulative_priority_inversion">Cumulative Priority Inversion</a></li>
+</ul>
+
+
+<ul>
+<li><a href="html/prosa.analysis.facts.busy_interval.priority_inversion.html#preemption_time_exists">Threorem 30</a></li>
+</ul>
+
+
+<ul>
+<li><a href="html/prosa.model.task.preemption.fully_preemptive.html">Fully preemptive</a></li>
+
+<li><a href="html/prosa.model.task.preemption.fully_nonpreemptive.html">Fully non-preemptive</a></li>
+
+<li><a href="html/prosa.model.task.preemption.limited_preemptive.html">Fixed preemption points</a></li>
+
+<li><a href="html/prosa.model.task.preemption.floating_nonpreemptive.html">Floating non-preemptive regions</a></li>
+</ul>
+
+<h2 id="instantiations">Instantiations</h2>
+
+
+<ul>
+<li><a href="html/prosa.results.fixed_priority.rta.bounded_pi.html#uniprocessor_response_time_bound_fp">General FP model (Theorem 31)</a></li>
+  
+<li><a href="html/prosa.results.fixed_priority.rta.fully_preemptive.html#uniprocessor_response_time_bound_fully_preemptive_fp">FP + Fully preemptive</a></li>
+
+<li><a href="html/prosa.results.fixed_priority.rta.fully_nonpreemptive.html#uniprocessor_response_time_bound_fully_nonpreemptive_fp">FP + Fully non-preemptive</a></li>
+
+<li><a href="html/prosa.results.fixed_priority.rta.limited_preemptive.html#uniprocessor_response_time_bound_fp_with_fixed_preemption_points">FP + Fixed preemption points</a></li>
+
+<li><a href="html/prosa.results.fixed_priority.rta.floating_nonpreemptive.html#uniprocessor_response_time_bound_fp_with_floating_nonpreemptive_regions">FP + Floating non-preemptive regions</a></li>
+</ul>
+
+<ul>
+
+<li><a href="html/prosa.results.edf.rta.bounded_pi.html#uniprocessor_response_time_bound_edf">General EDF model (Theorem 32)</a></li>
+
+<li><a href="html/prosa.results.edf.rta.fully_preemptive.html#uniprocessor_response_time_bound_fully_preemptive_edf">EDF + Fully preemptive</a></li>
+
+<li><a href="html/prosa.results.edf.rta.fully_nonpreemptive.html#uniprocessor_response_time_bound_fully_nonpreemptive_edf">EDF + Fully non-preemptive</a></li>
+
+<li><a href="html/prosa.results.edf.rta.limited_preemptive.html#uniprocessor_response_time_bound_edf_with_fixed_preemption_points">EDF + Fixed preemption points</a></li>
+
+<li><a href="html/prosa.results.edf.rta.floating_nonpreemptive.html#uniprocessor_response_time_bound_edf_with_floating_nonpreemptive_regions">EDF + Floating non-preemptive regions</a></li>
+</ul>
