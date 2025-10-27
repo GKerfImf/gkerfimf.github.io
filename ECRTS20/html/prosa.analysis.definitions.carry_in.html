@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.analysis.definitions.carry_in</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.priority.classes.html#"><span class="id" title="library">prosa.model.priority.classes</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#"><span class="id" title="library">seq</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#"><span class="id" title="library">fintype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Throughout this file, we assume ideal uniprocessor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab120"></a><h1 class="section">No Carry-In</h1>
+ In this module we define the notion of no carry-in time for uni-processor schedulers. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="NoCarryIn"><span class="id" title="section">NoCarryIn</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="NoCarryIn.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="NoCarryIn.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uni-processor schedule of this arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="NoCarryIn.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="definition">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The processor has no carry-in at time t iff every job (regardless of priority) 
+      from the arrival sequence released before t has completed by that time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="no_carry_in"><span class="id" title="definition">no_carry_in</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j_o</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#j_o"><span class="id" title="variable">j_o</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrived_before"><span class="id" title="definition">arrived_before</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#j_o"><span class="id" title="variable">j_o</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#j_o"><span class="id" title="variable">j_o</span></a> <a class="idref" href="prosa.analysis.definitions.carry_in.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.carry_in.html#NoCarryIn"><span class="id" title="section">NoCarryIn</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.analysis.facts.model.task_arrivals</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.arrivals.html#"><span class="id" title="library">prosa.model.task.arrivals</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this file we provide basic properties related to tasks on arrival sequences. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="TaskArrivals"><span class="id" title="section">TaskArrivals</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of job associated with any type of tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="TaskArrivals.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> be any task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="TaskArrivals.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that the number of arrivals of task can be split into disjoint intervals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a name="num_arrivals_of_task_cat"><span class="id" title="lemma">num_arrivals_of_task_cat</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">t</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t2"><span class="id" title="variable">t2</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t2"><span class="id" title="variable">t2</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#t2"><span class="id" title="variable">t2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> /<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GE</span> <span class="id" title="var">LE</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> /<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> /<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (@<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#big_cat_nat"><span class="id" title="lemma">big_cat_nat</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#filter_cat"><span class="id" title="lemma">filter_cat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#size_cat"><span class="id" title="lemma">size_cat</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.task_arrivals.html#TaskArrivals"><span class="id" title="section">TaskArrivals</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

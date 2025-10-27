@@ -1,0 +1,310 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.model.preemption.parameter</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.all.html#"><span class="id" title="library">prosa.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.all.html#"><span class="id" title="library">prosa.behavior.all</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab26"></a><h1 class="section">Job-Level Preemption Model</h1>
+ There are many equivalent ways to represent at which points in time a job
+    is preemptable, i.e., where it can be forced to relinquish the processor on
+    which it is executing. In Prosa, the various preemption models are
+    represented with a single predicate <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> that indicates, for
+    given a job and a given degree of progress, whether the job is preemptable
+    at its current point of execution. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobPreemptable"><span class="id" title="record">JobPreemptable</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) :=<br/>
+&nbsp;&nbsp;<a name="job_preemptable"><span class="id" title="projection">job_preemptable</span></a> : <a class="idref" href="prosa.model.preemption.parameter.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab27"></a><h1 class="section">Maximum and Last Non-preemptive Segment of a Job</h1>
+ In the following section we define the notions of the maximal and the last
+    non-preemptive segments. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="MaxAndLastNonpreemptiveSegment"><span class="id" title="section">MaxAndLastNonpreemptiveSegment</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ Consider any type of jobs with arrival times and execution costs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and consider any given preemption model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.preemption.parameter.html#JobPreemptable"><span class="id" title="class">JobPreemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+It is useful to define a representation of the preemption points of a job
+      as an actual sequence of points where this job can be preempted. To this
+      end, we define <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> as the sequence of all progress
+      values at which job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is preemptable, according to
+      <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">seq</span></a> ρ <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">:</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="prosa.util.list.html#range"><span class="id" title="definition">range</span></a> 0 (<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">|</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#3d61eb9bcecd9ede478c4672178648de"><span class="id" title="notation">]</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We observe that the conversion indeed is an equivalent way of
+      representing the set of preemption points. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Remark</span> <a name="conversion_preserves_equivalence"><span class="id" title="lemma">conversion_preserves_equivalence</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) (ρ : <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#4bfb4f2d0721ba668e3a802ab1b745a1"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ? <span class="id" title="var">LE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span>: (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#posnP"><span class="id" title="lemma">posnP</span></a> (<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <span class="id" title="var">j</span>)) ⇒ [<span class="id" title="var">ZERO</span>|<span class="id" title="var">POS</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">PP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">move</span>: <span class="id" title="var">LE</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">ZERO</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#leqn0"><span class="id" title="lemma">leqn0</span></a>; <span class="id" title="tactic">move</span> ⇒ /<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#eqP"><span class="id" title="lemma">eqP</span></a> <span class="id" title="var">EQ</span>; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">PP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <span class="id" title="var">ZERO</span> <span class="id" title="tactic">in</span> <span class="id" title="var">PP</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">PP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <span class="id" title="var">j</span> 0) <span class="id" title="var">eqn</span>:<span class="id" title="var">EQ</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">PP</span> ⇒ /<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [/<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#eqP"><span class="id" title="lemma">eqP</span></a> <span class="id" title="var">A1</span>| <span class="id" title="var">FF</span>]; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">F</span>: <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <span class="id" title="var">j</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> 0 <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#eqP"><span class="id" title="lemma">eqP</span></a>/<a class="idref" href="prosa.util.tactics.html#neqP"><span class="id" title="lemma">neqP</span></a>; <span class="id" title="tactic">rewrite</span> -<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#lt0n"><span class="id" title="lemma">lt0n</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">PP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a> <span class="id" title="tactic">in</span> ×.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#mem_filter"><span class="id" title="lemma">mem_filter</span></a>; <span class="id" title="tactic">apply</span>/<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#mem_iota"><span class="id" title="lemma">mem_iota</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#subn0"><span class="id" title="lemma">subn0</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#add0n"><span class="id" title="lemma">add0n</span></a> //; <span class="id" title="tactic">apply</span>/<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">PP</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#mem_filter"><span class="id" title="lemma">mem_filter</span></a>; <span class="id" title="tactic">move</span> ⇒ /<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">PP</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We further define a function that, for a given job, yields the sequence
+      of lengths of its nonpreemptive segments. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="lengths_of_segments"><span class="id" title="definition">lengths_of_segments</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.util.nondecreasing.html#distances"><span class="id" title="definition">distances</span></a> (<a class="idref" href="prosa.model.preemption.parameter.html#job_preemption_points"><span class="id" title="definition">job_preemption_points</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we define a function that determines the length of a job's longest
+      nonpreemptive segment (or zero if the job is fully preemptive). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_max_nonpreemptive_segment"><span class="id" title="definition">job_max_nonpreemptive_segment</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.util.list.html#max0"><span class="id" title="definition">max0</span></a> (<a class="idref" href="prosa.model.preemption.parameter.html#lengths_of_segments"><span class="id" title="definition">lengths_of_segments</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, we define a function that yields the length of a job's last
+      nonpreemptive segment (or zero if the job is fully preemptive). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_last_nonpreemptive_segment"><span class="id" title="definition">job_last_nonpreemptive_segment</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.util.list.html#last0"><span class="id" title="definition">last0</span></a> (<a class="idref" href="prosa.model.preemption.parameter.html#lengths_of_segments"><span class="id" title="definition">lengths_of_segments</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab28"></a><h1 class="section">Run-to-Completion Threshold of a Job</h1>
+
+<div class="paragraph"> </div>
+
+ Finally, we define the notion of a job's run-to-completion threshold: the
+      run-to-completion threshold is the amount of service after which a job
+      cannot be preempted until its completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_run_to_completion_threshold"><span class="id" title="definition">job_run_to_completion_threshold</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">-</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.model.preemption.parameter.html#job_last_nonpreemptive_segment"><span class="id" title="definition">job_last_nonpreemptive_segment</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">-</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.preemption.parameter.html#MaxAndLastNonpreemptiveSegment"><span class="id" title="section">MaxAndLastNonpreemptiveSegment</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab29"></a><h1 class="section">Model Validity</h1>
+ In the following, we define properties that any reasonable job preemption
+    model must satisfy. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="PreemptionModel"><span class="id" title="section">PreemptionModel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ Consider any type of jobs with arrival times and execution costs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any preemption model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.preemption.parameter.html#JobPreemptable"><span class="id" title="class">JobPreemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of processor model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any job arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="PreemptionModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="PreemptionModel.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In the following, we define the notion of a valid preemption model.  To
+      begin with, we require that a job has to be executed at least one time
+      instant in order to reach a nonpreemptive segment. In other words, a job
+      must start execution to become non-preemptive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_cannot_become_nonpreemptive_before_execution"><span class="id" title="definition">job_cannot_become_nonpreemptive_before_execution</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> 0.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And vice versa, a job cannot remain non-preemptive after its completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_cannot_be_nonpreemptive_after_completion"><span class="id" title="definition">job_cannot_be_nonpreemptive_after_completion</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, if a job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is not preemptable at some time instant <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>, then <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span>
+      must be scheduled at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="not_preemptive_implies_scheduled"><span class="id" title="definition">not_preemptive_implies_scheduled</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#t"><span class="id" title="variable">t</span></a>) <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A job can start its execution only from a preemption point. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="execution_starts_with_preemption_point"><span class="id" title="definition">execution_starts_with_preemption_point</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">prt</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#prt"><span class="id" title="variable">prt</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#prt"><span class="id" title="variable">prt</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#prt"><span class="id" title="variable">prt</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a preemption model is a valid preemption model if
+       all assumptions given above are satisfied for any job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_preemption_model"><span class="id" title="definition">valid_preemption_model</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_cannot_become_nonpreemptive_before_execution"><span class="id" title="definition">job_cannot_become_nonpreemptive_before_execution</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#job_cannot_be_nonpreemptive_after_completion"><span class="id" title="definition">job_cannot_be_nonpreemptive_after_completion</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#not_preemptive_implies_scheduled"><span class="id" title="definition">not_preemptive_implies_scheduled</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#execution_starts_with_preemption_point"><span class="id" title="definition">execution_starts_with_preemption_point</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.preemption.parameter.html#PreemptionModel"><span class="id" title="section">PreemptionModel</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

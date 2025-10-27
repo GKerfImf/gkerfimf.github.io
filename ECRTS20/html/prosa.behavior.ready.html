@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.behavior.ready</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#"><span class="id" title="library">fintype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.service.html#"><span class="id" title="library">prosa.behavior.service</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab15"></a><h1 class="section">Readiness of a Job</h1>
+
+<div class="paragraph"> </div>
+
+ We define a general notion of readiness of a job: a job can be
+   scheduled only when it is ready, as determined by the predicate
+   <span class="inlinecode"><a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="projection">job_ready</span></a></span>. This notion of readiness is a general concept that is
+   used to model jitter, self-suspensions, etc.  Crucially, we require
+   that any sensible notion of readiness is a refinement of the notion
+   of a pending job, i.e., any ready job must also be pending. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobReady"><span class="id" title="record">JobReady</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) (<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.behavior.ready.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.ready.html#PState"><span class="id" title="variable">PState</span></a>} `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.behavior.ready.html#Job"><span class="id" title="variable">Job</span></a>} `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.ready.html#Job"><span class="id" title="variable">Job</span></a>} :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="job_ready"><span class="id" title="projection">job_ready</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.behavior.ready.html#PState"><span class="id" title="variable">PState</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.ready.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>;<br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+What follows is the consistency requirement: We require any
+        reasonable readiness model to consider only pending jobs to be
+        ready. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> : <span class="id" title="keyword">∀</span> <span class="id" title="var">sched</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>, <a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a class="idref" href="prosa.behavior.ready.html#sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.behavior.ready.html#sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a>;<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab16"></a><h1 class="section">Backlogged Jobs</h1>
+
+<div class="paragraph"> </div>
+
+ Based on the general notion of readiness, we define what it means to be
+   backlogged, i.e., ready to run but not executing. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="Backlogged"><span class="id" title="section">Backlogged</span></a>.<br/>
+</div>
+
+<div class="doc">
+Consider any kinds of jobs and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.behavior.ready.html#Backlogged.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.ready.html#Backlogged.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Allow for any notion of readiness. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.behavior.ready.html#Backlogged.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.ready.html#Backlogged.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Job j is backlogged at time t iff it is ready and not scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="backlogged"><span class="id" title="definition">backlogged</span></a> (<span class="id" title="var">sched</span> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.behavior.ready.html#Backlogged.PState"><span class="id" title="variable">PState</span></a>) (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.ready.html#Backlogged.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a class="idref" href="prosa.behavior.ready.html#sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.behavior.ready.html#sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.ready.html#Backlogged"><span class="id" title="section">Backlogged</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab17"></a><h1 class="section">Validity of a Schedule</h1>
+
+<div class="paragraph"> </div>
+
+ With the readiness concept in place, we define the notion of valid schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ValidSchedule"><span class="id" title="section">ValidSchedule</span></a>.<br/>
+</div>
+
+<div class="doc">
+Consider any kind of jobs and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidSchedule.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define whether jobs come from some arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> (<span class="id" title="var">arr_seq</span> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>, <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.behavior.ready.html#arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+..., whether a job can only be scheduled if it has arrived ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>, <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#has_arrived"><span class="id" title="definition">has_arrived</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+..., whether a job can only be scheduled if it is ready ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>, <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and whether a job cannot be scheduled after it completes. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>, <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.ready.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#00fe0eaf5e6949f0a31725357afa4bba"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.behavior.ready.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the schedule is valid iff
+<ul class="doclist">
+<li> jobs come from some arrival sequence
+
+</li>
+<li> a job is scheduled if it is ready 
+</li>
+</ul>
+
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_schedule"><span class="id" title="definition">valid_schedule</span></a> (<span class="id" title="var">arr_seq</span> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.behavior.ready.html#arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that we do not explicitly require that a valid schedule satisfies
+     <span class="inlinecode"><a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a></span> or <span class="inlinecode"><a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a></span> because these
+     properties are implied by jobs_must_be_ready_to_execute. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.ready.html#ValidSchedule"><span class="id" title="section">ValidSchedule</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

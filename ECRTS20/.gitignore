@@ -1,0 +1,15 @@
+*.d
+*.glob
+*.vo
+*.aux
+*.crashcoqide
+*.v#
+*.cache
+*~
+*.orig
+*/.#*
+#*#
+.#*
+*.DS_Store
+/proof-state
+/with-proof-state

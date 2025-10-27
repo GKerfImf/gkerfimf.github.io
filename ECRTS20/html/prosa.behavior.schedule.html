@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.behavior.schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#"><span class="id" title="library">fintype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#"><span class="id" title="library">prosa.behavior.arrival_sequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab5"></a><h1 class="section">Generic Processor State</h1>
+
+<div class="paragraph"> </div>
+
+ Rather than choosing a specific schedule representation up front, we define
+    the notion of a generic processor state, which allows us to state general
+    definitions of core concepts (such as "how much service has a job
+    received") that work across many possible scenarios (e.g., ideal
+    uniprocessor schedules, schedules with overheads, variable-speed
+    processors, multiprocessors, etc.).
+
+<div class="paragraph"> </div>
+
+    A concrete processor state type precisely determines how all relevant
+    aspects of the execution environment are modeled (e.g., scheduled jobs,
+    overheads, spinning). Here, we define just the common interface of all
+    possible concrete processor states by means of a "type class", i.e., we
+    define a few generic predicates and an invariant that must be defined by
+    all concrete processor state types.
+
+<div class="paragraph"> </div>
+
+    In the most simple case (i.e., an ideal uniprocessor state), at any time,
+    either a particular job is scheduled or the processor is idle. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="ProcessorState"><span class="id" title="record">ProcessorState</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) (<span class="id" title="var">State</span> : <span class="id" title="keyword">Type</span>) :=<br/>
+&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+A <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="record">ProcessorState</span></a></span> instance provides a finite set of cores on which
+        jobs can be scheduled. In the case of uniprocessors, this is irrelevant
+        and may be ignored (by convention, the unit type is used as a
+        placeholder in uniprocessor schedules, but this is not
+        important). (Hint to the Coq novice: <span class="inlinecode"><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#Finite.Exports.finType"><span class="id" title="abbreviation">finType</span></a></span> just means some type
+        with finitely many values, i.e., it is possible to enumerate all cores
+        of a multi-processor.)  
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="Core"><span class="id" title="projection">Core</span></a> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#Finite.Exports.finType"><span class="id" title="abbreviation">finType</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+For a given processor state and core, the <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#scheduled_on"><span class="id" title="projection">scheduled_on</span></a></span> predicate
+        checks whether a given job is running on the given core. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="scheduled_on"><span class="id" title="projection">scheduled_on</span></a> : <a class="idref" href="prosa.behavior.schedule.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.schedule.html#State"><span class="id" title="variable">State</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.schedule.html#Core"><span class="id" title="method">Core</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+For a given processor state, the <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="method">scheduled_in</span></a></span> predicate checks
+        whether a given job is running on any core in that state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">scheduled_in</span> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.schedule.html#Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">s</span> : <a class="idref" href="prosa.behavior.schedule.html#State"><span class="id" title="variable">State</span></a>) : <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b7547477b3531f14d89d6b13ad78482"><span class="id" title="notation">[</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b7547477b3531f14d89d6b13ad78482"><span class="id" title="notation">∃</span></a> <span class="id" title="var">c</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b7547477b3531f14d89d6b13ad78482"><span class="id" title="notation">:</span></a> <a class="idref" href="prosa.behavior.schedule.html#Core"><span class="id" title="method">Core</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#f3be25edeb0349b0a76405eded9d0b98"><span class="id" title="notation">,</span></a> <a class="idref" href="prosa.behavior.schedule.html#scheduled_on"><span class="id" title="method">scheduled_on</span></a> <a class="idref" href="prosa.behavior.schedule.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.schedule.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="prosa.behavior.schedule.html#c"><span class="id" title="variable">c</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#9b7547477b3531f14d89d6b13ad78482"><span class="id" title="notation">]</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+For a given processor state, the <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="projection">service_in</span></a></span> function determines how
+       much service a given job receives in that state (across all cores). 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="service_in"><span class="id" title="projection">service_in</span></a> : <a class="idref" href="prosa.behavior.schedule.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.schedule.html#State"><span class="id" title="variable">State</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+For a given processor state, a job does not receive service if it is
+        not scheduled in that state 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<a name="service_implies_scheduled"><span class="id" title="projection">service_implies_scheduled</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">s</span>, <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="method">scheduled_in</span></a> <a class="idref" href="prosa.behavior.schedule.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.schedule.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="method">service_in</span></a> <a class="idref" href="prosa.behavior.schedule.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.schedule.html#s"><span class="id" title="variable">s</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0<br/>
+&nbsp;&nbsp;}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab6"></a><h1 class="section">Schedule Representation</h1>
+
+<div class="paragraph"> </div>
+
+ In Prosa, schedules are represented as functions, which allows us to model
+    potentially infinite schedules. More specifically, a schedule simply maps
+    each instant to a processor state, which reflects state of the computing
+    platform at the specific time (e.g., which job is presently scheduled). 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Definition</span> <a name="schedule"><span class="id" title="definition">schedule</span></a> (<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>) := <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.schedule.html#PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The following line instructs Coq to not let proofs use knowledge of how
+    <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#scheduled_on"><span class="id" title="projection">scheduled_on</span></a></span>, <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="method">scheduled_in</span></a></span>, and <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="projection">service_in</span></a></span> are defined. Instead,
+    proofs must rely on basic lemmas about processor state classes. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Opaque</span> <a class="idref" href="prosa.behavior.schedule.html#scheduled_on"><span class="id" title="method">scheduled_on</span></a> <a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="method">scheduled_in</span></a> <a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="method">service_in</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

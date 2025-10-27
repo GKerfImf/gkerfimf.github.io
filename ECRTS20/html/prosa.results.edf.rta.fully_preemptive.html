@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.results.edf.rta.fully_preemptive</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.results.edf.rta.bounded_nps.html#"><span class="id" title="library">prosa.results.edf.rta.bounded_nps</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.preemption.task.preemptive.html#"><span class="id" title="library">prosa.analysis.facts.preemption.task.preemptive</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.preemptive.html#"><span class="id" title="library">prosa.analysis.facts.preemption.rtc_threshold.preemptive</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#"><span class="id" title="library">seq</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.path.html#"><span class="id" title="library">path</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#"><span class="id" title="library">fintype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab81"></a><h1 class="section">RTA for Fully Preemptive EDF</h1>
+ In this section we prove the RTA theorem for the fully preemptive EDF model 
+<div class="paragraph"> </div>
+
+ Throughout this file, we assume the EDF priority policy, ideal uni-processor 
+    schedules, and the basic (i.e., Liu &amp; Layland) readiness model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.priority.edf.html#"><span class="id" title="library">prosa.model.priority.edf</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.readiness.basic.html#"><span class="id" title="library">prosa.model.readiness.basic</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Furthermore, we assume the fully preemptive task model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.task.preemption.fully_preemptive.html#"><span class="id" title="library">prosa.model.task.preemption.fully_preemptive</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab82"></a><h2 class="section">Setup and Assumptions</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves"><span class="id" title="section">RTAforFullyPreemptiveEDFModelwithArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskDeadline"><span class="id" title="class">TaskDeadline</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent, non-duplicate arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_arr_seq_is_a_set"><span class="id" title="variable">H_arr_seq_is_a_set</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence_uniq"><span class="id" title="definition">arrival_sequence_uniq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary task set ts, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#list"><span class="id" title="inductive">list</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... assume that all jobs come from this task set, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a> : <a class="idref" href="prosa.model.task.concept.html#all_jobs_from_taskset"><span class="id" title="definition">all_jobs_from_taskset</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the cost of a job cannot be larger than the task cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#arrivals_have_valid_job_costs"><span class="id" title="definition">arrivals_have_valid_job_costs</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let max_arrivals be a family of valid arrival curves, i.e., for
+     any task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> in ts <span class="inlinecode"><span class="id" title="var">max_arrival</span></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> is (1) an arrival bound of
+     <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span>, and (2) it is a monotonic function that equals 0 for the
+     empty interval delta = 0. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.arrival.curves.html#MaxArrivals"><span class="id" title="class">MaxArrivals</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_valid_arrival_curve"><span class="id" title="variable">H_valid_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#valid_taskset_arrival_curve"><span class="id" title="definition">valid_taskset_arrival_curve</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_is_arrival_curve"><span class="id" title="variable">H_is_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#taskset_respects_max_arrivals"><span class="id" title="definition">taskset_respects_max_arrivals</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> be any task in ts that is to be analyzed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_tsk_in_ts"><span class="id" title="variable">H_tsk_in_ts</span></a> : <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uniprocessor schedule of the arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="definition">ideal.processor_state</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_jobs_come_from_arrival_sequence"><span class="id" title="variable">H_jobs_come_from_arrival_sequence</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where jobs do not execute before their arrival or after completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_completed_jobs_dont_execute"><span class="id" title="variable">H_completed_jobs_dont_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume we have sequential tasks, i.e, jobs from the 
+      same task execute in the order of their arrival. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_sequential_tasks"><span class="id" title="variable">H_sequential_tasks</span></a> : <a class="idref" href="prosa.model.task.sequentiality.html#sequential_tasks"><span class="id" title="definition">sequential_tasks</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we assume that the schedule is a work-conserving schedule... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_work_conserving"><span class="id" title="variable">H_work_conserving</span></a> : <a class="idref" href="prosa.model.schedule.work_conserving.html#work_conserving"><span class="id" title="definition">work_conserving</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the schedule respects the policy defined by the
+      <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> function (i.e., jobs have bounded non-preemptive
+      segments). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_respects_policy"><span class="id" title="variable">H_respects_policy</span></a> : <a class="idref" href="prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab83"></a><h2 class="section">Total Workload and Length of Busy Interval</h2>
+
+<div class="paragraph"> </div>
+
+ We introduce the abbreviation <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a></span> for the task request bound function,
+      which is defined as <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="projection">task_cost</span></a>(<a class="idref" href="prosa.util.bigcat.html#T"><span class="id" title="variable">T</span></a>)</span> <span class="inlinecode">×</span> <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a>(<a class="idref" href="prosa.util.bigcat.html#T"><span class="id" title="variable">T</span></a>,<a class="idref" href="prosa.analysis.facts.busy_interval.carry_in.html#ed95ab12a76ee91f943daebdba589d94"><span class="id" title="variable">Δ</span></a>)</span> for a task T. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we introduce <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> as an abbreviation
+      for the task request bound function of task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a> := <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the sum of individual request bound functions, we define the request bound 
+      function of all tasks (total request bound function). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.total_rbf"><span class="id" title="variable">total_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we define an upper bound on interfering workload received from jobs 
+      of other tasks with higher-than-or-equal priority. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.bound_on_total_hep_workload"><span class="id" title="variable">bound_on_total_hep_workload</span></a> <span class="id" title="var">A</span> <span class="id" title="var">Δ</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">sum_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">(</span></a><span class="id" title="var">tsk_o</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">|</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#tsk_o"><span class="id" title="variable">tsk_o</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#c385a484ee9d1b4e0615924561a9b75e"><span class="id" title="notation">!=</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#f9660601caed2f1f92279ff134c53c8a"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#tsk_o"><span class="id" title="variable">tsk_o</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#minn"><span class="id" title="definition">minn</span></a> (<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">)</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.model.task.concept.html#task_deadline"><span class="id" title="definition">task_deadline</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">-</span></a> <a class="idref" href="prosa.model.task.concept.html#task_deadline"><span class="id" title="definition">task_deadline</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#tsk_o"><span class="id" title="variable">tsk_o</span></a>) <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#d44f383ce45b5283439ea630afb544d5"><span class="id" title="variable">Δ</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let L be any positive fixed point of the busy interval recurrence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_L_positive"><span class="id" title="variable">H_L_positive</span></a> : <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7f2a7ef2c63af7359b22787a9daf336e"><span class="id" title="notation">&gt;</span></a> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_fixed_point"><span class="id" title="variable">H_fixed_point</span></a> : <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.total_rbf"><span class="id" title="variable">total_rbf</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab84"></a><h2 class="section">Response-Time Bound</h2>
+
+<div class="paragraph"> </div>
+
+ To reduce the time complexity of the analysis, recall the notion of search space. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.task_rbf_changes_at"><span class="id" title="variable">task_rbf_changes_at</span></a> <span class="id" title="var">A</span> := <a class="idref" href="prosa.results.edf.rta.bounded_pi.html#task_rbf_changes_at"><span class="id" title="definition">task_rbf_changes_at</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.bound_on_total_hep_workload_changes_at"><span class="id" title="variable">bound_on_total_hep_workload_changes_at</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.bounded_pi.html#bound_on_total_hep_workload_changes_at"><span class="id" title="definition">bound_on_total_hep_workload_changes_at</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.is_in_search_space"><span class="id" title="variable">is_in_search_space</span></a> <span class="id" title="var">A</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#00fe0eaf5e6949f0a31725357afa4bba"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">)</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.task_rbf_changes_at"><span class="id" title="variable">task_rbf_changes_at</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">||</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.bound_on_total_hep_workload_changes_at"><span class="id" title="variable">bound_on_total_hep_workload_changes_at</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any value R, and assume that for any given arrival offset A in the search space,
+      there is a solution of the response-time bound recurrence which is bounded by R. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<span class="id" title="var">A</span> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.is_in_search_space"><span class="id" title="variable">is_in_search_space</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">(</span></a><span class="id" title="var">F</span> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">),</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a> (<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a>) <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.bound_on_total_hep_workload"><span class="id" title="variable">bound_on_total_hep_workload</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> (<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#A"><span class="id" title="variable">A</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#F"><span class="id" title="variable">F</span></a>) <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#F"><span class="id" title="variable">F</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now, we can leverage the results for the abstract model with bounded non-preemptive segments
+      to establish a response-time bound for the more concrete model of fully preemptive scheduling. 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a name="RTAforFullyPreemptiveEDFModelwithArrivalCurves.response_time_bounded_by"><span class="id" title="variable">response_time_bounded_by</span></a> := <a class="idref" href="prosa.analysis.definitions.schedulability.html#task_response_time_bound"><span class="id" title="definition">task_response_time_bound</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a name="uniprocessor_response_time_bound_fully_preemptive_edf"><span class="id" title="lemma">uniprocessor_response_time_bound_fully_preemptive_edf</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.response_time_bounded_by"><span class="id" title="variable">response_time_bounded_by</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">BLOCK</span>: <a class="idref" href="prosa.results.edf.rta.bounded_nps.html#blocking_bound"><span class="id" title="definition">blocking_bound</span></a>  <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.results.edf.rta.bounded_nps.html#blocking_bound"><span class="id" title="definition">blocking_bound</span></a> /<a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="definition">parameters.task_max_nonpreemptive_segment</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<a class="idref" href="prosa.model.task.preemption.fully_preemptive.html#fully_preemptive_model"><span class="id" title="instance">fully_preemptive.fully_preemptive_model</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#subnn"><span class="id" title="lemma">subnn</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#big1_eq"><span class="id" title="lemma">big1_eq</span></a>. } <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.results.edf.rta.bounded_nps.html#uniprocessor_response_time_bound_edf_with_bounded_nonpreemptive_segments"><span class="id" title="lemma">uniprocessor_response_time_bound_edf_with_bounded_nonpreemptive_segments</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">L0</span> := <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a>) .<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">eauto</span> 2 <span class="id" title="keyword">with</span> <span class="id" title="var">basic_facts</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">A</span> /<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">LT</span> <span class="id" title="var">NEQ</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a> <span class="id" title="var">A</span>); <span class="id" title="var">feed</span> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a> ⇒ [<span class="id" title="var">F</span> [<span class="id" title="var">FIX</span> <span class="id" title="var">BOUND</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">F</span>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">BLOCK</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#add0n"><span class="id" title="lemma">add0n</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#subnn"><span class="id" title="lemma">subnn</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#subn0"><span class="id" title="lemma">subn0</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#subnn"><span class="id" title="lemma">subnn</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#addn0"><span class="id" title="lemma">addn0</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.results.edf.rta.fully_preemptive.html#RTAforFullyPreemptiveEDFModelwithArrivalCurves"><span class="id" title="section">RTAforFullyPreemptiveEDFModelwithArrivalCurves</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

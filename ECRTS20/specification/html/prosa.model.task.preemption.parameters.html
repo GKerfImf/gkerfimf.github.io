@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.model.task.preemption.parameters</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.preemption.parameter.html#"><span class="id" title="library">prosa.model.preemption.parameter</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab50"></a><h1 class="section">Task Preemption Model</h1>
+
+<div class="paragraph"> </div>
+
+ In this module, we define the abstract interface for task-level preemption
+    models. Specific preemption models are instantiated in the sibling files in
+    this directory. 
+<div class="paragraph"> </div>
+
+<a name="lab51"></a><h2 class="section">Preemption-Related Task Parameters</h2>
+
+<div class="paragraph"> </div>
+
+ We define three parameters to express the preemption behavior of a given
+    task. 
+<div class="paragraph"> </div>
+
+ First, we define <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="projection">task_max_nonpreemptive_segment</span></a></span> to denote a bound on the
+    maximum length of a task's non-preemptive segment. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="TaskMaxNonpreemptiveSegment"><span class="id" title="record">TaskMaxNonpreemptiveSegment</span></a> (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) :=<br/>
+&nbsp;&nbsp;<a name="task_max_nonpreemptive_segment"><span class="id" title="projection">task_max_nonpreemptive_segment</span></a> : <a class="idref" href="prosa.model.task.preemption.parameters.html#Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Second, <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_run_to_completion_threshold"><span class="id" title="projection">task_run_to_completion_threshold</span></a></span> indicates a progress bound with
+    the interpretation that, once a job of a task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> has received at least
+    <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_run_to_completion_threshold"><span class="id" title="projection">task_run_to_completion_threshold</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> time units of service, it will
+    remain nonpreemptive until the end and run to completion. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="TaskRunToCompletionThreshold"><span class="id" title="record">TaskRunToCompletionThreshold</span></a> (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) :=<br/>
+&nbsp;&nbsp;<a name="task_run_to_completion_threshold"><span class="id" title="projection">task_run_to_completion_threshold</span></a> : <a class="idref" href="prosa.model.task.preemption.parameters.html#Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Third, the parameter <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_preemption_points"><span class="id" title="projection">task_preemption_points</span></a></span> indicates the non-preemptive
+    segments of a task. Obviously, not all preemption models use this parameter. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="TaskPreemptionPoints"><span class="id" title="record">TaskPreemptionPoints</span></a> (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) :=<br/>
+&nbsp;&nbsp;<a name="task_preemption_points"><span class="id" title="projection">task_preemption_points</span></a> : <a class="idref" href="prosa.model.task.preemption.parameters.html#Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab52"></a><h2 class="section">Derived Properties</h2>
+ In this section, we define the notions of the maximal and the last
+    non-preemptive segments of a task. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="MaxAndLastNonpreemptiveSegment"><span class="id" title="section">MaxAndLastNonpreemptiveSegment</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with fixed preemption points. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.preemption.parameters.html#TaskPreemptionPoints"><span class="id" title="class">TaskPreemptionPoints</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#MaxAndLastNonpreemptiveSegment.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define a function <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpr_segment"><span class="id" title="definition">task_max_nonpr_segment</span></a></span> that computes the length of
+      the longest non-preemptive segment of a given task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="task_max_nonpr_segment"><span class="id" title="definition">task_max_nonpr_segment</span></a> (<span class="id" title="var">tsk</span> : <a class="idref" href="prosa.model.task.preemption.parameters.html#MaxAndLastNonpreemptiveSegment.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.list.html#max0"><span class="id" title="definition">max0</span></a> (<a class="idref" href="prosa.util.nondecreasing.html#distances"><span class="id" title="definition">distances</span></a> (<a class="idref" href="prosa.model.task.preemption.parameters.html#task_preemption_points"><span class="id" title="definition">task_preemption_points</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a>)).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_last_nonpr_segment"><span class="id" title="definition">task_last_nonpr_segment</span></a></span> is a function that computes the
+      length of the last non-preemptive segment. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="task_last_nonpr_segment"><span class="id" title="definition">task_last_nonpr_segment</span></a> (<span class="id" title="var">tsk</span> : <a class="idref" href="prosa.model.task.preemption.parameters.html#MaxAndLastNonpreemptiveSegment.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.list.html#last0"><span class="id" title="definition">last0</span></a> (<a class="idref" href="prosa.util.nondecreasing.html#distances"><span class="id" title="definition">distances</span></a> (<a class="idref" href="prosa.model.task.preemption.parameters.html#task_preemption_points"><span class="id" title="definition">task_preemption_points</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a>)).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.preemption.parameters.html#MaxAndLastNonpreemptiveSegment"><span class="id" title="section">MaxAndLastNonpreemptiveSegment</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To avoid having to specify redundant information, we allow Coq to
+    automatically infer a task's maximum non-preemptive segment length if its
+    preemption points are known. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Instance</span> <a name="TaskPreemptionPoints_to_TaskMaxNonpreemptiveSegment_conversion"><span class="id" title="instance">TaskPreemptionPoints_to_TaskMaxNonpreemptiveSegment_conversion</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) `{<a class="idref" href="prosa.model.task.preemption.parameters.html#TaskPreemptionPoints"><span class="id" title="class">TaskPreemptionPoints</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#Task"><span class="id" title="variable">Task</span></a>} : <a class="idref" href="prosa.model.task.preemption.parameters.html#TaskMaxNonpreemptiveSegment"><span class="id" title="class">TaskMaxNonpreemptiveSegment</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#Task"><span class="id" title="variable">Task</span></a> := <a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpr_segment"><span class="id" title="definition">task_max_nonpr_segment</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab53"></a><h2 class="section">Preemption Model Validity</h2>
+
+<div class="paragraph"> </div>
+
+ For analysis purposes, it is important that the distance between any two
+    neighboring preemption points of a job is bounded. We define the validity
+    criterion for the maximum non-preemptive segment length accordingly. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ValidPreemptionModel"><span class="id" title="section">ValidPreemptionModel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose we are given the maximum non-preemptive segment length for each task ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.preemption.parameters.html#TaskMaxNonpreemptiveSegment"><span class="id" title="class">TaskMaxNonpreemptiveSegment</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and a job-level preemption model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.preemption.parameter.html#JobPreemptable"><span class="id" title="class">JobPreemptable</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of processor state model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any job arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidPreemptionModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidPreemptionModel.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First we require that <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="projection">task_max_nonpreemptive_segment</span></a></span> gives an upper
+      bound on values of the function <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_max_nonpreemptive_segment"><span class="id" title="definition">job_max_nonpreemptive_segment</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_respects_max_nonpreemptive_segment"><span class="id" title="definition">job_respects_max_nonpreemptive_segment</span></a> (<span class="id" title="var">j</span>: <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_max_nonpreemptive_segment"><span class="id" title="definition">job_max_nonpreemptive_segment</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="definition">task_max_nonpreemptive_segment</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we require that all segments of a job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> have bounded length. That
+      is, for any progress <span class="inlinecode">ρ</span> of job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span>, there exists a preemption point <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#pp"><span class="id" title="variable">pp</span></a></span>
+      such that <span class="inlinecode">ρ</span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#pp"><span class="id" title="variable">pp</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode">ρ</span> <span class="inlinecode">+</span> <span class="inlinecode">(<span class="id" title="var">job_max_nps</span></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> <span class="inlinecode">-</span> <span class="inlinecode"><a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a>)</span>. That is, in any time
+      interval of length <span class="inlinecode"><span class="id" title="var">job_max_nps</span></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> during which a job is continuously
+      scheduled, there exists a preemption point that lies in this interval. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="nonpreemptive_regions_have_bounded_length"><span class="id" title="definition">nonpreemptive_regions_have_bounded_length</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (ρ : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">(</span></a><span class="id" title="var">pp</span> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">),</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#pp"><span class="id" title="variable">pp</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#e25b6ed2455c445c4a805315e6c2e053"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#1af91fb19f8f622aa9ec8998986a6bf9"><span class="id" title="variable">ρ</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.model.preemption.parameter.html#job_max_nonpreemptive_segment"><span class="id" title="definition">job_max_nonpreemptive_segment</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">-</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">)</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#pp"><span class="id" title="variable">pp</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the schedule exhibits bounded nonpreemptive segments iff the
+      predicate <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> satisfies the two preceding conditions. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="model_with_bounded_nonpreemptive_segments"><span class="id" title="definition">model_with_bounded_nonpreemptive_segments</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#job_respects_max_nonpreemptive_segment"><span class="id" title="definition">job_respects_max_nonpreemptive_segment</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#nonpreemptive_regions_have_bounded_length"><span class="id" title="definition">nonpreemptive_regions_have_bounded_length</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we say that the schedule exhibits <i>valid</i> bounded nonpreemptive
+      segments iff the predicate <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> defines a valid preemption
+      model and if this model has non-preemptive segments of bounded length. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_model_with_bounded_nonpreemptive_segments"><span class="id" title="definition">valid_model_with_bounded_nonpreemptive_segments</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#valid_preemption_model"><span class="id" title="definition">valid_preemption_model</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#model_with_bounded_nonpreemptive_segments"><span class="id" title="definition">model_with_bounded_nonpreemptive_segments</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidPreemptionModel"><span class="id" title="section">ValidPreemptionModel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab54"></a><h2 class="section">Run-to-Completion Threshold Validity</h2>
+
+<div class="paragraph"> </div>
+
+ Since a task model may not provide exact information about the preemption
+    points of a task, a task's run-to-completion threshold generally cannot be
+    defined in terms of the preemption points of a task (unlike a job's
+    run-to-completion threshold, which can always be computed from a job's
+    preemption points). Instead, we require each task-level preemption model to
+    specify a task's run-to-completion threshold explicitly. We define its
+    required properties in the following. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ValidTaskRunToCompletionThreshold"><span class="id" title="section">ValidTaskRunToCompletionThreshold</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with bounded WCETs ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where each job has an execution cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose we are given a job-level preemption model ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.preemption.parameter.html#JobPreemptable"><span class="id" title="class">JobPreemptable</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and the run-to-completion threshold for each task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.preemption.parameters.html#TaskRunToCompletionThreshold"><span class="id" title="class">TaskRunToCompletionThreshold</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, consider any kind of processor model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any job arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidTaskRunToCompletionThreshold.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidTaskRunToCompletionThreshold.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A task's run-to-completion threshold must not exceed the WCET of the
+      task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="task_rtc_bounded_by_cost"><span class="id" title="definition">task_rtc_bounded_by_cost</span></a> <span class="id" title="var">tsk</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#task_run_to_completion_threshold"><span class="id" title="definition">task_run_to_completion_threshold</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the run-to-completion threshold of a task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> bounds the
+      job-level run-to-completion threshold iff, for any job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> of task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span>,
+      the job's run-to-completion threshold is at most the task's
+      run-to-completion threshold. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_respects_task_rtc"><span class="id" title="definition">job_respects_task_rtc</span></a> <span class="id" title="var">tsk</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_run_to_completion_threshold"><span class="id" title="definition">job_run_to_completion_threshold</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#task_run_to_completion_threshold"><span class="id" title="definition">task_run_to_completion_threshold</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we require that a valid run-to-completion threshold parameter
+      will satisfy the two above definitions. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_task_run_to_completion_threshold"><span class="id" title="definition">valid_task_run_to_completion_threshold</span></a> <span class="id" title="var">tsk</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#task_rtc_bounded_by_cost"><span class="id" title="definition">task_rtc_bounded_by_cost</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#job_respects_task_rtc"><span class="id" title="definition">job_respects_task_rtc</span></a> <a class="idref" href="prosa.model.task.preemption.parameters.html#tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.preemption.parameters.html#ValidTaskRunToCompletionThreshold"><span class="id" title="section">ValidTaskRunToCompletionThreshold</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

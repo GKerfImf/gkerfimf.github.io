@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.behavior.job</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.time.html#"><span class="id" title="library">prosa.behavior.time</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab2"></a><h1 class="section">Notion of a Job Type</h1>
+
+<div class="paragraph"> </div>
+
+ Throughout the library we assume that jobs have decidable equality. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="JobType"><span class="id" title="definition">JobType</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab3"></a><h1 class="section">Unit of Work</h1>
+
+<div class="paragraph"> </div>
+
+ We define 'work' to denote the unit of service received or needed. In a
+   real system, this corresponds to the number of processor cycles. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="work"><span class="id" title="definition">work</span></a>  := <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab4"></a><h1 class="section">Basic Job Parameters — Cost, Arrival Time, and Absolute Deadline</h1>
+
+<div class="paragraph"> </div>
+
+ Definition of a generic type of parameter relating jobs to a discrete cost. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobCost"><span class="id" title="record">JobCost</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) := <a name="job_cost"><span class="id" title="projection">job_cost</span></a> : <a class="idref" href="prosa.behavior.job.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Definition of a generic type of parameter for job_arrival. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobArrival"><span class="id" title="record">JobArrival</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) := <a name="job_arrival"><span class="id" title="projection">job_arrival</span></a> : <a class="idref" href="prosa.behavior.job.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Definition of a generic type of parameter relating jobs to an absolute deadline. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobDeadline"><span class="id" title="record">JobDeadline</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) := <a name="job_deadline"><span class="id" title="projection">job_deadline</span></a> : <a class="idref" href="prosa.behavior.job.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

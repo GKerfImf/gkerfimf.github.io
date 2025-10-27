@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.behavior.service</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.fintype.html#"><span class="id" title="library">fintype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.schedule.html#"><span class="id" title="library">prosa.behavior.schedule</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Service"><span class="id" title="section">Service</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab7"></a><h1 class="section">Service of a Job</h1>
+
+<div class="paragraph"> </div>
+
+ Consider any kind of jobs and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<span class="id" title="var">PState</span> : <span class="id" title="keyword">Type</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.behavior.service.html#Service.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="Service.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.behavior.service.html#Service.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we define whether a job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="scheduled_at"><span class="id" title="definition">scheduled_at</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="method">scheduled_in</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#Service.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the instantaneous service received by job j at time t. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="service_at"><span class="id" title="definition">service_at</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="method">service_in</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#Service.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on the notion of instantaneous service, we define the cumulative
+      service received by job j during any interval from <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a></span> until (but not
+      including) <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="service_during"><span class="id" title="definition">service_during</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t1</span> <span class="id" title="var">t2</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">\</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">sum_</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.behavior.service.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">≤</span></a> <span class="id" title="var">t</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.behavior.service.html#t2"><span class="id" title="variable">t2</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#c0980ea1654f471922ad26f5837d48da"><span class="id" title="notation">)</span></a> <a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the previous definition, we define the cumulative service received
+      by job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> up to (but not including) time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="service"><span class="id" title="definition">service</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> 0 <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab8"></a><h1 class="section">Job Completion and Response Time</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, consider jobs that have a cost, a deadline, and an
+      arbitrary arrival time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobDeadline"><span class="id" title="class">JobDeadline</span></a> <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> has completed by time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> if it received all required
+      service in the interval from <span class="inlinecode">0</span> until (but not including) <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="completed_by"><span class="id" title="definition">completed_by</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#73030c22bc0b1fa771c65aa5414c65f9"><span class="id" title="notation">≥</span></a> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> completes at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> if it has completed by time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> but
+      not by time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">-</span> <span class="inlinecode">1</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="completes_at"><span class="id" title="definition">completes_at</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#f953bf7095e0da1cb644443fd0e17d6d"><span class="id" title="notation">.-1</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a constant <span class="inlinecode"><a class="idref" href="prosa.util.rel.html#Relations.R"><span class="id" title="variable">R</span></a></span> is a response time bound of a job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> if <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span>
+      has completed by <span class="inlinecode"><a class="idref" href="prosa.util.rel.html#Relations.R"><span class="id" title="variable">R</span></a></span> units after its arrival. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_response_time_bound"><span class="id" title="definition">job_response_time_bound</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">R</span> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#0dacc1786c5ba797d47dd85006231633"><span class="id" title="notation">+</span></a> <a class="idref" href="prosa.behavior.service.html#R"><span class="id" title="variable">R</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a job meets its deadline if it completes by its absolute deadline. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_meets_deadline"><span class="id" title="definition">job_meets_deadline</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_deadline"><span class="id" title="definition">job_deadline</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab9"></a><h1 class="section">Pending or Incomplete Jobs</h1>
+
+<div class="paragraph"> </div>
+
+ Job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is pending at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> iff it has arrived but has not yet completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="pending"><span class="id" title="definition">pending</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#has_arrived"><span class="id" title="definition">has_arrived</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is pending earlier and at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> iff it has arrived before time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>
+      and has not been completed yet. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="pending_earlier_and_at"><span class="id" title="definition">pending_earlier_and_at</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrived_before"><span class="id" title="definition">arrived_before</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#9ddeac0ab66152bd1d64bedb507a795e"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let's define the remaining cost of job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> as the amount of service that
+      has yet to be received for it to complete. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7825ccc99f23b0d30c9d40c317ba7af0"><span class="id" title="notation">-</span></a> <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.behavior.service.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.service.html#Service"><span class="id" title="section">Service</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

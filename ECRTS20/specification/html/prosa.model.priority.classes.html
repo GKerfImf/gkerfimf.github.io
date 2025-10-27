@@ -1,0 +1,348 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.model.priority.classes</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.rel.html#"><span class="id" title="library">prosa.util.rel</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.list.html#"><span class="id" title="library">prosa.util.list</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#"><span class="id" title="library">seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab55"></a><h1 class="section">The FP, JLFP, and JLDP Priority Classes</h1>
+
+<div class="paragraph"> </div>
+
+ In this module, we define the three well-known classes of priority
+    relations: (1) fixed-priority (FP) policies, (2) job-level fixed-priority
+    (JLFP) polices, and (3) job-level dynamic-priority (JLDP) policies, where
+    (2) is a subset of (3), and (1) a subset of (2). 
+<div class="paragraph"> </div>
+
+ As a convention, we use "hep" to mean "higher or equal priority." 
+<div class="paragraph"> </div>
+
+ We define an FP policy as a relation among tasks, ... 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="FP_policy"><span class="id" title="record">FP_policy</span></a> (<span class="id" title="var">Task</span>: <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a name="hep_task"><span class="id" title="projection">hep_task</span></a> : <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.model.priority.classes.html#Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... a JLFP policy as a relation among jobs, and ... 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JLFP_policy"><span class="id" title="record">JLFP_policy</span></a> (<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) := <a name="hep_job"><span class="id" title="projection">hep_job</span></a> : <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... a JLDP policy as a relation among jobs that may vary over time. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JLDP_policy"><span class="id" title="record">JLDP_policy</span></a> (<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) := <a name="hep_job_at"><span class="id" title="projection">hep_job_at</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+NB: The preceding definitions currently make it difficult to express
+        priority policies in which the priority of a job at a given time varies
+        depending on the preceding schedule prefix (e.g., least-laxity
+        first). That is, there is room for an even more general notion of a
+        schedule-dependent JLDP policy, where the priority relation among jobs
+        may vary depending both on time and the schedule prefix prior to a
+        given time. This is left to future work.  
+<div class="paragraph"> </div>
+
+<a name="lab56"></a><h2 class="section">Automatic FP ➔ JLFP ➔ JLDP Conversion</h2>
+
+<div class="paragraph"> </div>
+
+ Since there are natural interpretations of FP and JLFP policies as JLFP and
+    JLDP policies, respectively, we define conversions that express these
+    generalizations. In practice, this means that Coq will be able to
+    automatically satisfy a JLDP assumption if a JLFP or FP policy is in
+    scope. 
+<div class="paragraph"> </div>
+
+ First, any FP policy can be interpreted as an JLFP policy by comparing jobs
+    according to the priorities of their respective tasks. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Instance</span> <a name="FP_to_JLFP"><span class="id" title="instance">FP_to_JLFP</span></a> (<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) (<span class="id" title="var">Task</span>: <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.priority.classes.html#Task"><span class="id" title="variable">Task</span></a>} `{<a class="idref" href="prosa.model.priority.classes.html#FP_policy"><span class="id" title="class">FP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Task"><span class="id" title="variable">Task</span></a>} : <a class="idref" href="prosa.model.priority.classes.html#JLFP_policy"><span class="id" title="class">JLFP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> ⇒ <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.priority.classes.html#j1"><span class="id" title="variable">j1</span></a>) (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.priority.classes.html#j2"><span class="id" title="variable">j2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Second, any JLFP policy implies a JLDP policy that simply ignores the time
+    parameter. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Instance</span> <a name="JLFP_to_JLDP"><span class="id" title="instance">JLFP_to_JLDP</span></a> (<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) `{<a class="idref" href="prosa.model.priority.classes.html#JLFP_policy"><span class="id" title="class">JLFP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a>} : <a class="idref" href="prosa.model.priority.classes.html#JLDP_policy"><span class="id" title="class">JLDP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Job"><span class="id" title="variable">Job</span></a> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <span class="id" title="var">_</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> ⇒ <a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> <a class="idref" href="prosa.model.priority.classes.html#j1"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.model.priority.classes.html#j2"><span class="id" title="variable">j2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab57"></a><h2 class="section">Properties of Priority Policies</h2>
+
+<div class="paragraph"> </div>
+
+ In the following section, we define key properties of common priority
+    policies that proofs often depend on. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="Priorities"><span class="id" title="section">Priorities</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+.. and assume that jobs have a cost and an arrival time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In the following section, we define properties of JLDP policies, and by
+      extension also properties of FP and JLFP policies. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="Priorities.JLDP"><span class="id" title="section">JLDP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any JLDP policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.priority.classes.html#JLDP_policy"><span class="id" title="class">JLDP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define what it means for a JLDP policy to be reflexive, transitive,
+        and total. Note that these definitions, although phrased in terms of a
+        given JLDP policy, can also be used for JLFP and FP policies due to the
+        above-defined conversion instances. 
+<div class="paragraph"> </div>
+
+ A JLDP policy is reflexive if the relation among jobs is reflexive at
+        every point in time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="reflexive_priorities"><span class="id" title="definition">reflexive_priorities</span></a> := <span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a> (<a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.model.priority.classes.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A JLDP policy is transitive if the relation among jobs is transitive at
+        every point in time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="transitive_priorities"><span class="id" title="definition">transitive_priorities</span></a> := <span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a> (<a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.model.priority.classes.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A JLDP policy is total if the relation among jobs is total at
+        every point in time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="total_priorities"><span class="id" title="definition">total_priorities</span></a> := <span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#total"><span class="id" title="definition">total</span></a> (<a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.model.priority.classes.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.priority.classes.html#Priorities.JLDP"><span class="id" title="section">JLDP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we define a property of JLFP policies. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="Priorities.JLFP"><span class="id" title="section">JLFP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any JLFP policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.priority.classes.html#JLFP_policy"><span class="id" title="class">JLFP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall that jobs of a sequential task are necessarily executed in the
+        order that they arrive.
+
+<div class="paragraph"> </div>
+
+        An arbitrary JLFP policy, however, can violate the sequential tasks
+        hypothesis.  For example, consider two jobs <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span>, <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span> of the same task
+        such that <span class="inlinecode"><a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="projection">job_arrival</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> <span class="inlinecode">&lt;</span> <span class="inlinecode"><a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="projection">job_arrival</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span>. It is possible that a JLFP
+        priority policy <span class="inlinecode">π</span> will assign a higher priority to the second job <span class="inlinecode">π</span>
+        <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#true"><span class="id" title="constructor">true</span></a></span>. But such a situation would contradict the natural
+        execution order of sequential tasks. It is therefore sometimes
+        necessary to restrict the space of JLFP policies to those that assign
+        priorities in a way that is consistent with sequential tasks.
+
+<div class="paragraph"> </div>
+
+        To this end, we say that a policy respects sequential tasks if, for any
+        two jobs <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span>, <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span> of the same task, <span class="inlinecode"><a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="projection">job_arrival</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="projection">job_arrival</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span>
+        implies <span class="inlinecode">π</span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Datatypes.html#true"><span class="id" title="constructor">true</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="policy_respects_sequential_tasks"><span class="id" title="definition">policy_respects_sequential_tasks</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.priority.classes.html#j1"><span class="id" title="variable">j1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.priority.classes.html#j2"><span class="id" title="variable">j2</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.priority.classes.html#j1"><span class="id" title="variable">j1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.priority.classes.html#j2"><span class="id" title="variable">j2</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> <a class="idref" href="prosa.model.priority.classes.html#j1"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.model.priority.classes.html#j2"><span class="id" title="variable">j2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.priority.classes.html#Priorities.JLFP"><span class="id" title="section">JLFP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we we define and observe two properties of FP policies. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="Priorities.FP"><span class="id" title="section">FP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any FP policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.priority.classes.html#FP_policy"><span class="id" title="class">FP_policy</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To express the common assumption that task priorities are unique, we
+        define whether the given FP policy is antisymmetric over a task set
+        <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.task.limited.html#LimitedPreemptionsModel.ts"><span class="id" title="variable">ts</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="antisymmetric_over_taskset"><span class="id" title="definition">antisymmetric_over_taskset</span></a> (<span class="id" title="var">ts</span> : <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> <a class="idref" href="prosa.model.priority.classes.html#Priorities.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.rel.html#antisymmetric_over_list"><span class="id" title="definition">antisymmetric_over_list</span></a> <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.model.priority.classes.html#ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, we observe that any <span class="inlinecode"><a class="idref" href="prosa.model.priority.classes.html#FP_policy"><span class="id" title="record">FP_policy</span></a></span> respects the sequential tasks
+        hypothesis, meaning that later-arrived jobs of a task don't have higher
+        priority than earlier-arrived jobs of the same task (assuming that task
+        priorities are reflexive). 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Remark</span> <a name="respects_sequential_tasks"><span class="id" title="lemma">respects_sequential_tasks</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.priority.classes.html#reflexive_priorities"><span class="id" title="definition">reflexive_priorities</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.priority.classes.html#policy_respects_sequential_tasks"><span class="id" title="definition">policy_respects_sequential_tasks</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">REFL</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> /<a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#eqP"><span class="id" title="lemma">eqP</span></a> <span class="id" title="var">EQ</span> <span class="id" title="var">LT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> /<a class="idref" href="prosa.model.priority.classes.html#FP_to_JLFP"><span class="id" title="instance">FP_to_JLFP</span></a> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">eapply</span> (<span class="id" title="var">REFL</span> 0).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.priority.classes.html#Priorities.FP"><span class="id" title="section">FP</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.priority.classes.html#Priorities"><span class="id" title="section">Priorities</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We add the above observation into the "Hint Database" basic_facts, so Coq
+    will be able to apply it automatically. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Hint Resolve</span> <span class="id" title="var">respects_sequential_tasks</span> : <span class="id" title="var">basic_facts</span>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

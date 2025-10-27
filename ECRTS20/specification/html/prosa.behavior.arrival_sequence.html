@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.behavior.arrival_sequence</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssreflect.html#"><span class="id" title="library">ssreflect</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#"><span class="id" title="library">seq</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#"><span class="id" title="library">ssrnat</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.bigop.html#"><span class="id" title="library">bigop</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#"><span class="id" title="library">eqtype</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrfun.html#"><span class="id" title="library">ssrfun</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.job.html#"><span class="id" title="library">prosa.behavior.job</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.notation.html#"><span class="id" title="library">prosa.util.notation</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This module contains basic definitions and properties of job arrival
+    sequences. 
+<div class="paragraph"> </div>
+
+<a name="lab10"></a><h1 class="section">Notion of an Arrival Sequence</h1>
+
+<div class="paragraph"> </div>
+
+ We begin by defining a job arrival sequence. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ArrivalSequence"><span class="id" title="section">ArrivalSequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Given any job type with decidable equality, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ArrivalSequence.Job"><span class="id" title="variable">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+..., an arrival sequence is a mapping from any time to a (finite) sequence of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> := <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequence.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequence"><span class="id" title="section">ArrivalSequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab11"></a><h1 class="section">Arrival of a Job</h1>
+
+<div class="paragraph"> </div>
+
+ Next, we define properties of jobs in a given arrival sequence. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="JobProperties"><span class="id" title="section">JobProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="JobProperties.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#JobProperties.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we define the sequence of jobs arriving at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrivals_at"><span class="id" title="definition">arrivals_at</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#JobProperties.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we say that job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> arrives at a given time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> iff it belongs to the
+       corresponding sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrives_at"><span class="id" title="definition">arrives_at</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.arrival_sequence.html#JobProperties.Job"><span class="id" title="variable">Job</span></a>) (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_at"><span class="id" title="definition">arrivals_at</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, we define whether job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> arrives at some (unknown) time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>, i.e.,
+       whether it belongs to the arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrives_in"><span class="id" title="definition">arrives_in</span></a> (<span class="id" title="var">j</span> : <a class="idref" href="prosa.behavior.arrival_sequence.html#JobProperties.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <span class="id" title="var">t</span><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">,</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_at"><span class="id" title="definition">arrivals_at</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#JobProperties"><span class="id" title="section">JobProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab12"></a><h1 class="section">Validity of an Arrival Sequence</h1>
+
+<div class="paragraph"> </div>
+
+ Next, we define valid arrival sequences. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ValidArrivalSequence"><span class="id" title="section">ValidArrivalSequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that job arrival times are known. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ValidArrivalSequence.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidArrivalSequence.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ValidArrivalSequence.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that arrival times are consistent if any job that arrives in the
+     sequence has the corresponding arrival time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_at"><span class="id" title="definition">arrives_at</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ValidArrivalSequence.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the arrival sequence is a set iff it doesn't contain duplicate
+     jobs at any given time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrival_sequence_uniq"><span class="id" title="definition">arrival_sequence_uniq</span></a> := <span class="id" title="keyword">∀</span> <span class="id" title="var">t</span>, <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#uniq"><span class="id" title="definition">uniq</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_at"><span class="id" title="definition">arrivals_at</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ValidArrivalSequence.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the arrival sequence is valid iff it is a set and arrival times
+     are consistent 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_arrival_sequence"><span class="id" title="definition">valid_arrival_sequence</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence_uniq"><span class="id" title="definition">arrival_sequence_uniq</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#ValidArrivalSequence"><span class="id" title="section">ValidArrivalSequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab13"></a><h1 class="section">Arrival Time Predicates</h1>
+
+<div class="paragraph"> </div>
+
+ Next, we define properties of job arrival times. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ArrivalTimeProperties"><span class="id" title="section">ArrivalTimeProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that job arrival times are known. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let j be any job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ArrivalTimeProperties.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that job j has arrived at time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> iff it arrives at some time <span class="inlinecode"><a class="idref" href="prosa.model.schedule.edf.html#t'"><span class="id" title="variable">t'</span></a></span>
+     with <span class="inlinecode"><a class="idref" href="prosa.model.schedule.edf.html#t'"><span class="id" title="variable">t'</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="has_arrived"><span class="id" title="definition">has_arrived</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties.j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we say that job j arrived before t iff it arrives at some time <span class="inlinecode"><a class="idref" href="prosa.model.schedule.edf.html#t'"><span class="id" title="variable">t'</span></a></span>
+     with <span class="inlinecode"><a class="idref" href="prosa.model.schedule.edf.html#t'"><span class="id" title="variable">t'</span></a></span> <span class="inlinecode">&lt;</span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrived_before"><span class="id" title="definition">arrived_before</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties.j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#00fe0eaf5e6949f0a31725357afa4bba"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we say that job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> arrives between <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span> iff it arrives at
+     some time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> with <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a></span> <span class="inlinecode">≤</span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">&lt;</span> <span class="inlinecode"><a class="idref" href="prosa.util.step_function.html#StepFunction.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrived_between"><span class="id" title="definition">arrived_between</span></a> (<span class="id" title="var">t1</span> <span class="id" title="var">t2</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#ea090076ab3dcdee0cfd3882c88b993f"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties.j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#ea090076ab3dcdee0cfd3882c88b993f"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t2"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalTimeProperties"><span class="id" title="section">ArrivalTimeProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab14"></a><h1 class="section">Finite Arrival Sequence Prefixes</h1>
+
+<div class="paragraph"> </div>
+
+ In this section, we define arrival sequence prefixes, which are useful to
+   define (computable) properties over sets of jobs in the schedule. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ArrivalSequencePrefix"><span class="id" title="section">ArrivalSequencePrefix</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that job arrival times are known. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequencePrefix.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ArrivalSequencePrefix.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequencePrefix.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+By concatenation, we construct the list of jobs that arrived in the
+     interval <tt>[t1, t2)</tt>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrivals_between"><span class="id" title="definition">arrivals_between</span></a> (<span class="id" title="var">t1</span> <span class="id" title="var">t2</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">\</span></a><a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">cat_</span></a><a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.behavior.arrival_sequence.html#t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">≤</span></a> <span class="id" title="var">t</span> <a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t2"><span class="id" title="variable">t2</span></a><a class="idref" href="prosa.util.notation.html#d782a246e25d95026f6c25b805dd6799"><span class="id" title="notation">)</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_at"><span class="id" title="definition">arrivals_at</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequencePrefix.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on that, we define the list of jobs that arrived up to time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>, ...
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrivals_up_to"><span class="id" title="definition">arrivals_up_to</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> 0 <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a><a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#bda89d73ec4a8f23ae92b565ffb5aaa6"><span class="id" title="notation">.+1</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and the list of jobs that arrived strictly before time <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrivals_before"><span class="id" title="definition">arrivals_before</span></a> (<span class="id" title="var">t</span> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> 0 <a class="idref" href="prosa.behavior.arrival_sequence.html#t"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#ArrivalSequencePrefix"><span class="id" title="section">ArrivalSequencePrefix</span></a>.<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

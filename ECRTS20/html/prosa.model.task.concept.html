@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<h1 class="libtitle">Library prosa.model.task.concept</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrbool.html#"><span class="id" title="library">ssrbool</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.all.html#"><span class="id" title="library">prosa.behavior.all</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab36"></a><h1 class="section">Task Type</h1>
+
+<div class="paragraph"> </div>
+
+ As in case of the job model, we make no assumptions about the structure or
+    type of tasks, i.e., like jobs, we consider tasks to be mathematically
+    opaque objects. We only assume that any type that represents tasks has a
+    decidable equality. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="TaskType"><span class="id" title="definition">TaskType</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#Equality.Exports.eqType"><span class="id" title="abbreviation">eqType</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab37"></a><h1 class="section">Task Model Core Parameters</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, we define three central parameters of the task model: how
+    jobs map to tasks, deadlines of tasks, and each task's WCET parameter. 
+<div class="paragraph"> </div>
+
+ First, we define a job-model parameter <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="projection">job_task</span></a></span> that maps each job to its
+    corresponding task. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="JobTask"><span class="id" title="record">JobTask</span></a> (<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>) (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a name="job_task"><span class="id" title="projection">job_task</span></a> : <a class="idref" href="prosa.model.task.concept.html#Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.concept.html#Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Second, we define a task-model parameter to express each task's relative
+    deadline. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="TaskDeadline"><span class="id" title="record">TaskDeadline</span></a> (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a name="task_deadline"><span class="id" title="projection">task_deadline</span></a> : <a class="idref" href="prosa.model.task.concept.html#Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Third, we define a task-model parameter to express each task's worst-case
+    execution cost (WCET). 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a name="TaskCost"><span class="id" title="record">TaskCost</span></a> (<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a name="task_cost"><span class="id" title="projection">task_cost</span></a> : <a class="idref" href="prosa.model.task.concept.html#Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab38"></a><h1 class="section">Task Model Validity</h1>
+
+<div class="paragraph"> </div>
+
+ In the following section, we introduce properties that a reasonable task
+    model must satisfy. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="ModelValidity"><span class="id" title="section">ModelValidity</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with WCETs and relative deadlines. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskDeadline"><span class="id" title="class">TaskDeadline</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we constrain the possible WCET values of a valid task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="ModelValidity.ValidCost"><span class="id" title="section">ValidCost</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ModelValidity.ValidCost.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.model.task.concept.html#ModelValidity.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The WCET of the task should be positive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="task_cost_positive"><span class="id" title="definition">task_cost_positive</span></a> := <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidCost.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#7f2a7ef2c63af7359b22787a9daf336e"><span class="id" title="notation">&gt;</span></a> 0.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The WCET should not be larger than the deadline, as otherwise the task
+        is trivially infeasible. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="task_cost_at_most_deadline"><span class="id" title="definition">task_cost_at_most_deadline</span></a> := <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidCost.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.concept.html#task_deadline"><span class="id" title="definition">task_deadline</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidCost.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidCost"><span class="id" title="section">ValidCost</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Second, we relate the cost of a task's jobs to its WCET. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a name="ModelValidity.ValidJobCost"><span class="id" title="section">ValidJobCost</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs associated with the tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidJobCost.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+</div>
+
+<div class="doc">
+... and consider the cost of each job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidJobCost.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The cost of any job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> cannot exceed the WCET of its respective
+        task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="valid_job_cost"><span class="id" title="definition">valid_job_cost</span></a> <span class="id" title="var">j</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.ssrnat.html#cb53cf0ee22c036a03b4a9281c68b5a3"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ModelValidity.ValidJobCost.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidJobCost.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The cost of a job from the arrival sequence cannot
+       be larger than the task cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="arrivals_have_valid_job_costs"><span class="id" title="definition">arrivals_have_valid_job_costs</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidJobCost.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#valid_job_cost"><span class="id" title="definition">valid_job_cost</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.concept.html#ModelValidity.ValidJobCost"><span class="id" title="section">ValidJobCost</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.concept.html#ModelValidity"><span class="id" title="section">ModelValidity</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a name="lab39"></a><h1 class="section">Task Sets</h1>
+
+<div class="paragraph"> </div>
+
+ Next, we introduce the notion of a task set and define properties of valid
+    task sets. 
+<div class="paragraph"> </div>
+
+ For simplicity, we represent sets of such tasks simply as (finite) sequences of
+    tasks. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Definition</span> <a name="TaskSet"><span class="id" title="definition">TaskSet</span></a> := <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.seq.html#seq"><span class="id" title="abbreviation">seq</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a name="ValidTaskSet"><span class="id" title="section">ValidTaskSet</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with WCETs ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#TaskCost"><span class="id" title="class">TaskCost</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+</div>
+
+<div class="doc">
+... as well as their individual execution costs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, consider an arrival sequence of these jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidTaskSet.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and the set of tasks that generate them.  
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a name="ValidTaskSet.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskSet"><span class="id" title="definition">TaskSet</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+All jobs in the arrival sequence should come from the task set. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="all_jobs_from_taskset"><span class="id" title="definition">all_jobs_from_taskset</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.Init.Logic.html#1c93e43e07fbeaeb6a625cb6614beb5d"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="https://coq.inria.fr/distrib/current/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.concept.html#ValidTaskSet"><span class="id" title="section">ValidTaskSet</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, for readability, we define two ways in which jobs and tasks
+    relate. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a name="SameTask"><span class="id" title="section">SameTask</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For any type of job associated with any type of tasks... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Task</span> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a class="idref" href="prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="prosa.model.task.concept.html#SameTask.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.model.task.concept.html#SameTask.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... we say that two jobs <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span> are from the same task iff
+      <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="projection">job_task</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j1"><span class="id" title="variable">j1</span></a></span> is equal to <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="projection">job_task</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.abstract.abstract_seq_rta.html#Sequential_Abstract_RTA.ResponseTimeBound.CompletionOfJobsFromSameTask.j2"><span class="id" title="variable">j2</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="same_task"><span class="id" title="definition">same_task</span></a> (<span class="id" title="var">j1</span> <span class="id" title="var">j2</span> : <a class="idref" href="prosa.model.task.concept.html#SameTask.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.concept.html#j1"><span class="id" title="variable">j1</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.concept.html#j2"><span class="id" title="variable">j2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We further say that a job <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is a job of task <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span> iff <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="projection">job_task</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#RunToCompletionThreshold.j"><span class="id" title="variable">j</span></a></span> is
+      equal to <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#TaskRTCThresholdFullyNonPreemptive.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a name="job_of_task"><span class="id" title="definition">job_of_task</span></a> (<span class="id" title="var">tsk</span> : <a class="idref" href="prosa.model.task.concept.html#SameTask.Task"><span class="id" title="variable">Task</span></a>) (<span class="id" title="var">j</span> : <a class="idref" href="prosa.model.task.concept.html#SameTask.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.concept.html#j"><span class="id" title="variable">j</span></a> <a class="idref" href="https://math-comp.github.io/htmldoc//mathcomp.ssreflect.eqtype.html#df45e8c2e8370fd4f0f7c4fdaf208180"><span class="id" title="notation">==</span></a> <a class="idref" href="prosa.model.task.concept.html#tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.concept.html#SameTask"><span class="id" title="section">SameTask</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>

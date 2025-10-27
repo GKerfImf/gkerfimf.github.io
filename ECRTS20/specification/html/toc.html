@@ -1,0 +1,846 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<link href="coqdocjs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="config.js"></script>
+<script type="text/javascript" src="coqdocjs.js"></script>
+</head>
+
+<body onload="document.getElementById('content').focus()">
+  <div id="header">
+    <span class="left">
+      <span class="modulename"> <script> document.write(document.title) </script> </span>
+    </span>
+
+    <span class="button" id="toggle-proofs"></span>
+
+    <span class="right">
+      <a href="../">Project Page</a>
+      <a href="./indexpage.html"> Index </a>
+      <a href="./toc.html"> Table of Contents </a>
+    </span>
+</div>
+    <div id="content" tabindex="-1" onblur="document.getElementById('content').focus()">
+    <div id="main">
+<div id="toc">
+<a href="prosa.behavior.time.html"><h2>Library prosa.behavior.time</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.time.html#lab1">Model of Time</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.job.html"><h2>Library prosa.behavior.job</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.job.html#lab2">Notion of a Job Type</a>
+
+</li>
+<li><a href="prosa.behavior.job.html#lab3">Unit of Work</a>
+
+</li>
+<li><a href="prosa.behavior.job.html#lab4">Basic Job Parameters — Cost, Arrival Time, and Absolute Deadline</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.schedule.html"><h2>Library prosa.behavior.schedule</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.schedule.html#lab5">Generic Processor State</a>
+
+</li>
+<li><a href="prosa.behavior.schedule.html#lab6">Schedule Representation</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.service.html"><h2>Library prosa.behavior.service</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.service.html#lab7">Service of a Job</a>
+
+</li>
+<li><a href="prosa.behavior.service.html#lab8">Job Completion and Response Time</a>
+
+</li>
+<li><a href="prosa.behavior.service.html#lab9">Pending or Incomplete Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.arrival_sequence.html"><h2>Library prosa.behavior.arrival_sequence</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.arrival_sequence.html#lab10">Notion of an Arrival Sequence</a>
+
+</li>
+<li><a href="prosa.behavior.arrival_sequence.html#lab11">Arrival of a Job</a>
+
+</li>
+<li><a href="prosa.behavior.arrival_sequence.html#lab12">Validity of an Arrival Sequence</a>
+
+</li>
+<li><a href="prosa.behavior.arrival_sequence.html#lab13">Arrival Time Predicates</a>
+
+</li>
+<li><a href="prosa.behavior.arrival_sequence.html#lab14">Finite Arrival Sequence Prefixes</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.ready.html"><h2>Library prosa.behavior.ready</h2></a>
+<ul class="doclist">
+<li><a href="prosa.behavior.ready.html#lab15">Readiness of a Job</a>
+
+</li>
+<li><a href="prosa.behavior.ready.html#lab16">Backlogged Jobs</a>
+
+</li>
+<li><a href="prosa.behavior.ready.html#lab17">Validity of a Schedule</a>
+
+</li>
+</ul>
+<a href="prosa.behavior.all.html"><h2>Library prosa.behavior.all</h2></a>
+<a href="prosa.model.processor.ideal.html"><h2>Library prosa.model.processor.ideal</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.processor.ideal.html#lab18">The Ideal Uniprocessor Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.processor.ideal.html#lab19">Idle Instants</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.processor.platform_properties.html"><h2>Library prosa.model.processor.platform_properties</h2></a>
+<a href="prosa.model.readiness.basic.html"><h2>Library prosa.model.readiness.basic</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.readiness.basic.html#lab20">Liu &amp; Layland Readiness Model</a>
+
+</li>
+</ul>
+<a href="prosa.model.preemption.fully_nonpreemptive.html"><h2>Library prosa.model.preemption.fully_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.preemption.fully_nonpreemptive.html#lab21">Preemption Model: Fully Non-Preemptive Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.model.preemption.fully_preemptive.html"><h2>Library prosa.model.preemption.fully_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.preemption.fully_preemptive.html#lab22">Preemption Model: Fully Preemptive Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.model.preemption.limited_preemptive.html"><h2>Library prosa.model.preemption.limited_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.preemption.limited_preemptive.html#lab23">Job Model Parameter for Preemption Points</a>
+
+</li>
+<li><a href="prosa.model.preemption.limited_preemptive.html#lab24">Preemption Model: Limited-Preemptive Jobs</a>
+<ul class="doclist">
+<li><a href="prosa.model.preemption.limited_preemptive.html#lab25">Model Validity</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.preemption.parameter.html"><h2>Library prosa.model.preemption.parameter</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.preemption.parameter.html#lab26">Job-Level Preemption Model</a>
+
+</li>
+<li><a href="prosa.model.preemption.parameter.html#lab27">Maximum and Last Non-preemptive Segment of a Job</a>
+
+</li>
+<li><a href="prosa.model.preemption.parameter.html#lab28">Run-to-Completion Threshold of a Job</a>
+
+</li>
+<li><a href="prosa.model.preemption.parameter.html#lab29">Model Validity</a>
+
+</li>
+</ul>
+<a href="prosa.model.task.absolute_deadline.html"><h2>Library prosa.model.task.absolute_deadline</h2></a>
+<a href="prosa.model.task.arrival.curves.html"><h2>Library prosa.model.task.arrival.curves</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.arrival.curves.html#lab30">The Arbitrary Arrival Curves Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.arrival.curves.html#lab31">Task Parameters for the Arrival Curves Model</a>
+
+</li>
+<li><a href="prosa.model.task.arrival.curves.html#lab32">Parameter Semantics</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.arrival.curves.html#lab33">Definition of Arrival Curves</a>
+
+</li>
+<li><a href="prosa.model.task.arrival.curves.html#lab34">Definition of Minimum Distance Bounds</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="prosa.model.task.arrival.curves.html#lab35">Model Validity</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.arrivals.html"><h2>Library prosa.model.task.arrivals</h2></a>
+<a href="prosa.model.task.concept.html"><h2>Library prosa.model.task.concept</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.concept.html#lab36">Task Type</a>
+
+</li>
+<li><a href="prosa.model.task.concept.html#lab37">Task Model Core Parameters</a>
+
+</li>
+<li><a href="prosa.model.task.concept.html#lab38">Task Model Validity</a>
+
+</li>
+<li><a href="prosa.model.task.concept.html#lab39">Task Sets</a>
+
+</li>
+</ul>
+<a href="prosa.model.task.preemption.floating_nonpreemptive.html"><h2>Library prosa.model.task.preemption.floating_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.floating_nonpreemptive.html#lab40">Task Model with Floating Non-Preemptive Regions</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.floating_nonpreemptive.html#lab41">Model Validity</a>
+
+</li>
+<li><a href="prosa.model.task.preemption.floating_nonpreemptive.html#lab42">Run-to-Completion Threshold</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.preemption.fully_nonpreemptive.html"><h2>Library prosa.model.task.preemption.fully_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.fully_nonpreemptive.html#lab43">Fully Non-Preemptive Task Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.fully_nonpreemptive.html#lab44">Run-to-Completion Threshold</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.preemption.fully_preemptive.html"><h2>Library prosa.model.task.preemption.fully_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.fully_preemptive.html#lab45">Fully Preemptive Task Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.fully_preemptive.html#lab46">Run-to-Completion Threshold</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.preemption.limited_preemptive.html"><h2>Library prosa.model.task.preemption.limited_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.limited_preemptive.html#lab47">Limited-Preemptive Task Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.limited_preemptive.html#lab48">Model Validity</a>
+
+</li>
+<li><a href="prosa.model.task.preemption.limited_preemptive.html#lab49">Run-to-Completion Threshold</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.preemption.parameters.html"><h2>Library prosa.model.task.preemption.parameters</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.parameters.html#lab50">Task Preemption Model</a>
+<ul class="doclist">
+<li><a href="prosa.model.task.preemption.parameters.html#lab51">Preemption-Related Task Parameters</a>
+
+</li>
+<li><a href="prosa.model.task.preemption.parameters.html#lab52">Derived Properties</a>
+
+</li>
+<li><a href="prosa.model.task.preemption.parameters.html#lab53">Preemption Model Validity</a>
+
+</li>
+<li><a href="prosa.model.task.preemption.parameters.html#lab54">Run-to-Completion Threshold Validity</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.task.sequentiality.html"><h2>Library prosa.model.task.sequentiality</h2></a>
+<a href="prosa.model.priority.classes.html"><h2>Library prosa.model.priority.classes</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.priority.classes.html#lab55">The FP, JLFP, and JLDP Priority Classes</a>
+<ul class="doclist">
+<li><a href="prosa.model.priority.classes.html#lab56">Automatic FP ➔ JLFP ➔ JLDP Conversion</a>
+
+</li>
+<li><a href="prosa.model.priority.classes.html#lab57">Properties of Priority Policies</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.model.priority.edf.html"><h2>Library prosa.model.priority.edf</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.priority.edf.html#lab58">EDF Priority Policy</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.edf.html"><h2>Library prosa.model.schedule.edf</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.edf.html#lab59">Fully-Preemptive EDF Schedules</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.limited_preemptive.html"><h2>Library prosa.model.schedule.limited_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.limited_preemptive.html#lab60">Preemption Model Compliance</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.nonpreemptive.html"><h2>Library prosa.model.schedule.nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.nonpreemptive.html#lab61">Nonpreemptive Schedules</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.preemption_time.html"><h2>Library prosa.model.schedule.preemption_time</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.preemption_time.html#lab62">Preemption Times</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.priority_driven.html"><h2>Library prosa.model.schedule.priority_driven</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.priority_driven.html#lab63">Priority-Driven Schedules</a>
+
+</li>
+</ul>
+<a href="prosa.model.schedule.work_conserving.html"><h2>Library prosa.model.schedule.work_conserving</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.schedule.work_conserving.html#lab64">Definition of Work Conservation</a>
+
+</li>
+</ul>
+<a href="prosa.model.aggregate.service_of_jobs.html"><h2>Library prosa.model.aggregate.service_of_jobs</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.aggregate.service_of_jobs.html#lab65">Service Received by Sets of Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.model.aggregate.workload.html"><h2>Library prosa.model.aggregate.workload</h2></a>
+<ul class="doclist">
+<li><a href="prosa.model.aggregate.workload.html#lab66">Cumulative Workload of Sets of Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.bounded_nps.html"><h2>Library prosa.results.edf.rta.bounded_nps</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.bounded_nps.html#lab67">RTA for EDF  with Bounded Non-Preemptive Segments</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.bounded_nps.html#lab68">Priority inversion is bounded</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.bounded_nps.html#lab69">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.bounded_pi.html"><h2>Library prosa.results.edf.rta.bounded_pi</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.bounded_pi.html#lab70">Abstract RTA for EDF-schedulers with Bounded Priority Inversion</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.bounded_pi.html#lab71">Filling Out Hypothesis Of Abstract RTA Theorem</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.bounded_pi.html#lab72">Final Theorem</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.floating_nonpreemptive.html"><h2>Library prosa.results.edf.rta.floating_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.floating_nonpreemptive.html#lab73">RTA for EDF with Floating Non-Preemptive Regions</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.floating_nonpreemptive.html#lab74">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.floating_nonpreemptive.html#lab75">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.floating_nonpreemptive.html#lab76">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.fully_nonpreemptive.html"><h2>Library prosa.results.edf.rta.fully_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.fully_nonpreemptive.html#lab77">RTA for Fully Non-Preemptive EDF</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.fully_nonpreemptive.html#lab78">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.fully_nonpreemptive.html#lab79">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.fully_nonpreemptive.html#lab80">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.fully_preemptive.html"><h2>Library prosa.results.edf.rta.fully_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.fully_preemptive.html#lab81">RTA for Fully Preemptive EDF</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.fully_preemptive.html#lab82">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.fully_preemptive.html#lab83">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.fully_preemptive.html#lab84">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.edf.rta.limited_preemptive.html"><h2>Library prosa.results.edf.rta.limited_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.limited_preemptive.html#lab85">RTA for EDF with Fixed Preemption Points</a>
+<ul class="doclist">
+<li><a href="prosa.results.edf.rta.limited_preemptive.html#lab86">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.limited_preemptive.html#lab87">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.edf.rta.limited_preemptive.html#lab88">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.bounded_nps.html"><h2>Library prosa.results.fixed_priority.rta.bounded_nps</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.bounded_nps.html#lab89">RTA for FP-schedulers with Bounded Non-Preemptive Segments</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.bounded_nps.html#lab90">Priority inversion is bounded</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.bounded_nps.html#lab91">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.bounded_pi.html"><h2>Library prosa.results.fixed_priority.rta.bounded_pi</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.bounded_pi.html#lab92">Abstract RTA for FP-schedulers with Bounded Priority Inversion</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.bounded_pi.html#lab93">Filling Out Hypotheses Of Abstract RTA Theorem</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.bounded_pi.html#lab94">Final Theorem</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html"><h2>Library prosa.results.fixed_priority.rta.floating_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#lab95">RTA for Model with Floating Non-Preemptive Regions</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#lab96">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#lab97">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#lab98">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.fully_nonpreemptive.html"><h2>Library prosa.results.fixed_priority.rta.fully_nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.fully_nonpreemptive.html#lab99">RTA for Fully Non-Preemptive FP Model</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.fully_nonpreemptive.html#lab100">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.fully_nonpreemptive.html#lab101">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.fully_nonpreemptive.html#lab102">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.fully_preemptive.html"><h2>Library prosa.results.fixed_priority.rta.fully_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.fully_preemptive.html#lab103">RTA for Fully Preemptive FP Model</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.fully_preemptive.html#lab104">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.fully_preemptive.html#lab105">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.fully_preemptive.html#lab106">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.results.fixed_priority.rta.limited_preemptive.html"><h2>Library prosa.results.fixed_priority.rta.limited_preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.limited_preemptive.html#lab107">RTA for FP-schedulers with Fixed Preemption Points</a>
+<ul class="doclist">
+<li><a href="prosa.results.fixed_priority.rta.limited_preemptive.html#lab108">Setup and Assumptions</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.limited_preemptive.html#lab109">Total Workload and Length of Busy Interval</a>
+
+</li>
+<li><a href="prosa.results.fixed_priority.rta.limited_preemptive.html#lab110">Response-Time Bound</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.abstract_rta.html"><h2>Library prosa.analysis.abstract.abstract_rta</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.abstract_rta.html#lab111">Abstract Response-Time Analysis</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.abstract_seq_rta.html"><h2>Library prosa.analysis.abstract.abstract_seq_rta</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.abstract_seq_rta.html#lab112">Abstract Response-Time Analysis with sequential tasks</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.definitions.html"><h2>Library prosa.analysis.abstract.definitions</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.definitions.html#lab113">Definitions for Abstract Response-Time Analysis</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.ideal_jlfp_rta.html"><h2>Library prosa.analysis.abstract.ideal_jlfp_rta</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.ideal_jlfp_rta.html#lab114">JLFP instantiation of Interference and Interfering Workload for ideal uni-processor.</a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.ideal_jlfp_rta.html#lab115">Interference and Interfering Workload</a>
+
+</li>
+<li><a href="prosa.analysis.abstract.ideal_jlfp_rta.html#lab116">Equivalences</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.run_to_completion.html"><h2>Library prosa.analysis.abstract.run_to_completion</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.run_to_completion.html#lab117">Run-to-Completion Threshold of a job</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.abstract.search_space.html"><h2>Library prosa.analysis.abstract.search_space</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.abstract.search_space.html#lab118">Reduction of the search space for Abstract RTA</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.busy_interval.html"><h2>Library prosa.analysis.definitions.busy_interval</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.busy_interval.html#lab119">Busy Interval for JLFP-models</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.carry_in.html"><h2>Library prosa.analysis.definitions.carry_in</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.carry_in.html#lab120">No Carry-In</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.job_properties.html"><h2>Library prosa.analysis.definitions.job_properties</h2></a>
+<a href="prosa.analysis.definitions.priority_inversion.html"><h2>Library prosa.analysis.definitions.priority_inversion</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.priority_inversion.html#lab121">Cumulative Priority Inversion for JLFP-models</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.progress.html"><h2>Library prosa.analysis.definitions.progress</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.progress.html#lab122">Job Progress (or Lack Thereof)</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.request_bound_function.html"><h2>Library prosa.analysis.definitions.request_bound_function</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.request_bound_function.html#lab123">Request Bound Function (RBF)</a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.request_bound_function.html#lab124">RBF of a Single Task</a>
+
+</li>
+<li><a href="prosa.analysis.definitions.request_bound_function.html#lab125">Total RBF of Multiple Tasks</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.schedulability.html"><h2>Library prosa.analysis.definitions.schedulability</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.schedulability.html#lab126">Schedulability</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.definitions.task_schedule.html"><h2>Library prosa.analysis.definitions.task_schedule</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.definitions.task_schedule.html#lab127">Schedule of task</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.behavior.all.html"><h2>Library prosa.analysis.facts.behavior.all</h2></a>
+<a href="prosa.analysis.facts.behavior.arrivals.html"><h2>Library prosa.analysis.facts.behavior.arrivals</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.behavior.arrivals.html#lab128">Arrival Sequence</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.behavior.completion.html"><h2>Library prosa.analysis.facts.behavior.completion</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.behavior.completion.html#lab129">Completion</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.behavior.deadlines.html"><h2>Library prosa.analysis.facts.behavior.deadlines</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.behavior.deadlines.html#lab130">Deadlines</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.behavior.service.html"><h2>Library prosa.analysis.facts.behavior.service</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.behavior.service.html#lab131">Service</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.busy_interval.busy_interval.html"><h2>Library prosa.analysis.facts.busy_interval.busy_interval</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.busy_interval.busy_interval.html#lab132">Existence of Busy Interval for JLFP-models</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.busy_interval.carry_in.html"><h2>Library prosa.analysis.facts.busy_interval.carry_in</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.busy_interval.carry_in.html#lab133">Existence of No Carry-In Instant</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.busy_interval.priority_inversion.html"><h2>Library prosa.analysis.facts.busy_interval.priority_inversion</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.busy_interval.priority_inversion.html#lab134">Priority inversion is bounded</a>
+
+</li>
+<li><a href="prosa.analysis.facts.busy_interval.priority_inversion.html#lab135">Processor Executes HEP jobs after Preemption Point</a>
+
+</li>
+<li><a href="prosa.analysis.facts.busy_interval.priority_inversion.html#lab136">Preemption Time Exists</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.edf.html"><h2>Library prosa.analysis.facts.edf</h2></a>
+<a href="prosa.analysis.facts.model.ideal_schedule.html"><h2>Library prosa.analysis.facts.model.ideal_schedule</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.model.ideal_schedule.html#lab137">Incremental Service in Ideal Schedule</a>
+
+</li>
+<li><a href="prosa.analysis.facts.model.ideal_schedule.html#lab138">Automation</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.model.rbf.html"><h2>Library prosa.analysis.facts.model.rbf</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.model.rbf.html#lab139">Facts about Request Bound Functions (RBFs)</a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.model.rbf.html#lab140">RBF is a Bound on Workload</a>
+
+</li>
+<li><a href="prosa.analysis.facts.model.rbf.html#lab141">RBF Properties</a>
+
+</li>
+</ul>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.model.sequential.html"><h2>Library prosa.analysis.facts.model.sequential</h2></a>
+<a href="prosa.analysis.facts.model.service_of_jobs.html"><h2>Library prosa.analysis.facts.model.service_of_jobs</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.model.service_of_jobs.html#lab142">Lemmas about Service Received by Sets of Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.model.task_arrivals.html"><h2>Library prosa.analysis.facts.model.task_arrivals</h2></a>
+<a href="prosa.analysis.facts.model.workload.html"><h2>Library prosa.analysis.facts.model.workload</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.model.workload.html#lab143">Lemmas about Workload of Sets of Jobs</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.job.limited.html"><h2>Library prosa.analysis.facts.preemption.job.limited</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.job.limited.html#lab144">Platform for Models with Limited Preemptions</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.job.nonpreemptive.html"><h2>Library prosa.analysis.facts.preemption.job.nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.job.nonpreemptive.html#lab145">Platform for Fully Non-Preemptive model</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.job.preemptive.html"><h2>Library prosa.analysis.facts.preemption.job.preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.job.preemptive.html#lab146">Preemptions in Fully Preemptive Model</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.rtc_threshold.floating.html"><h2>Library prosa.analysis.facts.preemption.rtc_threshold.floating</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.rtc_threshold.floating.html#lab147">Task's Run to Completion Threshold</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html"><h2>Library prosa.analysis.facts.preemption.rtc_threshold.job_preemptable</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.rtc_threshold.job_preemptable.html#lab148">Run-to-Completion Threshold</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.rtc_threshold.limited.html"><h2>Library prosa.analysis.facts.preemption.rtc_threshold.limited</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.rtc_threshold.limited.html#lab149">Task's Run to Completion Threshold</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html"><h2>Library prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.rtc_threshold.nonpreemptive.html#lab150">Task's Run to Completion Threshold</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.rtc_threshold.preemptive.html"><h2>Library prosa.analysis.facts.preemption.rtc_threshold.preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.rtc_threshold.preemptive.html#lab151">Task's Run to Completion Threshold</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.task.floating.html"><h2>Library prosa.analysis.facts.preemption.task.floating</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.task.floating.html#lab152">Platform for Floating Non-Preemptive Regions Model</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.task.limited.html"><h2>Library prosa.analysis.facts.preemption.task.limited</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.task.limited.html#lab153">Platform for Models with Limited Preemptions</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.task.nonpreemptive.html"><h2>Library prosa.analysis.facts.preemption.task.nonpreemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.task.nonpreemptive.html#lab154">Platform for Fully Non-Preemptive Model</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.preemption.task.preemptive.html"><h2>Library prosa.analysis.facts.preemption.task.preemptive</h2></a>
+<ul class="doclist">
+<li><a href="prosa.analysis.facts.preemption.task.preemptive.html#lab155">Platform for Fully Preemptive Model</a>
+
+</li>
+</ul>
+<a href="prosa.analysis.facts.readiness.basic.html"><h2>Library prosa.analysis.facts.readiness.basic</h2></a>
+<a href="prosa.util.all.html"><h2>Library prosa.util.all</h2></a>
+<a href="prosa.util.bigcat.html"><h2>Library prosa.util.bigcat</h2></a>
+<a href="prosa.util.counting.html"><h2>Library prosa.util.counting</h2></a>
+<a href="prosa.util.epsilon.html"><h2>Library prosa.util.epsilon</h2></a>
+<a href="prosa.util.list.html"><h2>Library prosa.util.list</h2></a>
+<a href="prosa.util.minmax.html"><h2>Library prosa.util.minmax</h2></a>
+<a href="prosa.util.nat.html"><h2>Library prosa.util.nat</h2></a>
+<a href="prosa.util.nondecreasing.html"><h2>Library prosa.util.nondecreasing</h2></a>
+<ul class="doclist">
+<li><a href="prosa.util.nondecreasing.html#lab156">Non-Decreasing Sequence and Distances</a>
+
+</li>
+<li><a href="prosa.util.nondecreasing.html#lab157">Properties of Increasing Sequence</a>
+
+</li>
+<li><a href="prosa.util.nondecreasing.html#lab158">Properties of Non-Decreasing Sequence</a>
+
+</li>
+<li><a href="prosa.util.nondecreasing.html#lab159">Properties of <span class="inlinecode"><span class="id" title="var">Undup</span></span> of Non-Decreasing Sequence</a>
+
+</li>
+<li><a href="prosa.util.nondecreasing.html#lab160">Properties of Distances</a>
+
+</li>
+<li><a href="prosa.util.nondecreasing.html#lab161">Properties of Distances of Non-Decreasing Sequence</a>
+
+</li>
+</ul>
+<a href="prosa.util.notation.html"><h2>Library prosa.util.notation</h2></a>
+<a href="prosa.util.rel.html"><h2>Library prosa.util.rel</h2></a>
+<a href="prosa.util.rewrite_facilities.html"><h2>Library prosa.util.rewrite_facilities</h2></a>
+<ul class="doclist">
+<li><a href="prosa.util.rewrite_facilities.html#lab162">Rewriting</a>
+
+</li>
+</ul>
+<a href="prosa.util.ssromega.html"><h2>Library prosa.util.ssromega</h2></a>
+<a href="prosa.util.step_function.html"><h2>Library prosa.util.step_function</h2></a>
+<a href="prosa.util.sum.html"><h2>Library prosa.util.sum</h2></a>
+<a href="prosa.util.tactics.html"><h2>Library prosa.util.tactics</h2></a>
+<ul class="doclist">
+<li><ul class="doclist">
+<li><a href="prosa.util.tactics.html#lab163">Exploiting a hypothesis</a>
+
+</li>
+</ul>
+
+</li>
+<li><a href="prosa.util.tactics.html#lab164">Handier movement of inequalities.</a>
+
+</li>
+</ul>
+</div>
+</div>
+<div id="footer">
+  Generated by <a href="http://coq.inria.fr/">coqdoc</a> and improved with <a href="https://github.com/tebbi/coqdocjs">CoqdocJS</a>
+</div>
+</div>
+</body>
+
+</html>
