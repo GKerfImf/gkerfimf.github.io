@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.util.nat</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.util.nat</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.nat.html#"><span class="id" title="library">prosa.util.nat</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.tactics.html#"><span class="id" title="library">prosa.classic.util.tactics</span></a> <a class="idref" href="prosa.util.ssrlia.html#"><span class="id" title="library">prosa.util.ssrlia</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span> <span class="id" title="library">div</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="NatLemmas" class="idref" href="#NatLemmas"><span class="id" title="section">NatLemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="addnb" class="idref" href="#addnb"><span class="id" title="lemma">addnb</span></a> (<a id="b1:1" class="idref" href="#b1:1"><span class="id" title="binder">b1</span></a> <a id="b2:2" class="idref" href="#b2:2"><span class="id" title="binder">b2</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>) : <span class="id" title="notation">(</span><a class="idref" href="prosa.classic.util.nat.html#b1:1"><span class="id" title="variable">b1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.util.nat.html#b2:2"><span class="id" title="variable">b2</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">!=</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.util.nat.html#b1:1"><span class="id" title="variable">b1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">||</span></a> <a class="idref" href="prosa.classic.util.nat.html#b2:2"><span class="id" title="variable">b2</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">destruct</span> <span class="id" title="var">b1</span>,<span class="id" title="var">b2</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> ?<span class="id" title="lemma">addn0</span> ?<span class="id" title="lemma">add0n</span> ?<span class="id" title="lemma">addn1</span> ?<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orTb"><span class="id" title="lemma">orTb</span></a> ?<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orbT"><span class="id" title="lemma">orbT</span></a> ?<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orbF"><span class="id" title="lemma">orbF</span></a> ?<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orFb"><span class="id" title="lemma">orFb</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="subh4" class="idref" href="#subh4"><span class="id" title="lemma">subh4</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="m:3" class="idref" href="#m:3"><span class="id" title="binder">m</span></a> <a id="n:4" class="idref" href="#n:4"><span class="id" title="binder">n</span></a> <a id="p:5" class="idref" href="#p:5"><span class="id" title="binder">p</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.nat.html#m:3"><span class="id" title="variable">m</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.util.nat.html#n:4"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.nat.html#p:5"><span class="id" title="variable">p</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.util.nat.html#n:4"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.util.nat.html#m:3"><span class="id" title="variable">m</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.util.nat.html#n:4"><span class="id" title="variable">n</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.classic.util.nat.html#p:5"><span class="id" title="variable">p</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.util.nat.html#p:5"><span class="id" title="variable">p</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.util.nat.html#n:4"><span class="id" title="variable">n</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.classic.util.nat.html#m:3"><span class="id" title="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">p</span> <span class="id" title="notation">==</span> <span class="id" title="lemma">n</span> <span class="id" title="notation">-</span> <span class="id" title="var">m</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">EQ</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">EQ</span> <span class="id" title="lemma">subKn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negbT"><span class="id" title="lemma">negbT</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>; <span class="id" title="tactic">unfold</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#not"><span class="id" title="definition">not</span></a>; <span class="id" title="tactic">intro</span> <span class="id" title="var">BUG</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">BUG</span> <span class="id" title="lemma">subKn</span> ?<span class="id" title="lemma">eq_refl</span> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="addmovr" class="idref" href="#addmovr"><span class="id" title="lemma">addmovr</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="m:6" class="idref" href="#m:6"><span class="id" title="binder">m</span></a> <a id="n:7" class="idref" href="#n:7"><span class="id" title="binder">n</span></a> <a id="p:8" class="idref" href="#p:8"><span class="id" title="binder">p</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.nat.html#m:6"><span class="id" title="variable">m</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.classic.util.nat.html#n:7"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.util.nat.html#m:6"><span class="id" title="variable">m</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.classic.util.nat.html#n:7"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.util.nat.html#p:8"><span class="id" title="variable">p</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.classic.util.nat.html#m:6"><span class="id" title="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.util.nat.html#p:8"><span class="id" title="variable">p</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.util.nat.html#n:7"><span class="id" title="variable">n</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">split</span>; <span class="id" title="var">ins</span>; <span class="id" title="var">ssrlia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="addmovl" class="idref" href="#addmovl"><span class="id" title="lemma">addmovl</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="m:9" class="idref" href="#m:9"><span class="id" title="binder">m</span></a> <a id="n:10" class="idref" href="#n:10"><span class="id" title="binder">n</span></a> <a id="p:11" class="idref" href="#p:11"><span class="id" title="binder">p</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.nat.html#m:9"><span class="id" title="variable">m</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.classic.util.nat.html#n:10"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.util.nat.html#p:11"><span class="id" title="variable">p</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.util.nat.html#m:9"><span class="id" title="variable">m</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.classic.util.nat.html#n:10"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.classic.util.nat.html#p:11"><span class="id" title="variable">p</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.util.nat.html#n:10"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.util.nat.html#m:9"><span class="id" title="variable">m</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">split</span>; <span class="id" title="var">ins</span>; <span class="id" title="var">ssrlia</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="ltSnm" class="idref" href="#ltSnm"><span class="id" title="lemma">ltSnm</span></a> : <span class="id" title="keyword">∀</span> <a id="n:12" class="idref" href="#n:12"><span class="id" title="binder">n</span></a> <a id="m:13" class="idref" href="#m:13"><span class="id" title="binder">m</span></a>, <a class="idref" href="prosa.classic.util.nat.html#n:12"><span class="id" title="variable">n</span></a><span class="id" title="notation">.+1</span> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.util.nat.html#m:13"><span class="id" title="variable">m</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.util.nat.html#n:12"><span class="id" title="variable">n</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.util.nat.html#m:13"><span class="id" title="variable">m</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="var">ins</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">ltn_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <span class="id" title="var">n</span><span class="id" title="notation">.+1</span>); [<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">ltnSn</span> |<span class="id" title="tactic">by</span> <span class="id" title="var">ins</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="min_lt_same" class="idref" href="#min_lt_same"><span class="id" title="lemma">min_lt_same</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="x:14" class="idref" href="#x:14"><span class="id" title="binder">x</span></a> <a id="y:15" class="idref" href="#y:15"><span class="id" title="binder">y</span></a> <a id="z:16" class="idref" href="#z:16"><span class="id" title="binder">z</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="definition">minn</span> <a class="idref" href="prosa.classic.util.nat.html#x:14"><span class="id" title="variable">x</span></a> <a class="idref" href="prosa.classic.util.nat.html#z:16"><span class="id" title="variable">z</span></a> <span class="id" title="notation">&lt;</span> <span class="id" title="definition">minn</span> <a class="idref" href="prosa.classic.util.nat.html#y:15"><span class="id" title="variable">y</span></a> <a class="idref" href="prosa.classic.util.nat.html#z:16"><span class="id" title="variable">z</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.util.nat.html#x:14"><span class="id" title="variable">x</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.util.nat.html#y:15"><span class="id" title="variable">y</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="definition">minn</span>; <span class="id" title="var">ins</span>; <span class="id" title="var">desf</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negbT"><span class="id" title="lemma">negbT</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Heq0</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span> <span class="id" title="tactic">in</span> <span class="id" title="var">Heq0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <span class="id" title="var">z</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negbT"><span class="id" title="lemma">negbT</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">Heq</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span> <span class="id" title="tactic">in</span> <span class="id" title="var">Heq</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> (<span class="id" title="lemma">ltn_trans</span> <span class="id" title="var">H</span>) <span class="id" title="tactic">in</span> <span class="id" title="var">Heq0</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltnn</span> <span class="id" title="tactic">in</span> <span class="id" title="var">Heq0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltnn</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.util.nat.html#NatLemmas"><span class="id" title="section">NatLemmas</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

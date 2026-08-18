@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.util.ssrlia</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.util.ssrlia</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrfun</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.micromega.Lia.html#"><span class="id" title="library">Lia</span></a>.<br/>
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This tactic matches over the hypotheses, searching for expressions that can 
+      be converted from <span class="inlinecode"><span class="id" title="library">ssreflect</span></span> arithmetic to Coq arithmetic. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">arith_hypo_ssrnat2coqnat</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#andb"><span class="id" title="definition">andb</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="keyword">let</span> <span class="id" title="var">H0</span> := <span class="id" title="tactic">fresh</span> <span class="id" title="tactic">in</span> <span class="id" title="tactic">case</span>/<span class="id" title="var">andP</span>: <span class="id" title="var">H</span> ⇒ <span class="id" title="var">H</span> <span class="id" title="var">H0</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#orb"><span class="id" title="definition">orb</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">case</span>/<span class="id" title="var">orP</span>: <span class="id" title="var">H</span> ⇒ <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [?<span class="id" title="var">L</span> <span class="id" title="notation">≤</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">move</span>/<span class="id" title="var">leP</span>: <span class="id" title="var">H</span> ⇒ <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [?<span class="id" title="var">L</span> <span class="id" title="notation">&lt;</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">move</span>/<span class="id" title="var">ltP</span> : <span class="id" title="var">H</span> ⇒ <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [?<span class="id" title="var">L</span> <span class="id" title="notation">==</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">move</span>/<span class="id" title="var">eqP</span> : <span class="id" title="var">H</span> ⇒ <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [<span class="id" title="definition">addn</span> ?<span class="id" title="var">L</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">plusE</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [<span class="id" title="definition">muln</span> ?<span class="id" title="var">L</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">multE</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;| <span class="id" title="var">H</span> : <span class="id" title="keyword">context</span> [<span class="id" title="definition">subn</span> ?<span class="id" title="var">L</span> ?<span class="id" title="var">R</span>] |- <span class="id" title="var">_</span> ⇒ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">minusE</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H</span><br/>
+&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This tactic matches the goal, searching for expressions that can be 
+      converted from <span class="inlinecode"><span class="id" title="library">ssreflect</span></span> arithmetic to Coq arithmetic. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">arith_goal_ssrnat2coqnat</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> ?<span class="id" title="definition">NatTrec.trecE</span> -?<span class="id" title="lemma">plusE</span> -?<span class="id" title="lemma">minusE</span> -?<span class="id" title="lemma">multE</span> -?<span class="id" title="lemma">leqNgt</span> -?<span class="id" title="lemma">ltnNge</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="keyword">match</span> <span class="id" title="keyword">goal</span> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#is_true"><span class="id" title="definition">is_true</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#andb"><span class="id" title="definition">andb</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ⇒ <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#is_true"><span class="id" title="definition">is_true</span></a> (<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#orb"><span class="id" title="definition">orb</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span>) ⇒ <span class="id" title="tactic">try</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#is_true"><span class="id" title="definition">is_true</span></a> (<span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <span class="id" title="var">_</span>) ⇒ <span class="id" title="tactic">try</span> <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">leP</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| |- <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#is_true"><span class="id" title="definition">is_true</span></a> (<span class="id" title="var">_</span> <span class="id" title="notation">&lt;</span> <span class="id" title="var">_</span>) ⇒ <span class="id" title="tactic">try</span> <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">ltP</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Solves linear integer arithmetic goals containing <span class="inlinecode"><span class="id" title="library">ssreflect</span></span> expressions. 
+    This tactic first rewrites the context to replace operations from <span class="inlinecode"><span class="id" title="library">ssreflect</span></span>
+    to the corresponding operations in the Coq library, then calls <span class="inlinecode"><span class="id" title="var">lia</span></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Ltac</span> <span class="id" title="var">ssrlia</span> :=<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">repeat</span> <span class="id" title="var">arith_hypo_ssrnat2coqnat</span>; <span class="id" title="var">arith_goal_ssrnat2coqnat</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>;<br/>
+&nbsp;&nbsp;<span class="id" title="var">lia</span>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

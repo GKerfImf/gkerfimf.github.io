@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.analysis.global.basic.interference_bound_fp</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.analysis.global.basic.interference_bound_fp</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.priority.html#"><span class="id" title="library">prosa.classic.model.priority</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.global.workload.html#"><span class="id" title="library">prosa.classic.model.schedule.global.workload</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.global.basic.schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.global.basic.interference.html#"><span class="id" title="library">prosa.classic.model.schedule.global.basic.interference</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.analysis.global.basic.workload_bound.html#"><span class="id" title="library">prosa.classic.analysis.global.basic.workload_bound</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.analysis.global.basic.interference_bound.html#"><span class="id" title="library">prosa.classic.analysis.global.basic.interference_bound</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="InterferenceBoundFP" class="idref" href="#InterferenceBoundFP"><span class="id" title="module">InterferenceBoundFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">Schedule</span> <span class="id" title="var">WorkloadBound</span> <span class="id" title="var">Priority</span> <span class="id" title="var">Interference</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">InterferenceBoundGeneric</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="InterferenceBoundFP.Definitions" class="idref" href="#InterferenceBoundFP.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="sporadic_task:1" class="idref" href="#sporadic_task:1"><span class="id" title="binder">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.task_cost" class="idref" href="#InterferenceBoundFP.Definitions.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.task_period" class="idref" href="#InterferenceBoundFP.Definitions.task_period"><span class="id" title="variable">task_period</span></a>: <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.task_deadline" class="idref" href="#InterferenceBoundFP.Definitions.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.tsk" class="idref" href="#InterferenceBoundFP.Definitions.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="InterferenceBoundFP.Definitions.task_with_response_time" class="idref" href="#InterferenceBoundFP.Definitions.task_with_response_time"><span class="id" title="variable">task_with_response_time</span></a> := (<a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#11c698c8685bb8ab1cf725545c085ac4"><span class="id" title="notation">×</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>)%<span class="id" title="keyword">type</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.R_prev" class="idref" href="#InterferenceBoundFP.Definitions.R_prev"><span class="id" title="variable">R_prev</span></a>: <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.task_with_response_time"><span class="id" title="variable">task_with_response_time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.delta" class="idref" href="#InterferenceBoundFP.Definitions.delta"><span class="id" title="variable">delta</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="InterferenceBoundFP.Definitions.higher_eq_priority" class="idref" href="#InterferenceBoundFP.Definitions.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="InterferenceBoundFP.Definitions.total_interference_bound" class="idref" href="#InterferenceBoundFP.Definitions.total_interference_bound"><span class="id" title="variable">total_interference_bound</span></a> := <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound.html#InterferenceBoundGeneric.interference_bound_generic"><span class="id" title="definition">interference_bound_generic</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.delta"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="InterferenceBoundFP.total_interference_bound_fp" class="idref" href="#InterferenceBoundFP.total_interference_bound_fp"><span class="id" title="definition">total_interference_bound_fp</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">\</span></a><a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">sum_</span></a><a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">((</span></a><a id="tsk_other:9" class="idref" href="#tsk_other:9"><span class="id" title="binder">tsk_other</span></a><a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">,</span></a> <a id="R_other:10" class="idref" href="#R_other:10"><span class="id" title="binder">R_other</span></a><a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">)</span></a> <a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">&lt;-</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.R_prev"><span class="id" title="variable">R_prev</span></a><a class="idref" href="prosa.classic.util.notation.html#6b6d29c0a17ee8e54eb04bf3ca4cba47"><span class="id" title="notation">)</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions.total_interference_bound"><span class="id" title="variable">total_interference_bound</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#tsk_other:9"><span class="id" title="variable">tsk_other</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">,</span></a> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#R_other:10"><span class="id" title="variable">R_other</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#e6756e10c36f149b18b4a8741ed83079"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.analysis.global.basic.interference_bound_fp.html#InterferenceBoundFP"><span class="id" title="module">InterferenceBoundFP</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

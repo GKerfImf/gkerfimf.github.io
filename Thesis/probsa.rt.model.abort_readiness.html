@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>probsa.rt.model.abort_readiness</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library probsa.rt.model.abort_readiness</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa/prosa.behavior.all.html#"><span class="id" title="library">prosa.behavior.all</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="BasicReadinessWithJobAbortion" class="idref" href="#BasicReadinessWithJobAbortion"><span class="id" title="section">BasicReadinessWithJobAbortion</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa/prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:2" class="idref" href="#PState:2"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa/prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#BasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose jobs have an arrival time and a cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">JobArrival</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Job</span></a>} `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobCost</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a>} `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobDeadline</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Global</span> <span class="id" title="var">Program</span> <span class="id" title="keyword">Instance</span> <a id="abort_ready_instance" class="idref" href="#abort_ready_instance"><span class="id" title="instance">abort_ready_instance</span></a> : <a class="idref" href="prosa/prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#BasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#BasicReadinessWithJobAbortion.PState"><span class="id" title="variable">PState</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa/prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a id="sched:6" class="idref" href="#sched:6"><span class="id" title="binder">sched</span></a> <a id="j:7" class="idref" href="#j:7"><span class="id" title="binder">j</span></a> <a id="t:8" class="idref" href="#t:8"><span class="id" title="binder">t</span></a> := <a class="idref" href="prosa/prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#sched:6"><span class="id" title="variable">sched</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#j:7"><span class="id" title="variable">j</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#t:8"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> (<a class="idref" href="probsa.rt.model.abort_readiness.html#t:8"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa/prosa.behavior.job.html#job_deadline"><span class="id" title="definition">job_deadline</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#j:7"><span class="id" title="variable">j</span></a>)%<span class="id" title="var">nat</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Next</span> <span class="id" title="keyword">Obligation</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">H2</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">H2</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="probsa.rt.model.abort_readiness.html#BasicReadinessWithJobAbortion"><span class="id" title="section">BasicReadinessWithJobAbortion</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">probsa.rt.behavior</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="probsa.rt.behavior.job.html#"><span class="id" title="library">job</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="ProbBasicReadinessWithJobAbortion" class="idref" href="#ProbBasicReadinessWithJobAbortion"><span class="id" title="section">ProbBasicReadinessWithJobAbortion</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="31d7cf2ba18d558123591ac2814f8c07" class="idref" href="#31d7cf2ba18d558123591ac2814f8c07"><span class="id" title="binder">Ω</span></a>} {<a id="5587be393abab7d9461a4b3f4fb7e097" class="idref" href="#5587be393abab7d9461a4b3f4fb7e097"><span class="id" title="binder">μ</span></a> : <a class="idref" href="probsa.util.notation.html#measure"><span class="id" title="definition">measure</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#31d7cf2ba18d558123591ac2814f8c07"><span class="id" title="variable">Ω</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:11" class="idref" href="#Job:11"><span class="id" title="binder">Job</span></a> : <span class="id" title="abbreviation">finType</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:12" class="idref" href="#PState:12"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa/prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose jobs have an arrival time and a cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="job_arrival:13" class="idref" href="#job_arrival:13"><span class="id" title="binder">job_arrival</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobArrivalRV"><span class="id" title="class">JobArrivalRV</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#a0b2810f42b59c80a3b43fee73f41290"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#6c2be79d6a745f589357ac2c08f45b87"><span class="id" title="variable">μ</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_cost:14" class="idref" href="#job_cost:14"><span class="id" title="binder">job_cost</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobCostRV"><span class="id" title="class">JobCostRV</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#a0b2810f42b59c80a3b43fee73f41290"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#6c2be79d6a745f589357ac2c08f45b87"><span class="id" title="variable">μ</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_deadline:15" class="idref" href="#job_deadline:15"><span class="id" title="binder">job_deadline</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobDeadlineRV"><span class="id" title="class">JobDeadlineRV</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#a0b2810f42b59c80a3b43fee73f41290"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#6c2be79d6a745f589357ac2c08f45b87"><span class="id" title="variable">μ</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pr_abort_ready_instance" class="idref" href="#pr_abort_ready_instance"><span class="id" title="definition">pr_abort_ready_instance</span></a> : (<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Unicode.Utf8_core.html#e15f3fa8414cf45e36c73a91b3f5f2c2"><span class="id" title="notation">∀</span></a> <a id="fc829d156dfba5c0cb6027d260527304" class="idref" href="#fc829d156dfba5c0cb6027d260527304"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.abort_readiness.html#a0b2810f42b59c80a3b43fee73f41290"><span class="id" title="variable">Ω</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Unicode.Utf8_core.html#e15f3fa8414cf45e36c73a91b3f5f2c2"><span class="id" title="notation">,</span></a> <a class="idref" href="prosa/prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion.PState"><span class="id" title="variable">PState</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> (<a id="ea2eb4fb80ca4a5d5fdf83a928d31eda" class="idref" href="#ea2eb4fb80ca4a5d5fdf83a928d31eda"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.abort_readiness.html#a0b2810f42b59c80a3b43fee73f41290"><span class="id" title="variable">Ω</span></a>) ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="probsa.rt.model.abort_readiness.html#abort_ready_instance"><span class="id" title="instance">abort_ready_instance</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> <span class="id" title="var">_</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="probsa.rt.behavior.job.html#sample0_arrivals"><span class="id" title="definition">sample0_arrivals</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ea2eb4fb80ca4a5d5fdf83a928d31eda"><span class="id" title="variable">ω</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="probsa.rt.behavior.job.html#sample0_costs"><span class="id" title="definition">sample0_costs</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ea2eb4fb80ca4a5d5fdf83a928d31eda"><span class="id" title="variable">ω</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="probsa.rt.behavior.job.html#sample0_deadlines"><span class="id" title="definition">sample0_deadlines</span></a> <a class="idref" href="probsa.rt.model.abort_readiness.html#ea2eb4fb80ca4a5d5fdf83a928d31eda"><span class="id" title="variable">ω</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="probsa.rt.model.abort_readiness.html#ProbBasicReadinessWithJobAbortion"><span class="id" title="section">ProbBasicReadinessWithJobAbortion</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

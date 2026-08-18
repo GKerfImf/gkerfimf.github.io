@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.arrival.basic.job</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.arrival.basic.job</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Job" class="idref" href="#Job"><span class="id" title="module">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span> <span class="id" title="var">ArrivalSequence</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Job.ValidJob" class="idref" href="#Job.ValidJob"><span class="id" title="section">ValidJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidJob.job_cost" class="idref" href="#Job.ValidJob.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidJob.j" class="idref" href="#Job.ValidJob.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidJob.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.job_cost_positive" class="idref" href="#Job.job_cost_positive"><span class="id" title="definition">job_cost_positive</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidJob.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidJob"><span class="id" title="section">ValidJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Job.ValidRealtimeJob" class="idref" href="#Job.ValidRealtimeJob"><span class="id" title="section">ValidRealtimeJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:4" class="idref" href="#Job:4"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidRealtimeJob.job_cost" class="idref" href="#Job.ValidRealtimeJob.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidRealtimeJob.job_deadline" class="idref" href="#Job.ValidRealtimeJob.job_deadline"><span class="id" title="variable">job_deadline</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidRealtimeJob.j" class="idref" href="#Job.ValidRealtimeJob.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.job_deadline_positive" class="idref" href="#Job.job_deadline_positive"><span class="id" title="definition">job_deadline_positive</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.job_cost_le_deadline" class="idref" href="#Job.job_cost_le_deadline"><span class="id" title="definition">job_cost_le_deadline</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.valid_realtime_job" class="idref" href="#Job.valid_realtime_job"><span class="id" title="definition">valid_realtime_job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_cost_positive"><span class="id" title="definition">job_cost_positive</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_cost_le_deadline"><span class="id" title="definition">job_cost_le_deadline</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_deadline_positive"><span class="id" title="definition">job_deadline_positive</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidRealtimeJob"><span class="id" title="section">ValidRealtimeJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Job.ValidSporadicTaskJob" class="idref" href="#Job.ValidSporadicTaskJob"><span class="id" title="section">ValidSporadicTaskJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="sporadic_task:8" class="idref" href="#sporadic_task:8"><span class="id" title="binder">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.task_cost" class="idref" href="#Job.ValidSporadicTaskJob.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.task_deadline" class="idref" href="#Job.ValidSporadicTaskJob.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:11" class="idref" href="#Job:11"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.job_cost" class="idref" href="#Job.ValidSporadicTaskJob.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.job_deadline" class="idref" href="#Job.ValidSporadicTaskJob.job_deadline"><span class="id" title="variable">job_deadline</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.job_task" class="idref" href="#Job.ValidSporadicTaskJob.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidSporadicTaskJob.j" class="idref" href="#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.job_cost_le_task_cost" class="idref" href="#Job.job_cost_le_task_cost"><span class="id" title="definition">job_cost_le_task_cost</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.task_cost"><span class="id" title="variable">task_cost</span></a> (<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.job_deadline_eq_task_deadline" class="idref" href="#Job.job_deadline_eq_task_deadline"><span class="id" title="definition">job_deadline_eq_task_deadline</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.task_deadline"><span class="id" title="variable">task_deadline</span></a> (<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.valid_sporadic_job" class="idref" href="#Job.valid_sporadic_job"><span class="id" title="definition">valid_sporadic_job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.valid_realtime_job"><span class="id" title="definition">valid_realtime_job</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_cost_le_task_cost"><span class="id" title="definition">job_cost_le_task_cost</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_deadline_eq_task_deadline"><span class="id" title="definition">job_deadline_eq_task_deadline</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidSporadicTaskJob"><span class="id" title="section">ValidSporadicTaskJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Job.ValidTaskJob" class="idref" href="#Job.ValidTaskJob"><span class="id" title="section">ValidTaskJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:16" class="idref" href="#Task:16"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidTaskJob.task_cost" class="idref" href="#Job.ValidTaskJob.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:18" class="idref" href="#Job:18"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidTaskJob.job_cost" class="idref" href="#Job.ValidTaskJob.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidTaskJob.job_task" class="idref" href="#Job.ValidTaskJob.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Job.ValidTaskJob.arr_seq" class="idref" href="#Job.ValidTaskJob.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Job.cost_of_jobs_from_arrival_sequence_le_task_cost" class="idref" href="#Job.cost_of_jobs_from_arrival_sequence_le_task_cost"><span class="id" title="definition">cost_of_jobs_from_arrival_sequence_le_task_cost</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:22" class="idref" href="#j:22"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#j:22"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.job_cost_le_task_cost"><span class="id" title="definition">job_cost_le_task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#j:22"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.ValidTaskJob"><span class="id" title="section">ValidTaskJob</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job"><span class="id" title="module">Job</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.aggregate.workload</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.aggregate.workload</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.priority.classes.html#"><span class="id" title="library">prosa.model.priority.classes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab137"></a><h1 class="section">Cumulative Workload of Sets of Jobs</h1>
+
+<div class="paragraph"> </div>
+
+ In this module, we define the notion of the cumulative workload of
+    a set of jobs. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="WorkloadOfJobs" class="idref" href="#WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any type of jobs with execution costs that are
+      associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="WorkloadOfJobs.arr_seq" class="idref" href="#WorkloadOfJobs.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we define the workload for generic sets of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="WorkloadOfJobs.WorkloadOfJobs" class="idref" href="#WorkloadOfJobs.WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Given any computable predicate on jobs, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="WorkloadOfJobs.WorkloadOfJobs.P" class="idref" href="#WorkloadOfJobs.WorkloadOfJobs.P"><span class="id" title="variable">P</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#pred"><span class="id" title="definition">pred</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any (finite) set of jobs, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="WorkloadOfJobs.WorkloadOfJobs.jobs" class="idref" href="#WorkloadOfJobs.WorkloadOfJobs.jobs"><span class="id" title="variable">jobs</span></a> : <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... we define the total workload of the jobs that satisfy
+        predicate <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.P"><span class="id" title="variable">P</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="workload_of_jobs" class="idref" href="#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> := <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j:11" class="idref" href="#j:11"><span class="id" title="binder">j</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.WorkloadOfJobs.jobs"><span class="id" title="variable">jobs</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.WorkloadOfJobs.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#j:9"><span class="id" title="variable">j</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#j:9"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we define the workload of jobs with higher or
+      equal priority under JLFP policies. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="WorkloadOfJobs.PerJobPriority" class="idref" href="#WorkloadOfJobs.PerJobPriority"><span class="id" title="section">PerJobPriority</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any JLFP policy that indicates whether a job has
+        higher or equal priority. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:12" class="idref" href="#H2:12"><span class="id" title="binder">JLFP_policy</span></a> <a id="H2:12" class="idref" href="#H2:12"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let j be the job to be analyzed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="WorkloadOfJobs.PerJobPriority.j" class="idref" href="#WorkloadOfJobs.PerJobPriority.j"><span class="id" title="variable">j</span></a> : <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall the notion of a job of higher or equal priority. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="WorkloadOfJobs.PerJobPriority.of_higher_or_equal_priority" class="idref" href="#WorkloadOfJobs.PerJobPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a> <a id="j_hp:14" class="idref" href="#j_hp:14"><span class="id" title="binder">j_hp</span></a> := <a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#j_hp:14"><span class="id" title="variable">j_hp</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.PerJobPriority.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then, we define the workload of higher or equal priority of all jobs
+       with higher-or-equal priority than j. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="workload_of_higher_or_equal_priority_jobs" class="idref" href="#workload_of_higher_or_equal_priority_jobs"><span class="id" title="definition">workload_of_higher_or_equal_priority_jobs</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.PerJobPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.PerJobPriority"><span class="id" title="section">PerJobPriority</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We also define workload of a task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="WorkloadOfJobs.TaskWorkload" class="idref" href="#WorkloadOfJobs.TaskWorkload"><span class="id" title="section">TaskWorkload</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be the task to be analyzed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="WorkloadOfJobs.TaskWorkload.tsk" class="idref" href="#WorkloadOfJobs.TaskWorkload.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define the task workload as the workload of jobs of task
+        <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_workload" class="idref" href="#task_workload"><span class="id" title="definition">task_workload</span></a> <a id="jobs:16" class="idref" href="#jobs:16"><span class="id" title="binder">jobs</span></a> := <a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.TaskWorkload.tsk"><span class="id" title="variable">tsk</span></a>) <a class="idref" href="prosa.model.aggregate.workload.html#jobs:16"><span class="id" title="variable">jobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we define the task's workload in a given interval <span class="inlinecode">[<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>,</span>
+        <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a>)].</span> <span class="inlinecode"></span>
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_workload_between" class="idref" href="#task_workload_between"><span class="id" title="definition">task_workload_between</span></a> (<a id="t1:17" class="idref" href="#t1:17"><span class="id" title="binder">t1</span></a> <a id="t2:18" class="idref" href="#t2:18"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#task_workload"><span class="id" title="definition">task_workload</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#t1:17"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.aggregate.workload.html#t2:18"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs.TaskWorkload"><span class="id" title="section">TaskWorkload</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.aggregate.workload.html#WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

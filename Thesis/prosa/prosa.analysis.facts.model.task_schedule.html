@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.model.task_schedule</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.model.task_schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#"><span class="id" title="library">prosa.analysis.definitions.task_schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#"><span class="id" title="library">prosa.analysis.facts.model.ideal_schedule</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this file we provide basic properties related to schedule of a task. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="TaskSchedule" class="idref" href="#TaskSchedule"><span class="id" title="section">TaskSchedule</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a></span> be any ideal uni-processor schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskSchedule.sched" class="idref" href="#TaskSchedule.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskSchedule.tsk" class="idref" href="#TaskSchedule.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that if a job of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>,
+      then task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="job_of_task_scheduled_implies_task_scheduled" class="idref" href="#job_of_task_scheduled_implies_task_scheduled"><span class="id" title="lemma">job_of_task_scheduled_implies_task_scheduled</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:9" class="idref" href="#j:9"><span class="id" title="binder">j</span></a> <a id="t:10" class="idref" href="#t:10"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#j:9"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#j:9"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#t:10"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#t:10"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ? <span class="id" title="var">TSK</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a> ⇒ /<span class="id" title="lemma">eqP</span> →.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And vice versa, if no job of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is scheduled at time
+      <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, then task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is not scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="job_of_task_scheduled_implies_task_scheduled'" class="idref" href="#job_of_task_scheduled_implies_task_scheduled'"><span class="id" title="lemma">job_of_task_scheduled_implies_task_scheduled'</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:11" class="idref" href="#j:11"><span class="id" title="binder">j</span></a> <a id="t:12" class="idref" href="#t:12"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#j:11"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#j:11"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#t:12"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#t:12"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="var">TSK</span> <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">apply</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> ⇒ <span class="id" title="var">TSCHED</span>; <span class="id" title="tactic">apply</span>: <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">TSCHED</span>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.task_schedule.html#TaskSchedule"><span class="id" title="section">TaskSchedule</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

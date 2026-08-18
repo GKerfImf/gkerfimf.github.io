@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.arrival.basic.task</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.arrival.basic.task</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">fintype</span> <span class="id" title="library">seq</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="SporadicTask" class="idref" href="#SporadicTask"><span class="id" title="module">SporadicTask</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="SporadicTask.BasicTask" class="idref" href="#SporadicTask.BasicTask"><span class="id" title="section">BasicTask</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTask.BasicTask.task_cost" class="idref" href="#SporadicTask.BasicTask.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTask.BasicTask.task_period" class="idref" href="#SporadicTask.BasicTask.task_period"><span class="id" title="variable">task_period</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTask.BasicTask.task_deadline" class="idref" href="#SporadicTask.BasicTask.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="SporadicTask.BasicTask.ValidParameters" class="idref" href="#SporadicTask.BasicTask.ValidParameters"><span class="id" title="section">ValidParameters</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTask.BasicTask.ValidParameters.tsk" class="idref" href="#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.task_cost_positive" class="idref" href="#SporadicTask.task_cost_positive"><span class="id" title="definition">task_cost_positive</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.task_period_positive" class="idref" href="#SporadicTask.task_period_positive"><span class="id" title="definition">task_period_positive</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.task_deadline_positive" class="idref" href="#SporadicTask.task_deadline_positive"><span class="id" title="definition">task_deadline_positive</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.task_cost_le_deadline" class="idref" href="#SporadicTask.task_cost_le_deadline"><span class="id" title="definition">task_cost_le_deadline</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.task_cost_le_period" class="idref" href="#SporadicTask.task_cost_le_period"><span class="id" title="definition">task_cost_le_period</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTask.is_valid_sporadic_task" class="idref" href="#SporadicTask.is_valid_sporadic_task"><span class="id" title="definition">is_valid_sporadic_task</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.task_cost_positive"><span class="id" title="definition">task_cost_positive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.task_period_positive"><span class="id" title="definition">task_period_positive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.task_deadline_positive"><span class="id" title="definition">task_deadline_positive</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.task_cost_le_deadline"><span class="id" title="definition">task_cost_le_deadline</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.task_cost_le_period"><span class="id" title="definition">task_cost_le_period</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask.ValidParameters"><span class="id" title="section">ValidParameters</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.BasicTask"><span class="id" title="section">BasicTask</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask"><span class="id" title="module">SporadicTask</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="SporadicTaskset" class="idref" href="#SporadicTaskset"><span class="id" title="module">SporadicTaskset</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">SporadicTask</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="SporadicTaskset.TasksetDefs" class="idref" href="#SporadicTaskset.TasksetDefs"><span class="id" title="section">TasksetDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTaskset.taskset_of" class="idref" href="#SporadicTaskset.taskset_of"><span class="id" title="definition">taskset_of</span></a> (<a id="Task:6" class="idref" href="#Task:6"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>) := <a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">{</span></a><a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">set</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#Task:6"><span class="id" title="variable">Task</span></a><a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties"><span class="id" title="section">TasksetProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:7" class="idref" href="#Task:7"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties.task_cost" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties.task_period" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties.task_period"><span class="id" title="variable">task_period</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties.task_deadline" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties.is_valid_task" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties.is_valid_task"><span class="id" title="variable">is_valid_task</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTask.is_valid_sporadic_task"><span class="id" title="definition">is_valid_sporadic_task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_deadline"><span class="id" title="variable">task_deadline</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SporadicTaskset.TasksetDefs.TasksetProperties.ts" class="idref" href="#SporadicTaskset.TasksetDefs.TasksetProperties.ts"><span class="id" title="variable">ts</span></a>: <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTaskset.valid_sporadic_taskset" class="idref" href="#SporadicTaskset.valid_sporadic_taskset"><span class="id" title="definition">valid_sporadic_taskset</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:12" class="idref" href="#tsk:12"><span class="id" title="binder">tsk</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:12"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.is_valid_task"><span class="id" title="variable">is_valid_task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:12"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTaskset.implicit_deadline_model" class="idref" href="#SporadicTaskset.implicit_deadline_model"><span class="id" title="definition">implicit_deadline_model</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:13" class="idref" href="#tsk:13"><span class="id" title="binder">tsk</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:13"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:13"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:13"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTaskset.constrained_deadline_model" class="idref" href="#SporadicTaskset.constrained_deadline_model"><span class="id" title="definition">constrained_deadline_model</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:14" class="idref" href="#tsk:14"><span class="id" title="binder">tsk</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:14"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:14"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#tsk:14"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="SporadicTaskset.arbitrary_deadline_model" class="idref" href="#SporadicTaskset.arbitrary_deadline_model"><span class="id" title="definition">arbitrary_deadline_model</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#True"><span class="id" title="inductive">True</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs.TasksetProperties"><span class="id" title="section">TasksetProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset.TasksetDefs"><span class="id" title="section">TasksetDefs</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#SporadicTaskset"><span class="id" title="module">SporadicTaskset</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

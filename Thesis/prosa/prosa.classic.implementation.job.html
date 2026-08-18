@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.implementation.job</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.implementation.job</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.implementation.task.html#"><span class="id" title="library">prosa.classic.implementation.task</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">seq</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="ConcreteJob" class="idref" href="#ConcreteJob"><span class="id" title="module">ConcreteJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">ConcreteTask</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ConcreteJob.Defs" class="idref" href="#ConcreteJob.Defs"><span class="id" title="section">Defs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Record</span> <a id="ConcreteJob.concrete_job" class="idref" href="#ConcreteJob.concrete_job"><span class="id" title="record">concrete_job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="ConcreteJob.job_id" class="idref" href="#ConcreteJob.job_id"><span class="id" title="projection">job_id</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="ConcreteJob.job_arrival" class="idref" href="#ConcreteJob.job_arrival"><span class="id" title="projection">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="ConcreteJob.job_cost" class="idref" href="#ConcreteJob.job_cost"><span class="id" title="projection">job_cost</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="ConcreteJob.job_deadline" class="idref" href="#ConcreteJob.job_deadline"><span class="id" title="projection">job_deadline</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="ConcreteJob.job_task" class="idref" href="#ConcreteJob.job_task"><span class="id" title="projection">job_task</span></a>: <a class="idref" href="prosa.classic.implementation.task.html#ConcreteTask.concrete_task_eqType"><span class="id" title="definition">concrete_task_eqType</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ConcreteJob.job_eqdef" class="idref" href="#ConcreteJob.job_eqdef"><span class="id" title="definition">job_eqdef</span></a> (<a id="j1:7" class="idref" href="#j1:7"><span class="id" title="binder">j1</span></a> <a id="j2:8" class="idref" href="#j2:8"><span class="id" title="binder">j2</span></a>: <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.concrete_job"><span class="id" title="record">concrete_job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_id"><span class="id" title="projection">job_id</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j1:7"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_id"><span class="id" title="projection">job_id</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j2:8"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_arrival"><span class="id" title="projection">job_arrival</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j1:7"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_arrival"><span class="id" title="projection">job_arrival</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j2:8"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_cost"><span class="id" title="projection">job_cost</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j1:7"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_cost"><span class="id" title="projection">job_cost</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j2:8"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_deadline"><span class="id" title="projection">job_deadline</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j1:7"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_deadline"><span class="id" title="projection">job_deadline</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j2:8"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_task"><span class="id" title="projection">job_task</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j1:7"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_task"><span class="id" title="projection">job_task</span></a> <a class="idref" href="prosa.classic.implementation.job.html#j2:8"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="ConcreteJob.eqn_job" class="idref" href="#ConcreteJob.eqn_job"><span class="id" title="lemma">eqn_job</span></a> : <span class="id" title="definition">Equality.axiom</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_eqdef"><span class="id" title="definition">job_eqdef</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="definition">Equality.axiom</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_eqdef"><span class="id" title="definition">job_eqdef</span></a> <span class="id" title="var">x</span> <span class="id" title="var">y</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ReflectT"><span class="id" title="abbreviation">ReflectT</span></a>; <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_eqdef"><span class="id" title="definition">job_eqdef</span></a> <span class="id" title="tactic">in</span> ×.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<span class="id" title="lemma">eqP</span> <span class="id" title="var">ID</span> /<span class="id" title="lemma">eqP</span> <span class="id" title="var">ARR</span>] /<span class="id" title="lemma">eqP</span> <span class="id" title="var">COST</span>] /<span class="id" title="lemma">eqP</span> <span class="id" title="var">DL</span>] /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TASK</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>, <span class="id" title="var">y</span>; <span class="id" title="tactic">simpl</span> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">subst</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ReflectF"><span class="id" title="abbreviation">ReflectF</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.job_eqdef"><span class="id" title="definition">job_eqdef</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#not"><span class="id" title="definition">not</span></a> <span class="id" title="tactic">in</span> *; <span class="id" title="tactic">intro</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negbT"><span class="id" title="lemma">negbT</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negb_and"><span class="id" title="lemma">negb_and</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">x</span>, <span class="id" title="var">y</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negb_and"><span class="id" title="lemma">negb_and</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">EQ</span> | /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TASK</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">EQ</span> | /<span class="id" title="lemma">eqP</span> <span class="id" title="var">DL</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negb_and"><span class="id" title="lemma">negb_and</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">EQ</span> | /<span class="id" title="lemma">eqP</span> <span class="id" title="var">COST</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negb_and"><span class="id" title="lemma">negb_and</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [/<span class="id" title="lemma">eqP</span> <span class="id" title="var">ID</span> | /<span class="id" title="lemma">eqP</span> <span class="id" title="var">ARR</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">ID</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">ARR</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">COST</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">DL</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">TASK</span>; <span class="id" title="tactic">inversion</span> <span class="id" title="var">BUG</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Canonical</span> <a id="ConcreteJob.concrete_job_eqMixin" class="idref" href="#ConcreteJob.concrete_job_eqMixin"><span class="id" title="definition">concrete_job_eqMixin</span></a> := <span class="id" title="abbreviation">EqMixin</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.eqn_job"><span class="id" title="lemma">eqn_job</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Canonical</span> <a id="ConcreteJob.concrete_job_eqType" class="idref" href="#ConcreteJob.concrete_job_eqType"><span class="id" title="definition">concrete_job_eqType</span></a> := <span class="id" title="keyword">Eval</span> <span class="id" title="tactic">hnf</span> <span class="id" title="tactic">in</span> <span class="id" title="abbreviation">EqType</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.concrete_job"><span class="id" title="record">concrete_job</span></a> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.concrete_job_eqMixin"><span class="id" title="definition">concrete_job_eqMixin</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob.Defs"><span class="id" title="section">Defs</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.implementation.job.html#ConcreteJob"><span class="id" title="module">ConcreteJob</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

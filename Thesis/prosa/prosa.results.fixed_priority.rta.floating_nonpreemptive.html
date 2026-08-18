@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.results.fixed_priority.rta.floating_nonpreemptive</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.results.fixed_priority.rta.floating_nonpreemptive</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">path</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.results.fixed_priority.rta.bounded_nps.html#"><span class="id" title="library">prosa.results.fixed_priority.rta.bounded_nps</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.preemption.rtc_threshold.floating.html#"><span class="id" title="library">prosa.analysis.facts.preemption.rtc_threshold.floating</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.readiness.sequential.html#"><span class="id" title="library">prosa.analysis.facts.readiness.sequential</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab253"></a><h1 class="section">RTA for Model with Floating Non-Preemptive Regions</h1>
+ In this module we prove the RTA theorem for floating non-preemptive regions FP model. 
+<div class="paragraph"> </div>
+
+ Throughout this file, we assume the FP priority policy, ideal uni-processor 
+    schedules, and the sequential readiness model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.readiness.sequential.html#"><span class="id" title="library">prosa.model.readiness.sequential</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Furthermore, we assume the task model with floating non-preemptive regions. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.preemption.limited_preemptive.html#"><span class="id" title="library">prosa.model.preemption.limited_preemptive</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#"><span class="id" title="library">prosa.model.task.preemption.floating_nonpreemptive</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab254"></a><h2 class="section">Setup and Assumptions</h2>
+
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="RTAforFloatingModelwithArrivalCurves" class="idref" href="#RTAforFloatingModelwithArrivalCurves"><span class="id" title="section">RTAforFloatingModelwithArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent, non-duplicate arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.arr_seq" class="idref" href="#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_arrival_times_are_consistent" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_arr_seq_is_a_set" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_arr_seq_is_a_set"><span class="id" title="variable">H_arr_seq_is_a_set</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence_uniq"><span class="id" title="definition">arrival_sequence_uniq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume we have the model with floating non-preemptive regions. 
+      I.e., for each task only the length of the maximal non-preemptive 
+      segment is known <i>and</i> each job level is divided into a number of
+      non-preemptive segments by inserting preemption points. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">JobPreemptionPoints</span></a> <a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">Job</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a id="H4:11" class="idref" href="#H4:11"><span class="id" title="binder">TaskMaxNonpreemptiveSegment</span></a> <a id="H4:11" class="idref" href="#H4:11"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_valid_task_model_with_floating_nonpreemptive_regions" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_valid_task_model_with_floating_nonpreemptive_regions"><span class="id" title="variable">H_valid_task_model_with_floating_nonpreemptive_regions</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#valid_model_with_floating_nonpreemptive_regions"><span class="id" title="definition">valid_model_with_floating_nonpreemptive_regions</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary task set ts, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.ts" class="idref" href="#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#list"><span class="id" title="inductive">list</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... assume that all jobs come from the task set, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_all_jobs_from_taskset" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a> : <a class="idref" href="prosa.model.task.concept.html#all_jobs_from_taskset"><span class="id" title="definition">all_jobs_from_taskset</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the cost of a job cannot be larger than the task cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_valid_job_cost" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#arrivals_have_valid_job_costs"><span class="id" title="definition">arrivals_have_valid_job_costs</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let max_arrivals be a family of valid arrival curves, i.e., for any task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in ts 
+     <span class="inlinecode"><span class="id" title="var">max_arrival</span></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is (1) an arrival bound of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>, and (2) it is a monotonic function 
+     that equals <span class="inlinecode">0</span> for the empty interval <span class="inlinecode"><span class="id" title="keyword">delta</span></span> <span class="inlinecode">=</span> <span class="inlinecode">0</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H5:16" class="idref" href="#H5:16"><span class="id" title="binder">MaxArrivals</span></a> <a id="H5:16" class="idref" href="#H5:16"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_valid_arrival_curve" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_valid_arrival_curve"><span class="id" title="variable">H_valid_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#valid_taskset_arrival_curve"><span class="id" title="definition">valid_taskset_arrival_curve</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_is_arrival_curve" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_is_arrival_curve"><span class="id" title="variable">H_is_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#taskset_respects_max_arrivals"><span class="id" title="definition">taskset_respects_max_arrivals</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task in ts that is to be analyzed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.tsk" class="idref" href="#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_tsk_in_ts" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_tsk_in_ts"><span class="id" title="variable">H_tsk_in_ts</span></a> : <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall that we assume sequential readiness. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Instance</span> <a id="sequential_readiness" class="idref" href="#sequential_readiness"><span class="id" title="instance">sequential_readiness</span></a> : <a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.readiness.sequential.html#sequential_ready_instance"><span class="id" title="instance">sequential_ready_instance</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any valid ideal uni-processor schedule with with
+      limited preemptions of this arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.sched" class="idref" href="#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.Job"><span class="id" title="variable">Job</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_sched_valid" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_sched_valid"><span class="id" title="variable">H_sched_valid</span></a> : <a class="idref" href="prosa.behavior.ready.html#valid_schedule"><span class="id" title="definition">valid_schedule</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_schedule_with_limited_preemptions" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_schedule_with_limited_preemptions"><span class="id" title="variable">H_schedule_with_limited_preemptions</span></a> : <a class="idref" href="prosa.model.schedule.limited_preemptive.html#schedule_respects_preemption_model"><span class="id" title="definition">schedule_respects_preemption_model</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an FP policy that indicates a higher-or-equal priority relation,
+      and assume that the relation is reflexive and transitive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H6:24" class="idref" href="#H6:24"><span class="id" title="binder">FP_policy</span></a> <a id="H6:24" class="idref" href="#H6:24"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_priority_is_reflexive" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_priority_is_reflexive"><span class="id" title="variable">H_priority_is_reflexive</span></a> : <a class="idref" href="prosa.model.priority.classes.html#reflexive_priorities"><span class="id" title="definition">reflexive_priorities</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_priority_is_transitive" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_priority_is_transitive"><span class="id" title="variable">H_priority_is_transitive</span></a> : <a class="idref" href="prosa.model.priority.classes.html#transitive_priorities"><span class="id" title="definition">transitive_priorities</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we assume that the schedule is a work-conserving schedule... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_work_conserving" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_work_conserving"><span class="id" title="variable">H_work_conserving</span></a> : <a class="idref" href="prosa.model.schedule.work_conserving.html#work_conserving"><span class="id" title="definition">work_conserving</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the schedule respects the policy defined by the <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> 
+     function (i.e., jobs have bounded non-preemptive segments). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_respects_policy" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_respects_policy"><span class="id" title="variable">H_respects_policy</span></a> : <a class="idref" href="prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab255"></a><h2 class="section">Total Workload and Length of Busy Interval</h2>
+
+<div class="paragraph"> </div>
+
+ We introduce the abbreviation <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a></span> for the task request bound function,
+       which is defined as <span class="inlinecode"><a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="projection">task_cost</span></a>(<a class="idref" href="prosa.util.bigcat.html#BigCatNatLemmas.T"><span class="id" title="variable">T</span></a>)</span> <span class="inlinecode">×</span> <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a>(<a class="idref" href="prosa.util.bigcat.html#BigCatNatLemmas.T"><span class="id" title="variable">T</span></a>,<a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a>)</span> for a task T. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.rbf" class="idref" href="#RTAforFloatingModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we introduce <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> as an abbreviation
+      for the task request bound function of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.task_rbf" class="idref" href="#RTAforFloatingModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a> := <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.rbf"><span class="id" title="variable">rbf</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the sum of individual request bound functions, we define
+      the request bound function of all tasks with higher priority
+      ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.total_hep_rbf" class="idref" href="#RTAforFloatingModelwithArrivalCurves.total_hep_rbf"><span class="id" title="variable">total_hep_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_hep_request_bound_function_FP"><span class="id" title="definition">total_hep_request_bound_function_FP</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the request bound function of all tasks with higher
+      priority other than task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.total_ohep_rbf" class="idref" href="#RTAforFloatingModelwithArrivalCurves.total_ohep_rbf"><span class="id" title="variable">total_ohep_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_ohep_request_bound_function_FP"><span class="id" title="definition">total_ohep_request_bound_function_FP</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we define a bound for the priority inversion caused by tasks of lower priority. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.blocking_bound" class="idref" href="#RTAforFloatingModelwithArrivalCurves.blocking_bound"><span class="id" title="variable">blocking_bound</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">max_</span><span class="id" title="notation">(</span><a id="tsk_other:31" class="idref" href="#tsk_other:31"><span class="id" title="binder">tsk_other</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a> <span class="id" title="notation">|</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#tsk_other:29"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a><span class="id" title="notation">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(</span><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="definition">task_max_nonpreemptive_segment</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#tsk_other:29"><span class="id" title="variable">tsk_other</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a><span class="id" title="notation">)</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let L be any positive fixed point of the busy interval recurrence, determined by 
+      the sum of blocking and higher-or-equal-priority workload. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.L" class="idref" href="#RTAforFloatingModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_L_positive" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_L_positive"><span class="id" title="variable">H_L_positive</span></a> : <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_fixed_point" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_fixed_point"><span class="id" title="variable">H_fixed_point</span></a> : <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.blocking_bound"><span class="id" title="variable">blocking_bound</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.total_hep_rbf"><span class="id" title="variable">total_hep_rbf</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab256"></a><h2 class="section">Response-Time Bound</h2>
+
+<div class="paragraph"> </div>
+
+ To reduce the time complexity of the analysis, recall the notion of search space. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.is_in_search_space" class="idref" href="#RTAforFloatingModelwithArrivalCurves.is_in_search_space"><span class="id" title="variable">is_in_search_space</span></a> := <a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#is_in_search_space"><span class="id" title="definition">is_in_search_space</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any value R, and assume that for any given
+      arrival A from search space there is a solution of the
+      response-time bound recurrence which is bounded by R. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RTAforFloatingModelwithArrivalCurves.R" class="idref" href="#RTAforFloatingModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RTAforFloatingModelwithArrivalCurves.H_R_is_maximum" class="idref" href="#RTAforFloatingModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="A:36" class="idref" href="#A:36"><span class="id" title="binder">A</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.is_in_search_space"><span class="id" title="variable">is_in_search_space</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#A:36"><span class="id" title="variable">A</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a>  <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">(</span></a><a id="F:37" class="idref" href="#F:37"><span class="id" title="binder">F</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">),</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#A:36"><span class="id" title="variable">A</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#F:37"><span class="id" title="variable">F</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.blocking_bound"><span class="id" title="variable">blocking_bound</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a> (<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#A:36"><span class="id" title="variable">A</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a>) <span class="id" title="notation">+</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.total_ohep_rbf"><span class="id" title="variable">total_ohep_rbf</span></a> (<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#A:36"><span class="id" title="variable">A</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#F:37"><span class="id" title="variable">F</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#F:37"><span class="id" title="variable">F</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now, we can reuse the results for the abstract model with
+      bounded nonpreemptive segments to establish a response-time
+      bound for the more concrete model with floating nonpreemptive
+      regions.  
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RTAforFloatingModelwithArrivalCurves.response_time_bounded_by" class="idref" href="#RTAforFloatingModelwithArrivalCurves.response_time_bounded_by"><span class="id" title="variable">response_time_bounded_by</span></a> := <a class="idref" href="prosa.analysis.definitions.schedulability.html#task_response_time_bound"><span class="id" title="definition">task_response_time_bound</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a id="uniprocessor_response_time_bound_fp_with_floating_nonpreemptive_regions" class="idref" href="#uniprocessor_response_time_bound_fp_with_floating_nonpreemptive_regions"><span class="id" title="lemma">uniprocessor_response_time_bound_fp_with_floating_nonpreemptive_regions</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.response_time_bounded_by"><span class="id" title="variable">response_time_bounded_by</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.R"><span class="id" title="variable">R</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.H_valid_task_model_with_floating_nonpreemptive_regions"><span class="id" title="variable">H_valid_task_model_with_floating_nonpreemptive_regions</span></a>) ⇒ [<span class="id" title="var">LIMJ</span> <span class="id" title="var">JMLETM</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">LIMJ</span>) ⇒ [<span class="id" title="var">BEG</span> [<span class="id" title="var">END</span> <span class="id" title="var">_</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.results.fixed_priority.rta.bounded_nps.html#uniprocessor_response_time_bound_fp_with_bounded_nonpreemptive_segments"><span class="id" title="lemma">uniprocessor_response_time_bound_fp_with_bounded_nonpreemptive_segments</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">all</span>: <span class="id" title="tactic">eauto</span> 2 <span class="id" title="keyword">with</span> <span class="id" title="var">basic_facts</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.sequential.html#sequential_readiness_implies_work_bearing_readiness"><span class="id" title="lemma">sequential_readiness_implies_work_bearing_readiness</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.sequential.html#sequential_readiness_implies_sequential_tasks"><span class="id" title="lemma">sequential_readiness_implies_sequential_tasks</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">intros</span> <span class="id" title="var">A</span> <span class="id" title="var">SP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">subnn</span> <span class="id" title="lemma">subn0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves.H_R_is_maximum"><span class="id" title="variable">H_R_is_maximum</span></a> <span class="id" title="var">_</span> <span class="id" title="var">SP</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">F</span> [<span class="id" title="var">EQ</span> <span class="id" title="var">LE</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">∃</span> <span class="id" title="var">F</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addn0</span>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.results.fixed_priority.rta.floating_nonpreemptive.html#RTAforFloatingModelwithArrivalCurves"><span class="id" title="section">RTAforFloatingModelwithArrivalCurves</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

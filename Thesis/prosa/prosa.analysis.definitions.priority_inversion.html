@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.priority_inversion</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.priority_inversion</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.busy_interval.html#"><span class="id" title="library">prosa.analysis.definitions.busy_interval</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Throughout this file, we assume ideal uniprocessor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab13"></a><h1 class="section">Cumulative Priority Inversion for JLFP-models</h1>
+ In this module we define the notion of cumulative priority inversion for uni-processor for JLFP schedulers. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="CumulativePriorityInversion" class="idref" href="#CumulativePriorityInversion"><span class="id" title="section">CumulativePriorityInversion</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CumulativePriorityInversion.arr_seq" class="idref" href="#CumulativePriorityInversion.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CumulativePriorityInversion.H_arrival_times_are_consistent" class="idref" href="#CumulativePriorityInversion.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uniprocessor schedule of this arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CumulativePriorityInversion.sched" class="idref" href="#CumulativePriorityInversion.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume a given JLFP policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">JLFP_policy</span></a> <a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we define a notion of bounded priority inversion experienced by a job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="CumulativePriorityInversion.JobPriorityInversionBound" class="idref" href="#CumulativePriorityInversion.JobPriorityInversionBound"><span class="id" title="section">JobPriorityInversionBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CumulativePriorityInversion.JobPriorityInversionBound.tsk" class="idref" href="#CumulativePriorityInversion.JobPriorityInversionBound.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job j of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CumulativePriorityInversion.JobPriorityInversionBound.j" class="idref" href="#CumulativePriorityInversion.JobPriorityInversionBound.j"><span class="id" title="variable">j</span></a> : <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CumulativePriorityInversion.JobPriorityInversionBound.H_from_arrival_sequence" class="idref" href="#CumulativePriorityInversion.JobPriorityInversionBound.H_from_arrival_sequence"><span class="id" title="variable">H_from_arrival_sequence</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CumulativePriorityInversion.JobPriorityInversionBound.H_job_task" class="idref" href="#CumulativePriorityInversion.JobPriorityInversionBound.H_job_task"><span class="id" title="variable">H_job_task</span></a> : <a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the job incurs priority inversion if it has higher
+        priority than the scheduled job. Note that this definition
+        implicitly assumes that the scheduler is
+        work-conserving. Therefore, it cannot be applied to models
+        with jitter or self-suspensions. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="is_priority_inversion" class="idref" href="#is_priority_inversion"><span class="id" title="definition">is_priority_inversion</span></a> (<a id="t:15" class="idref" href="#t:15"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">if</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t:15"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">is</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">jlp</span> <span class="id" title="keyword">then</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> <span class="id" title="var">jlp</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound.j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">else</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then we compute the cumulative priority inversion incurred by
+         a job within some time interval <code>[t1, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="cumulative_priority_inversion" class="idref" href="#cumulative_priority_inversion"><span class="id" title="definition">cumulative_priority_inversion</span></a> (<a id="t1:16" class="idref" href="#t1:16"><span class="id" title="binder">t1</span></a> <a id="t2:17" class="idref" href="#t2:17"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t1:16"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:20" class="idref" href="#t:20"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t2:17"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#is_priority_inversion"><span class="id" title="definition">is_priority_inversion</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t:18"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that priority inversion of job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is bounded by a constant <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.limited.abstract_RTA.reduction_of_search_space.html#AbstractRTAReduction.SearchSpace.B"><span class="id" title="variable">B</span></a></span> iff cumulative 
+         priority inversion within any busy interval prefix is bounded by <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.limited.abstract_RTA.reduction_of_search_space.html#AbstractRTAReduction.SearchSpace.B"><span class="id" title="variable">B</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="priority_inversion_of_job_is_bounded_by" class="idref" href="#priority_inversion_of_job_is_bounded_by"><span class="id" title="definition">priority_inversion_of_job_is_bounded_by</span></a> (<a id="B:21" class="idref" href="#B:21"><span class="id" title="binder">B</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:22" class="idref" href="#t1:22"><span class="id" title="binder">t1</span></a> <a id="t2:23" class="idref" href="#t2:23"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.busy_interval.html#busy_interval_prefix"><span class="id" title="definition">busy_interval_prefix</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t1:22"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t2:23"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.priority_inversion.html#cumulative_priority_inversion"><span class="id" title="definition">cumulative_priority_inversion</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t1:22"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#t2:23"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#B:21"><span class="id" title="variable">B</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.JobPriorityInversionBound"><span class="id" title="section">JobPriorityInversionBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we define a notion of the bounded priority inversion for task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="CumulativePriorityInversion.TaskPriorityInversionBound" class="idref" href="#CumulativePriorityInversion.TaskPriorityInversionBound"><span class="id" title="section">TaskPriorityInversionBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CumulativePriorityInversion.TaskPriorityInversionBound.tsk" class="idref" href="#CumulativePriorityInversion.TaskPriorityInversionBound.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> has bounded priority inversion if all 
+         its jobs have bounded cumulative priority inversion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="priority_inversion_is_bounded_by" class="idref" href="#priority_inversion_is_bounded_by"><span class="id" title="definition">priority_inversion_is_bounded_by</span></a> (<a id="B:25" class="idref" href="#B:25"><span class="id" title="binder">B</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="j:26" class="idref" href="#j:26"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.Job"><span class="id" title="variable">Job</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#j:26"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.TaskPriorityInversionBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#j:26"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#j:26"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.priority_inversion.html#priority_inversion_of_job_is_bounded_by"><span class="id" title="definition">priority_inversion_of_job_is_bounded_by</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#j:26"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#B:25"><span class="id" title="variable">B</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion.TaskPriorityInversionBound"><span class="id" title="section">TaskPriorityInversionBound</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.priority_inversion.html#CumulativePriorityInversion"><span class="id" title="section">CumulativePriorityInversion</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

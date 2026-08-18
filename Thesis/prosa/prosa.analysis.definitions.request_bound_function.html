@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.request_bound_function</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.request_bound_function</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.arrival.curves.html#"><span class="id" title="library">prosa.model.task.arrival.curves</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.priority.classes.html#"><span class="id" title="library">prosa.model.priority.classes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab16"></a><h1 class="section">Request Bound Function (RBF)</h1>
+
+<div class="paragraph"> </div>
+
+ We define the notion of a task's request-bound function (RBF), as well as
+    the total request bound function of a set of tasks. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="TaskWorkloadBoundedByArrivalCurves" class="idref" href="#TaskWorkloadBoundedByArrivalCurves"><span class="id" title="section">TaskWorkloadBoundedByArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any type of jobs associated with these tasks, where each task has
+      a cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and an FP policy that indicates a higher-or-equal priority
+      relation. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">FP_policy</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#MaxArrivals"><span class="id" title="record">MaxArrivals</span></a></span> denote any function that takes a task and an interval length
+      and returns the associated number of job arrivals of the task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:7" class="idref" href="#H3:7"><span class="id" title="binder">MaxArrivals</span></a> <a id="H3:7" class="idref" href="#H3:7"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab17"></a><h2 class="section">RBF of a Single Task</h2>
+
+<div class="paragraph"> </div>
+
+ In this section, we define a bound for the workload of a single task
+      under uni-processor FP scheduling. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="TaskWorkloadBoundedByArrivalCurves.SingleTask" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.SingleTask"><span class="id" title="section">SingleTask</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> that is to be scheduled in an interval of length delta. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskWorkloadBoundedByArrivalCurves.SingleTask.tsk" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.SingleTask.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskWorkloadBoundedByArrivalCurves.SingleTask.delta" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.SingleTask.delta"><span class="id" title="variable">delta</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We define the following workload bound for the task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_request_bound_function" class="idref" href="#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.SingleTask.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">×</span> <a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.SingleTask.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.SingleTask.delta"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.SingleTask"><span class="id" title="section">SingleTask</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab18"></a><h2 class="section">Total RBF of Multiple Tasks</h2>
+
+<div class="paragraph"> </div>
+
+ In this section, we define a bound for the workload of multiple tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks"><span class="id" title="section">AllTasks</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider a task set ts... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks.ts" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#list"><span class="id" title="inductive">list</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task in task set. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks.tsk" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let delta be the length of the interval of interest. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks.delta" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks.delta"><span class="id" title="variable">delta</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall the definition of higher-or-equal-priority task and the per-task
+        workload bound for FP scheduling. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks.is_hep_task" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks.is_hep_task"><span class="id" title="variable">is_hep_task</span></a> <a id="tsk_other:13" class="idref" href="#tsk_other:13"><span class="id" title="binder">tsk_other</span></a> := <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:13"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="TaskWorkloadBoundedByArrivalCurves.AllTasks.is_other_hep_task" class="idref" href="#TaskWorkloadBoundedByArrivalCurves.AllTasks.is_other_hep_task"><span class="id" title="variable">is_other_hep_task</span></a> <a id="tsk_other:14" class="idref" href="#tsk_other:14"><span class="id" title="binder">tsk_other</span></a> := <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:14"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:14"><span class="id" title="variable">tsk_other</span></a> <span class="id" title="notation">!=</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.tsk"><span class="id" title="variable">tsk</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the sum of individual workload bounds, we define the following
+        bound for the total workload of tasks in any interval of length
+        delta. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="total_request_bound_function" class="idref" href="#total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk:17" class="idref" href="#tsk:17"><span class="id" title="binder">tsk</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.ts"><span class="id" title="variable">ts</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk:15"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.delta"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Similarly, we define the following bound for the total workload of
+        tasks of higher-or-equal priority (with respect to <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>) in any interval
+        of length delta. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="total_hep_request_bound_function_FP" class="idref" href="#total_hep_request_bound_function_FP"><span class="id" title="definition">total_hep_request_bound_function_FP</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk_other:20" class="idref" href="#tsk_other:20"><span class="id" title="binder">tsk_other</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.ts"><span class="id" title="variable">ts</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.is_hep_task"><span class="id" title="variable">is_hep_task</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:18"><span class="id" title="variable">tsk_other</span></a><span class="id" title="notation">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:18"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.delta"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We also define a bound for the total workload of higher-or-equal
+        priority tasks other than <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in any interval of length delta. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="total_ohep_request_bound_function_FP" class="idref" href="#total_ohep_request_bound_function_FP"><span class="id" title="definition">total_ohep_request_bound_function_FP</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk_other:23" class="idref" href="#tsk_other:23"><span class="id" title="binder">tsk_other</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.ts"><span class="id" title="variable">ts</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.is_other_hep_task"><span class="id" title="variable">is_other_hep_task</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:21"><span class="id" title="variable">tsk_other</span></a><span class="id" title="notation">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#tsk_other:21"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks.delta"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves.AllTasks"><span class="id" title="section">AllTasks</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#TaskWorkloadBoundedByArrivalCurves"><span class="id" title="section">TaskWorkloadBoundedByArrivalCurves</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

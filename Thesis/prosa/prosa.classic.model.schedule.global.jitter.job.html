@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.global.jitter.job</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.global.jitter.job</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="JobWithJitter" class="idref" href="#JobWithJitter"><span class="id" title="module">JobWithJitter</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">Job</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter"><span class="id" title="section">ValidSporadicTaskJobWithJitter</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="sporadic_task:1" class="idref" href="#sporadic_task:1"><span class="id" title="binder">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.task_cost" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.task_deadline" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.task_jitter" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.task_jitter"><span class="id" title="variable">task_jitter</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:5" class="idref" href="#Job:5"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.job_cost" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.job_deadline" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.job_deadline"><span class="id" title="variable">job_deadline</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.job_task" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.job_jitter" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.job_jitter"><span class="id" title="variable">job_jitter</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.j" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="JobWithJitter.job_jitter_leq_task_jitter" class="idref" href="#JobWithJitter.job_jitter_leq_task_jitter"><span class="id" title="definition">job_jitter_leq_task_jitter</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.job_jitter"><span class="id" title="variable">job_jitter</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.task_jitter"><span class="id" title="variable">task_jitter</span></a> (<a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.j"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="JobWithJitter.ValidSporadicTaskJobWithJitter.j_is_valid_job" class="idref" href="#JobWithJitter.ValidSporadicTaskJobWithJitter.j_is_valid_job"><span class="id" title="variable">j_is_valid_job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.job.html#Job.valid_sporadic_job"><span class="id" title="definition">valid_sporadic_job</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.task_cost"><span class="id" title="variable">task_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="JobWithJitter.valid_sporadic_job_with_jitter" class="idref" href="#JobWithJitter.valid_sporadic_job_with_jitter"><span class="id" title="definition">valid_sporadic_job_with_jitter</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter.j_is_valid_job"><span class="id" title="variable">j_is_valid_job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.job_jitter_leq_task_jitter"><span class="id" title="definition">job_jitter_leq_task_jitter</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter.ValidSporadicTaskJobWithJitter"><span class="id" title="section">ValidSporadicTaskJobWithJitter</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.global.jitter.job.html#JobWithJitter"><span class="id" title="module">JobWithJitter</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

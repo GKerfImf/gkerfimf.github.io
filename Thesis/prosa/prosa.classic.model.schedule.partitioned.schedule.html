@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.partitioned.schedule</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.partitioned.schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.global.schedulability.html#"><span class="id" title="library">prosa.classic.model.schedule.global.schedulability</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.global.basic.schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedulability.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.schedulability</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Partitioned" class="idref" href="#Partitioned"><span class="id" title="module">Partitioned</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Module</span> <a id="Partitioned.uni" class="idref" href="#Partitioned.uni"><span class="id" title="module">uni</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule"><span class="id" title="module">prosa.classic.model.schedule.uni.schedule.UniprocessorSchedule</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Module</span> <a id="Partitioned.uni_sched" class="idref" href="#Partitioned.uni_sched"><span class="id" title="module">uni_sched</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedulability.html#Schedulability"><span class="id" title="module">prosa.classic.model.schedule.uni.schedulability.Schedulability</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">SporadicTaskset</span> <span class="id" title="var">Schedule</span> <span class="id" title="var">Schedulability</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="keyword">Time</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.PartitionedDefs" class="idref" href="#Partitioned.PartitionedDefs"><span class="id" title="section">PartitionedDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.job_task" class="idref" href="#Partitioned.PartitionedDefs.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.arr_seq" class="idref" href="#Partitioned.PartitionedDefs.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="num_cpus:5" class="idref" href="#num_cpus:5"><span class="id" title="binder">num_cpus</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.sched" class="idref" href="#Partitioned.PartitionedDefs.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.PartitionedDefs.NoJobMigration" class="idref" href="#Partitioned.PartitionedDefs.NoJobMigration"><span class="id" title="section">NoJobMigration</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.NoJobMigration.j" class="idref" href="#Partitioned.PartitionedDefs.NoJobMigration.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Partitioned.never_migrates" class="idref" href="#Partitioned.never_migrates"><span class="id" title="definition">never_migrates</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:8" class="idref" href="#t:8"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="cpu:9" class="idref" href="#cpu:9"><span class="id" title="binder">cpu</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.scheduled_on"><span class="id" title="definition">scheduled_on</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoJobMigration.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu:9"><span class="id" title="variable">cpu</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#t:8"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t':10" class="idref" href="#t':10"><span class="id" title="binder">t'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="cpu':11" class="idref" href="#cpu':11"><span class="id" title="binder">cpu'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.scheduled_on"><span class="id" title="definition">scheduled_on</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoJobMigration.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu':11"><span class="id" title="variable">cpu'</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#t':10"><span class="id" title="variable">t'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu':11"><span class="id" title="variable">cpu'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu:9"><span class="id" title="variable">cpu</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.NoJobMigration.assigned_cpu" class="idref" href="#Partitioned.PartitionedDefs.NoJobMigration.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a> : <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.processor"><span class="id" title="definition">processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Partitioned.job_local_to_processor" class="idref" href="#Partitioned.job_local_to_processor"><span class="id" title="definition">job_local_to_processor</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:13" class="idref" href="#t:13"><span class="id" title="binder">t</span></a>, <span class="id" title="keyword">∀</span> <a id="cpu:14" class="idref" href="#cpu:14"><span class="id" title="binder">cpu</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.scheduled_on"><span class="id" title="definition">scheduled_on</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoJobMigration.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu:14"><span class="id" title="variable">cpu</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu:14"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoJobMigration.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoJobMigration"><span class="id" title="section">NoJobMigration</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.PartitionedDefs.NoTaskMigration" class="idref" href="#Partitioned.PartitionedDefs.NoTaskMigration"><span class="id" title="section">NoTaskMigration</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.NoTaskMigration.tsk" class="idref" href="#Partitioned.PartitionedDefs.NoTaskMigration.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.NoTaskMigration.assigned_cpu" class="idref" href="#Partitioned.PartitionedDefs.NoTaskMigration.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a> : <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.processor"><span class="id" title="definition">processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Partitioned.task_local_to_processor" class="idref" href="#Partitioned.task_local_to_processor"><span class="id" title="definition">task_local_to_processor</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:17" class="idref" href="#j:17"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#j:17"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoTaskMigration.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.job_local_to_processor"><span class="id" title="definition">job_local_to_processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#j:17"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoTaskMigration.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.NoTaskMigration"><span class="id" title="section">NoTaskMigration</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.PartitionedDefs.PartitionedSchedule" class="idref" href="#Partitioned.PartitionedDefs.PartitionedSchedule"><span class="id" title="section">PartitionedSchedule</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.PartitionedSchedule.ts" class="idref" href="#Partitioned.PartitionedDefs.PartitionedSchedule.ts"><span class="id" title="variable">ts</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#list"><span class="id" title="inductive">list</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.PartitionedDefs.PartitionedSchedule.assigned_cpu" class="idref" href="#Partitioned.PartitionedDefs.PartitionedSchedule.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a>: <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.processor"><span class="id" title="definition">processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Partitioned.partitioned_schedule" class="idref" href="#Partitioned.partitioned_schedule"><span class="id" title="definition">partitioned_schedule</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:20" class="idref" href="#tsk:20"><span class="id" title="binder">tsk</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#tsk:20"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.PartitionedSchedule.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.task_local_to_processor"><span class="id" title="definition">task_local_to_processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#tsk:20"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.PartitionedSchedule.assigned_cpu"><span class="id" title="variable">assigned_cpu</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#tsk:20"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs.PartitionedSchedule"><span class="id" title="section">PartitionedSchedule</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.PartitionedDefs"><span class="id" title="section">PartitionedDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.SimpleProperties" class="idref" href="#Partitioned.SimpleProperties"><span class="id" title="section">SimpleProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:21" class="idref" href="#Job:21"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="num_cpus:22" class="idref" href="#num_cpus:22"><span class="id" title="binder">num_cpus</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.SimpleProperties.sched" class="idref" href="#Partitioned.SimpleProperties.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Partitioned.SimpleProperties.NoJobMigrationLemmas" class="idref" href="#Partitioned.SimpleProperties.NoJobMigrationLemmas"><span class="id" title="section">NoJobMigrationLemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Partitioned.SimpleProperties.NoJobMigrationLemmas.j" class="idref" href="#Partitioned.SimpleProperties.NoJobMigrationLemmas.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Partitioned.local_jobs_dont_migrate" class="idref" href="#Partitioned.local_jobs_dont_migrate"><span class="id" title="lemma">local_jobs_dont_migrate</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="cpu:25" class="idref" href="#cpu:25"><span class="id" title="binder">cpu</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.job_local_to_processor"><span class="id" title="definition">job_local_to_processor</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.NoJobMigrationLemmas.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#cpu:25"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.never_migrates"><span class="id" title="definition">never_migrates</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.NoJobMigrationLemmas.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.job_local_to_processor"><span class="id" title="definition">job_local_to_processor</span></a> /<a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.never_migrates"><span class="id" title="definition">never_migrates</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;⇒  <span class="id" title="var">cpu</span> <span class="id" title="var">H_is_local</span> <span class="id" title="var">t</span> <span class="id" title="var">cpu'</span> <span class="id" title="var">H_sched_at_t</span> <span class="id" title="var">t'</span> <span class="id" title="var">cpu''</span> <span class="id" title="var">H_sched_at_t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H_is_local</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H_sched_at_t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">H_is_local</span> <span class="id" title="tactic">in</span> <span class="id" title="var">H_sched_at_t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">H_sched_at_t</span> <span class="id" title="var">H_sched_at_t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties.NoJobMigrationLemmas"><span class="id" title="section">NoJobMigrationLemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned.SimpleProperties"><span class="id" title="section">SimpleProperties</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.partitioned.schedule.html#Partitioned"><span class="id" title="module">Partitioned</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

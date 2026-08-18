@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.model.rbf</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.model.rbf</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.model.workload.html#"><span class="id" title="library">prosa.analysis.facts.model.workload</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.job_properties.html#"><span class="id" title="library">prosa.analysis.definitions.job_properties</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#"><span class="id" title="library">prosa.analysis.definitions.request_bound_function</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab35"></a><h1 class="section">Facts about Request Bound Functions (RBFs)</h1>
+
+<div class="paragraph"> </div>
+
+ In this file, we prove some lemmas about request bound functions. 
+<div class="paragraph"> </div>
+
+<a id="lab36"></a><h2 class="section">RBF is a Bound on Workload</h2>
+
+<div class="paragraph"> </div>
+
+ First, we show that a task's RBF is indeed an upper bound on its
+    workload. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ProofWorkloadBound" class="idref" href="#ProofWorkloadBound"><span class="id" title="section">ProofWorkloadBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent, non-duplicate arrivals, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.arr_seq" class="idref" href="#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_arrival_times_are_consistent" class="idref" href="#ProofWorkloadBound.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_arr_seq_is_a_set" class="idref" href="#ProofWorkloadBound.H_arr_seq_is_a_set"><span class="id" title="variable">H_arr_seq_is_a_set</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence_uniq"><span class="id" title="definition">arrival_sequence_uniq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any schedule corresponding to this arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:10" class="idref" href="#PState:10"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.sched" class="idref" href="#ProofWorkloadBound.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.PState"><span class="id" title="variable">PState</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_jobs_come_from_arrival_sequence" class="idref" href="#ProofWorkloadBound.H_jobs_come_from_arrival_sequence"><span class="id" title="variable">H_jobs_come_from_arrival_sequence</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and an FP policy that indicates a higher-or-equal priority relation. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:13" class="idref" href="#H3:13"><span class="id" title="binder">FP_policy</span></a> <a id="H3:13" class="idref" href="#H3:13"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.jlfp_higher_eq_priority" class="idref" href="#ProofWorkloadBound.jlfp_higher_eq_priority"><span class="id" title="variable">jlfp_higher_eq_priority</span></a> := <a class="idref" href="prosa.model.priority.classes.html#FP_to_JLFP"><span class="id" title="instance">FP_to_JLFP</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, consider a task set <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span>... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.ts" class="idref" href="#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#list"><span class="id" title="inductive">list</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task in <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.tsk" class="idref" href="#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_tsk_in_ts" class="idref" href="#ProofWorkloadBound.H_tsk_in_ts"><span class="id" title="variable">H_tsk_in_ts</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that the job costs are no larger than the task costs ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_valid_job_cost" class="idref" href="#ProofWorkloadBound.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#arrivals_have_valid_job_costs"><span class="id" title="definition">arrivals_have_valid_job_costs</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and that all jobs come from the task set. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_all_jobs_from_taskset" class="idref" href="#ProofWorkloadBound.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a> : <a class="idref" href="prosa.model.task.concept.html#all_jobs_from_taskset"><span class="id" title="definition">all_jobs_from_taskset</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a></span> be any arrival bound for task-set <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H4:19" class="idref" href="#H4:19"><span class="id" title="binder">MaxArrivals</span></a> <a id="H4:19" class="idref" href="#H4:19"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.H_is_arrival_bound" class="idref" href="#ProofWorkloadBound.H_is_arrival_bound"><span class="id" title="variable">H_is_arrival_bound</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#taskset_respects_max_arrivals"><span class="id" title="definition">taskset_respects_max_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, recall the notions of total workload of jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.total_workload" class="idref" href="#ProofWorkloadBound.total_workload"><span class="id" title="variable">total_workload</span></a> <a id="t1:21" class="idref" href="#t1:21"><span class="id" title="binder">t1</span></a> <a id="t2:22" class="idref" href="#t2:22"><span class="id" title="binder">t2</span></a> := <a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#predT"><span class="id" title="definition">predT</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t1:21"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t2:22"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the workload of jobs of the same task as job j. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.task_workload" class="idref" href="#ProofWorkloadBound.task_workload"><span class="id" title="variable">task_workload</span></a> <a id="t1:23" class="idref" href="#t1:23"><span class="id" title="binder">t1</span></a> <a id="t2:24" class="idref" href="#t2:24"><span class="id" title="binder">t2</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a>) (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t1:23"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t2:24"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, let us define some local names for clarity. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.task_rbf" class="idref" href="#ProofWorkloadBound.task_rbf"><span class="id" title="variable">task_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.total_rbf" class="idref" href="#ProofWorkloadBound.total_rbf"><span class="id" title="variable">total_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.total_hep_rbf" class="idref" href="#ProofWorkloadBound.total_hep_rbf"><span class="id" title="variable">total_hep_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_hep_request_bound_function_FP"><span class="id" title="definition">total_hep_request_bound_function_FP</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.total_ohep_rbf" class="idref" href="#ProofWorkloadBound.total_ohep_rbf"><span class="id" title="variable">total_ohep_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_ohep_request_bound_function_FP"><span class="id" title="definition">total_ohep_request_bound_function_FP</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove that the workload of all jobs is
+      no larger than the request bound function. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF"><span class="id" title="section">WorkloadIsBoundedByRBF</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> and any interval of length <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.t" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="28ddffb7d859095c8063271398d2b4ab" class="idref" href="#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we show that workload of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is bounded by the number of
+        arrivals of the task times the cost of the task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_workload_le_num_of_arrivals_times_cost" class="idref" href="#task_workload_le_num_of_arrivals_times_cost"><span class="id" title="lemma">task_workload_le_num_of_arrivals_times_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.task_workload"><span class="id" title="variable">task_workload</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">×</span> <a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.task_workload"><span class="id" title="variable">task_workload</span></a> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a>/ <a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> -<span class="id" title="lemma">big_filter</span> -<span class="id" title="lemma">sum1_size</span> <span class="id" title="lemma">big_distrr</span> <span class="id" title="lemma">big_filter</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>)) <span class="id" title="var">eqn</span>:<span class="id" title="var">TASK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">TASK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">big_filter</span> !<span class="id" title="var">TASK</span> !<span class="id" title="lemma">big_nil</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> //= <span class="id" title="lemma">big_filter</span> <span class="id" title="lemma">big_seq_cond</span> [<span class="id" title="tactic">in</span> <span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#X:27"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">big_seq_cond</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_sum</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j'</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">IN</span> <span class="id" title="var">TSKj'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">muln1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">TSKj'</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSKj'</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="var">TSKj'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+As a corollary, we prove that workload of task is no larger the than
+        task request bound function. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="task_workload_le_task_rbf" class="idref" href="#task_workload_le_task_rbf"><span class="id" title="lemma">task_workload_le_task_rbf</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.task_workload"><span class="id" title="variable">task_workload</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.task_rbf"><span class="id" title="variable">task_rbf</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <span class="id" title="lemma">leq_trans</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#task_workload_le_num_of_arrivals_times_cost"><span class="id" title="lemma">task_workload_le_num_of_arrivals_times_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_mul2l</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}[<a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>](<span class="id" title="lemma">addKn</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_is_arrival_bound"><span class="id" title="variable">H_is_arrival_bound</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we prove that total workload of tasks is no larger than the total
+        request bound function. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="total_workload_le_total_rbf" class="idref" href="#total_workload_le_total_rbf"><span class="id" title="lemma">total_workload_le_total_rbf</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.total_workload"><span class="id" title="variable">total_workload</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.total_rbf"><span class="id" title="variable">total_rbf</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="var">l</span> := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<span class="id" title="lemma">leq_trans</span> (<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk':36" class="idref" href="#tsk':36"><span class="id" title="binder">tsk'</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">(</span><span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j0:39" class="idref" href="#j0:39"><span class="id" title="binder">j0</span></a> <span class="id" title="notation">&lt;-</span> <span class="id" title="var">l</span> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:31"><span class="id" title="variable">j0</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':28"><span class="id" title="variable">tsk'</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:31"><span class="id" title="variable">j0</span></a><span class="id" title="notation">)</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.total_workload"><span class="id" title="variable">total_workload</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EXCHANGE</span> := <span class="id" title="lemma">exchange_big_dep</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#predT"><span class="id" title="definition">predT</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">EXCHANGE</span> /=; <span class="id" title="tactic">clear</span> <span class="id" title="var">EXCHANGE</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> -/<span class="id" title="var">l</span> <span class="id" title="lemma">big_seq_cond</span> [<span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#X:40"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">big_seq_cond</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_sum</span>; <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j0</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">IN0</span> <span class="id" title="var">HP0</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_mkcond</span> (<span class="id" title="lemma">big_rem</span> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <span class="id" title="var">j0</span>)) /=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">eq_refl</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">tsk0</span> <span class="id" title="var">INtsk0</span> <span class="id" title="var">HP0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<span class="id" title="lemma">leq_trans</span> (<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <span class="id" title="var">tsk0</span> <span class="id" title="notation">×</span> <span class="id" title="definition">size</span> (<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <span class="id" title="var">tsk0</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>)))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">sum1_size</span> <span class="id" title="lemma">big_distrr</span> /= <span class="id" title="lemma">big_filter</span> -/<span class="id" title="var">l</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <span class="id" title="lemma">muln1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a> ⇒ <span class="id" title="var">j0</span> <span class="id" title="var">IN0</span> /<span class="id" title="lemma">eqP</span> &lt;-.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_mul2l</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}[<a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>](<span class="id" title="lemma">addKn</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_is_arrival_bound"><span class="id" title="variable">H_is_arrival_bound</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_addr</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we consider any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.j" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.j"><span class="id" title="variable">j</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.H_j_arrives" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.H_j_arrives"><span class="id" title="variable">H_j_arrives</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.H_job_of_tsk" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.H_job_of_tsk"><span class="id" title="variable">H_job_of_tsk</span></a> : <a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that two jobs <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> are in relation
+      <span class="inlinecode"><a class="idref" href="prosa.classic.analysis.uni.arrival_curves.workload_bound.html#MaxArrivalsWorkloadBound.Lemmas.ProofWorkloadBound.other_higher_eq_priority"><span class="id" title="variable">other_higher_eq_priority</span></a></span>, iff <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> has higher or equal priority than <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> and
+      is produced by a different task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.other_higher_eq_priority" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.other_higher_eq_priority"><span class="id" title="variable">other_higher_eq_priority</span></a> <a id="j1:44" class="idref" href="#j1:44"><span class="id" title="binder">j1</span></a> <a id="j2:45" class="idref" href="#j2:45"><span class="id" title="binder">j2</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.jlfp_higher_eq_priority"><span class="id" title="variable">jlfp_higher_eq_priority</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j1:44"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j2:45"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.task.concept.html#same_task"><span class="id" title="definition">same_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j1:44"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j2:45"><span class="id" title="variable">j2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall the notion of workload of higher or equal priority jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.total_hep_workload" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_hep_workload"><span class="id" title="variable">total_hep_workload</span></a> <a id="t1:46" class="idref" href="#t1:46"><span class="id" title="binder">t1</span></a> <a id="t2:47" class="idref" href="#t2:47"><span class="id" title="binder">t2</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> (<span class="id" title="keyword">fun</span> <a id="j_other:48" class="idref" href="#j_other:48"><span class="id" title="binder">j_other</span></a> ⇒ <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.jlfp_higher_eq_priority"><span class="id" title="variable">jlfp_higher_eq_priority</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j_other:48"><span class="id" title="variable">j_other</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.j"><span class="id" title="variable">j</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t1:46"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t2:47"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and workload of other higher or equal priority jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ProofWorkloadBound.WorkloadIsBoundedByRBF.total_ohep_workload" class="idref" href="#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_ohep_workload"><span class="id" title="variable">total_ohep_workload</span></a> <a id="t1:49" class="idref" href="#t1:49"><span class="id" title="binder">t1</span></a> <a id="t2:50" class="idref" href="#t2:50"><span class="id" title="binder">t2</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> (<span class="id" title="keyword">fun</span> <a id="j_other:51" class="idref" href="#j_other:51"><span class="id" title="binder">j_other</span></a> ⇒ <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.other_higher_eq_priority"><span class="id" title="variable">other_higher_eq_priority</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j_other:51"><span class="id" title="variable">j_other</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.j"><span class="id" title="variable">j</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t1:49"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t2:50"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that total workload of other tasks with higher-or-equal
+        priority is no larger than the total request bound function. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="total_workload_le_total_ohep_rbf" class="idref" href="#total_workload_le_total_ohep_rbf"><span class="id" title="lemma">total_workload_le_total_ohep_rbf</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_ohep_workload"><span class="id" title="variable">total_ohep_workload</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.total_ohep_rbf"><span class="id" title="variable">total_ohep_rbf</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="var">l</span> := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<span class="id" title="lemma">leq_trans</span> (<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk':60" class="idref" href="#tsk':60"><span class="id" title="binder">tsk'</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':52"><span class="id" title="variable">tsk'</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':52"><span class="id" title="variable">tsk'</span></a> <span class="id" title="notation">!=</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a><span class="id" title="notation">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j0:63" class="idref" href="#j0:63"><span class="id" title="binder">j0</span></a> <span class="id" title="notation">&lt;-</span> <span class="id" title="var">l</span> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:55"><span class="id" title="variable">j0</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':52"><span class="id" title="variable">tsk'</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:55"><span class="id" title="variable">j0</span></a><span class="id" title="notation">)</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.H_job_of_tsk"><span class="id" title="variable">H_job_of_tsk</span></a>) ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_ohep_workload"><span class="id" title="variable">total_ohep_workload</span></a> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.other_higher_eq_priority"><span class="id" title="variable">other_higher_eq_priority</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.jlfp_higher_eq_priority"><span class="id" title="variable">jlfp_higher_eq_priority</span></a> /<a class="idref" href="prosa.model.priority.classes.html#FP_to_JLFP"><span class="id" title="instance">FP_to_JLFP</span></a> /<a class="idref" href="prosa.model.task.concept.html#same_task"><span class="id" title="definition">same_task</span></a> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="var">P</span> := <span class="id" title="keyword">fun</span> <a id="x:66" class="idref" href="#x:66"><span class="id" title="binder">x</span></a> ⇒ <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#x:64"><span class="id" title="variable">x</span></a>) <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#x:64"><span class="id" title="variable">x</span></a> <span class="id" title="notation">!=</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<span class="id" title="lemma">exchange_big_dep</span> <span class="id" title="var">P</span>) //=; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<span class="id" title="var">P</span>; <span class="id" title="tactic">move</span> ⇒ ???/<span class="id" title="lemma">eqP</span>→.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<span class="id" title="var">P</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> -/<span class="id" title="var">l</span> <span class="id" title="lemma">big_seq_cond</span> [<span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#X:67"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">big_seq_cond</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_sum</span>; <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j0</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">IN0</span> <span class="id" title="var">HP0</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_mkcond</span> (<span class="id" title="lemma">big_rem</span> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <span class="id" title="var">j0</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">HP0</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andTb"><span class="id" title="lemma">andTb</span></a> <span class="id" title="lemma">eq_refl</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">tsk0</span> <span class="id" title="var">INtsk0</span> <span class="id" title="var">HP0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<span class="id" title="lemma">leq_trans</span> (<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <span class="id" title="var">tsk0</span> <span class="id" title="notation">×</span> <span class="id" title="definition">size</span> (<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <span class="id" title="var">tsk0</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>)))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">sum1_size</span> <span class="id" title="lemma">big_distrr</span> /= <span class="id" title="lemma">big_filter</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span>  <span class="id" title="lemma">muln1</span> /<span class="id" title="var">l</span> /<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> /<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrival_sequence.arrivals_between</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a>; <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j0</span> <span class="id" title="var">IN0</span> /<span class="id" title="lemma">eqP</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<span class="id" title="var">EQ</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_mul2l</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}[<a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>](<span class="id" title="lemma">addKn</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_is_arrival_bound"><span class="id" title="variable">H_is_arrival_bound</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_addr</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we prove that total workload of all tasks with higher-or-equal
+        priority is no larger than the total request bound function. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="total_workload_le_total_hep_rbf" class="idref" href="#total_workload_le_total_hep_rbf"><span class="id" title="lemma">total_workload_le_total_hep_rbf</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_hep_workload"><span class="id" title="variable">total_hep_workload</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.total_hep_rbf"><span class="id" title="variable">total_hep_rbf</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">set</span> <span class="id" title="var">l</span> := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>(@<span class="id" title="lemma">leq_trans</span> (<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="tsk':76" class="idref" href="#tsk':76"><span class="id" title="binder">tsk'</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.ts"><span class="id" title="variable">ts</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':68"><span class="id" title="variable">tsk'</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a><span class="id" title="notation">)</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j0:79" class="idref" href="#j0:79"><span class="id" title="binder">j0</span></a> <span class="id" title="notation">&lt;-</span> <span class="id" title="var">l</span> <span class="id" title="notation">|</span> <a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:71"><span class="id" title="variable">j0</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#tsk':68"><span class="id" title="variable">tsk'</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#j0:71"><span class="id" title="variable">j0</span></a><span class="id" title="notation">)</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.H_job_of_tsk"><span class="id" title="variable">H_job_of_tsk</span></a>) ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.total_hep_workload"><span class="id" title="variable">total_hep_workload</span></a> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.jlfp_higher_eq_priority"><span class="id" title="variable">jlfp_higher_eq_priority</span></a> /<a class="idref" href="prosa.model.priority.classes.html#FP_to_JLFP"><span class="id" title="instance">FP_to_JLFP</span></a> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EXCHANGE</span> := <span class="id" title="lemma">exchange_big_dep</span> (<span class="id" title="keyword">fun</span> <a id="x:80" class="idref" href="#x:80"><span class="id" title="binder">x</span></a> ⇒ <a class="idref" href="prosa.model.priority.classes.html#hep_task"><span class="id" title="definition">hep_task</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#x:80"><span class="id" title="variable">x</span></a>) <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.tsk"><span class="id" title="variable">tsk</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">EXCHANGE</span> /=; <span class="id" title="tactic">clear</span> <span class="id" title="var">EXCHANGE</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">tsk0</span> <span class="id" title="var">j0</span> <span class="id" title="var">HEP</span> /<span class="id" title="lemma">eqP</span> <span class="id" title="var">JOB0</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">JOB0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> -/<span class="id" title="var">l</span> <span class="id" title="lemma">big_seq_cond</span> [<span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#X:81"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">big_seq_cond</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_sum</span>; <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j0</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">IN0</span> <span class="id" title="var">HP0</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_mkcond</span> (<span class="id" title="lemma">big_rem</span> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <span class="id" title="var">j0</span>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">HP0</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andTb"><span class="id" title="lemma">andTb</span></a> <span class="id" title="lemma">eq_refl</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_all_jobs_from_taskset"><span class="id" title="variable">H_all_jobs_from_taskset</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">tsk0</span> <span class="id" title="var">INtsk0</span> <span class="id" title="var">HP0</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> (@<span class="id" title="lemma">leq_trans</span> (<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <span class="id" title="var">tsk0</span> <span class="id" title="notation">×</span> <span class="id" title="definition">size</span> (<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.arr_seq"><span class="id" title="variable">arr_seq</span></a> <span class="id" title="var">tsk0</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>)))).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">sum1_size</span> <span class="id" title="lemma">big_distrr</span> /= <span class="id" title="lemma">big_filter</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -/<span class="id" title="var">l</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <span class="id" title="lemma">muln1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq"><span class="id" title="lemma">leq_sum_seq</span></a>; <span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j0</span> <span class="id" title="var">IN0</span> /<span class="id" title="lemma">eqP</span> &lt;-.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_valid_job_cost"><span class="id" title="variable">H_valid_job_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived"><span class="id" title="lemma">in_arrivals_implies_arrived</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IN0</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_mul2l</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}[<a class="idref" href="prosa.analysis.facts.model.rbf.html#28ddffb7d859095c8063271398d2b4ab"><span class="id" title="variable">Δ</span></a>](<span class="id" title="lemma">addKn</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF.t"><span class="id" title="variable">t</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.H_is_arrival_bound"><span class="id" title="variable">H_is_arrival_bound</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_addr</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound.WorkloadIsBoundedByRBF"><span class="id" title="section">WorkloadIsBoundedByRBF</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#ProofWorkloadBound"><span class="id" title="section">ProofWorkloadBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab37"></a><h2 class="section">RBF Properties</h2>
+ In this section, we prove simple properties and identities of RBFs. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="RequestBoundFunctions" class="idref" href="#RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:82" class="idref" href="#Task:82"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:83" class="idref" href="#H:83"><span class="id" title="binder">TaskCost</span></a> <a id="H:83" class="idref" href="#H:83"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:84" class="idref" href="#Job:84"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:85" class="idref" href="#H0:85"><span class="id" title="binder">JobTask</span></a> <a id="H0:85" class="idref" href="#H0:85"><span class="id" title="binder">Job</span></a> <a id="H0:85" class="idref" href="#H0:85"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:86" class="idref" href="#H1:86"><span class="id" title="binder">JobArrival</span></a> <a id="H1:86" class="idref" href="#H1:86"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctions.arr_seq" class="idref" href="#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_arrival_times_are_consistent" class="idref" href="#RequestBoundFunctions.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctions.tsk" class="idref" href="#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a></span> be a family of valid arrival curves, i.e., for any task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span>
+     <span class="inlinecode"><span class="id" title="var">max_arrival</span></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is (1) an arrival bound of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>, and (2) it is a monotonic function
+     that equals 0 for the empty interval Δ = 0. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:90" class="idref" href="#H2:90"><span class="id" title="binder">MaxArrivals</span></a> <a id="H2:90" class="idref" href="#H2:90"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_valid_arrival_curve" class="idref" href="#RequestBoundFunctions.H_valid_arrival_curve"><span class="id" title="variable">H_valid_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#valid_arrival_curve"><span class="id" title="definition">valid_arrival_curve</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_is_arrival_curve" class="idref" href="#RequestBoundFunctions.H_is_arrival_curve"><span class="id" title="variable">H_is_arrival_curve</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#respects_max_arrivals"><span class="id" title="definition">respects_max_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let's define some local names for clarity. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="RequestBoundFunctions.task_rbf" class="idref" href="#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> := <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> <span class="inlinecode">0</span> is equal to <span class="inlinecode">0</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_rbf_0_zero" class="idref" href="#task_rbf_0_zero"><span class="id" title="lemma">task_rbf_0_zero</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> /<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">muln_eq0</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>; <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_valid_arrival_curve"><span class="id" title="variable">H_valid_arrival_curve</span></a> ⇒ [<span class="id" title="var">T1</span> <span class="id" title="var">T2</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> is monotone. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_rbf_monotone" class="idref" href="#task_rbf_monotone"><span class="id" title="lemma">task_rbf_monotone</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.rel.html#monotone"><span class="id" title="definition">monotone</span></a> <span class="id" title="definition">leq</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.util.rel.html#monotone"><span class="id" title="definition">monotone</span></a>; <span class="id" title="tactic">intros</span> ? ? <span class="id" title="var">LE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> /<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <span class="id" title="lemma">leq_mul2l</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>; <span class="id" title="tactic">right</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_valid_arrival_curve"><span class="id" title="variable">H_valid_arrival_curve</span></a> ⇒ [<span class="id" title="var">_</span> <span class="id" title="var">T</span>]; <span class="id" title="tactic">apply</span> <span class="id" title="var">T</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. This guarantees that there exists at least one
+      job of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctions.j" class="idref" href="#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_j_arrives" class="idref" href="#RequestBoundFunctions.H_j_arrives"><span class="id" title="variable">H_j_arrives</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_job_of_tsk" class="idref" href="#RequestBoundFunctions.H_job_of_tsk"><span class="id" title="variable">H_job_of_tsk</span></a> : <a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then we prove that <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> at <span class="inlinecode"><a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a></span> is greater than or equal to task cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_rbf_1_ge_task_cost" class="idref" href="#task_rbf_1_ge_task_cost"><span class="id" title="lemma">task_rbf_1_ge_task_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">ALT</span>: <span class="id" title="keyword">∀</span> <a id="n:96" class="idref" href="#n:96"><span class="id" title="binder">n</span></a>, <a class="idref" href="prosa.analysis.facts.model.rbf.html#n:96"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#f031fe1957c4a4a8e217aa46af2b4e25"><span class="id" title="notation">∨</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#n:96"><span class="id" title="variable">n</span></a> <span class="id" title="notation">&gt;</span> 0 <span class="id" title="tactic">by</span> <span class="id" title="tactic">clear</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">n</span>; <span class="id" title="tactic">destruct</span> <span class="id" title="var">n</span>; [<span class="id" title="tactic">left</span> | <span class="id" title="tactic">right</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">ALT</span> (<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>)); <span class="id" title="tactic">destruct</span> <span class="id" title="var">ALT</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">Z</span> | <span class="id" title="var">POS</span>]; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">Z</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leqNgt</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">CONTR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_is_arrival_curve"><span class="id" title="variable">H_is_arrival_curve</span></a> ⇒ <span class="id" title="var">ARRB</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">ARRB</span> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a>) (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a>)).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">feed</span> <span class="id" title="var">ARRB</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">CONTR</span>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> /<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}[<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>]<span class="id" title="lemma">muln1</span> <span class="id" title="lemma">ltn_mul2l</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">CONTR</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">CONTR</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">addn1</span> -[1]<span class="id" title="lemma">add0n</span> <span class="id" title="lemma">leq_add2r</span> <span class="id" title="lemma">leqn0</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">CONTR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">ARRB</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addKn</span> <span class="id" title="var">CONTR</span> <span class="id" title="lemma">leqn0</span> <span class="id" title="lemma">eqn0Ngt</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="var">T</span>; <span class="id" title="tactic">apply</span>: <span class="id" title="var">T</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> -<span class="id" title="lemma">has_predT</span> /<a class="idref" href="prosa.model.task.arrivals.html#task_arrivals_between"><span class="id" title="definition">task_arrivals_between</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">hasP</span>; <span class="id" title="tactic">∃</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.j"><span class="id" title="variable">j</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <span class="id" title="lemma">addn1</span> <span class="id" title="lemma">big_nat_recl</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_geq</span> ?<span class="id" title="lemma">cats0</span> //= <span class="id" title="lemma">mem_filter</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_j_arrives"><span class="id" title="variable">H_j_arrives</span></a> ⇒ [<span class="id" title="var">t</span> <span class="id" title="var">ARR</span>]; <span class="id" title="tactic">move</span>: (<span class="id" title="var">ARR</span>) ⇒ <span class="id" title="var">CONS</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">CONS</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">CONS</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> has a positive cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_positive_cost" class="idref" href="#RequestBoundFunctions.H_positive_cost"><span class="id" title="variable">H_positive_cost</span></a> : 0 <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then, we prove that <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.task_rbf"><span class="id" title="variable">task_rbf</span></a></span> at <span class="inlinecode"><a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a></span> is greater than <span class="inlinecode">0</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_rbf_epsilon_gt_0" class="idref" href="#task_rbf_epsilon_gt_0"><span class="id" title="lemma">task_rbf_epsilon_gt_0</span></a> : 0 <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.task_rbf"><span class="id" title="variable">task_rbf</span></a> <a class="idref" href="prosa.util.epsilon.html#a06c34952043eb8035c521bac955bdcc"><span class="id" title="definition">ε</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a>); <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#task_rbf_1_ge_task_cost"><span class="id" title="lemma">task_rbf_1_ge_task_cost</span></a>; <span class="id" title="tactic">eauto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider a set of tasks <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span> containing the task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctions.ts" class="idref" href="#RequestBoundFunctions.ts"><span class="id" title="variable">ts</span></a> : <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="RequestBoundFunctions.H_tsk_in_ts" class="idref" href="#RequestBoundFunctions.H_tsk_in_ts"><span class="id" title="variable">H_tsk_in_ts</span></a> : <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we prove that cost of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> is less than or equal to the 
+      <span class="inlinecode"><a class="idref" href="prosa.classic.analysis.uni.arrival_curves.workload_bound.html#MaxArrivalsWorkloadBound.total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="task_cost_le_sum_rbf" class="idref" href="#task_cost_le_sum_rbf"><span class="id" title="lemma">task_cost_le_sum_rbf</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:100" class="idref" href="#t:100"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.rbf.html#t:100"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&gt;</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#t:100"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">GE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> <span class="id" title="var">t</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <span class="id" title="lemma">leq_trans</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#task_rbf_1_ge_task_cost"><span class="id" title="lemma">task_rbf_1_ge_task_cost</span></a>; <span class="id" title="tactic">eauto</span> <span class="id" title="keyword">with</span> <span class="id" title="var">basic_facts</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#total_request_bound_function"><span class="id" title="definition">total_request_bound_function</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">erewrite</span> <span class="id" title="lemma">big_rem</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">exact</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.H_tsk_in_ts"><span class="id" title="variable">H_tsk_in_ts</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.analysis.definitions.request_bound_function.html#task_request_bound_function"><span class="id" title="definition">task_request_bound_function</span></a> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions.tsk"><span class="id" title="variable">tsk</span></a> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>); <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#task_rbf_monotone"><span class="id" title="lemma">task_rbf_monotone</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.rbf.html#RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

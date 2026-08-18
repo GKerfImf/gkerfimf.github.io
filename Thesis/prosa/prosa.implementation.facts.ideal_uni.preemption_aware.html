@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.implementation.facts.ideal_uni.preemption_aware</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.implementation.facts.ideal_uni.preemption_aware</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#"><span class="id" title="library">prosa.implementation.facts.generic_schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#"><span class="id" title="library">prosa.implementation.definitions.ideal_uni_scheduler</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#"><span class="id" title="library">prosa.analysis.facts.model.ideal_schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.schedule.limited_preemptive.html#"><span class="id" title="library">prosa.model.schedule.limited_preemptive</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab134"></a><h1 class="section">Properties of the Preemption-Aware Ideal Uniprocessor Scheduler</h1>
+
+<div class="paragraph"> </div>
+
+ This file establishes facts about the reference model of a
+    preemption-model-aware ideal uniprocessor scheduler. 
+<div class="paragraph"> </div>
+
+ The following results assume ideal uniprocessor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="NPUniprocessorScheduler" class="idref" href="#NPUniprocessorScheduler"><span class="id" title="section">NPUniprocessorScheduler</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs with costs and arrival times, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<a id="JC:2" class="idref" href="#JC:2"><span class="id" title="binder">JC</span></a> : <a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#Job:1"><span class="id" title="variable">Job</span></a>} {<a id="JA:3" class="idref" href="#JA:3"><span class="id" title="binder">JA</span></a> : <a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#Job:1"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... in the context of an ideal uniprocessor model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="NPUniprocessorScheduler.PState" class="idref" href="#NPUniprocessorScheduler.PState"><span class="id" title="variable">PState</span></a> := <a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="NPUniprocessorScheduler.idle_state" class="idref" href="#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> : <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PState"><span class="id" title="variable">PState</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose we are given a consistent arrival sequence of such jobs, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="NPUniprocessorScheduler.arr_seq" class="idref" href="#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.H_consistent_arrival_times" class="idref" href="#NPUniprocessorScheduler.H_consistent_arrival_times"><span class="id" title="variable">H_consistent_arrival_times</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... a non-clairvoyant readiness model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="RM:6" class="idref" href="#RM:6"><span class="id" title="binder">RM</span></a>: <a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a>)}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.H_nonclairvoyant_job_readiness" class="idref" href="#NPUniprocessorScheduler.H_nonclairvoyant_job_readiness"><span class="id" title="variable">H_nonclairvoyant_job_readiness</span></a>: <a class="idref" href="prosa.analysis.definitions.readiness.html#nonclairvoyant_readiness"><span class="id" title="definition">nonclairvoyant_readiness</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.RM"><span class="id" title="variable">RM</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and a preemption model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:8" class="idref" href="#H:8"><span class="id" title="binder">JobPreemptable</span></a> <a id="H:8" class="idref" href="#H:8"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For any given job selection policy ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="NPUniprocessorScheduler.choose_job" class="idref" href="#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... consider the schedule produced by the preemption-aware scheduler for
+      the policy induced by <span class="inlinecode"><a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="NPUniprocessorScheduler.schedule" class="idref" href="#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> := <a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="NPUniprocessorScheduler.policy" class="idref" href="#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> := <a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To begin with, we establish that the preemption-aware scheduler does not
+      induce non-work-conserving behavior. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="NPUniprocessorScheduler.WorkConservation" class="idref" href="#NPUniprocessorScheduler.WorkConservation"><span class="id" title="section">WorkConservation</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If <span class="inlinecode"><a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a></span> does not voluntarily idle the processor, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.WorkConservation.H_non_idling" class="idref" href="#NPUniprocessorScheduler.WorkConservation.H_non_idling"><span class="id" title="variable">H_non_idling</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:10" class="idref" href="#t:10"><span class="id" title="binder">t</span></a> <a id="s:11" class="idref" href="#s:11"><span class="id" title="binder">s</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:10"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#s:11"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#s:11"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="notation">[::]</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... then we can establish work-conservation. 
+<div class="paragraph"> </div>
+
+ First, we observe that <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a></span> yields <span class="inlinecode"><a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a></span> only if there are
+        no backlogged jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="allocation_at_idle" class="idref" href="#allocation_at_idle"><span class="id" title="lemma">allocation_at_idle</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="sched:13" class="idref" href="#sched:13"><span class="id" title="binder">sched</span></a> <a id="t:14" class="idref" href="#t:14"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#sched:13"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:14"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.schedule.work_conserving.html#jobs_backlogged_at"><span class="id" title="definition">jobs_backlogged_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#sched:13"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:14"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="notation">[::]</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">sched</span> <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> ⇒ [|<span class="id" title="var">t</span> <span class="id" title="var">_</span>]; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.WorkConservation.H_non_idling"><span class="id" title="variable">H_non_idling</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span>: (<span class="id" title="var">sched</span> <span class="id" title="var">t</span>) ⇒ [<span class="id" title="var">j'</span>|]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.WorkConservation.H_non_idling"><span class="id" title="variable">H_non_idling</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#if_neg"><span class="id" title="lemma">if_neg</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span>: (<a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <span class="id" title="var">j'</span> (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <span class="id" title="var">sched</span> <span class="id" title="var">j'</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>)); <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.WorkConservation.H_non_idling"><span class="id" title="variable">H_non_idling</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">discriminate</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+As a stepping stone, we observe that the generated schedule is idle at
+        a time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> only if there are no backlogged jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="idle_schedule_no_backlogged_jobs" class="idref" href="#idle_schedule_no_backlogged_jobs"><span class="id" title="lemma">idle_schedule_no_backlogged_jobs</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:15" class="idref" href="#t:15"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.processor.ideal.html#is_idle"><span class="id" title="definition">is_idle</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:15"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.schedule.work_conserving.html#jobs_backlogged_at"><span class="id" title="definition">jobs_backlogged_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:15"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="notation">[::]</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.processor.ideal.html#is_idle"><span class="id" title="definition">is_idle</span></a> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#generic_schedule"><span class="id" title="definition">generic_schedule</span></a> ⇒ /<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">NONE</span>. <span class="id" title="tactic">move</span>: (<span class="id" title="var">NONE</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a> ⇒ <span class="id" title="var">IDLE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#allocation_at_idle"><span class="id" title="lemma">allocation_at_idle</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">IDLE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<span class="id" title="var">IDLE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.backlogged.html#backlogged_jobs_prefix_invariance"><span class="id" title="lemma">backlogged_jobs_prefix_invariance</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">h</span> := <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.analysis.definitions.schedule_prefix.html#identical_prefix"><span class="id" title="definition">identical_prefix</span></a> ⇒ <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltnS</span> <span class="id" title="lemma">leq_eqVlt</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [/<span class="id" title="lemma">eqP</span> -&gt;|<span class="id" title="var">LT</span>]; <span class="id" title="var">last</span> <span class="id" title="tactic">first</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> <span class="id" title="var">LT</span> <span class="id" title="var">IDLE</span> <span class="id" title="var">NONE</span> ⇒ // ⇒ <span class="id" title="var">h</span> <span class="id" title="var">IH</span> <span class="id" title="var">LT_x</span> <span class="id" title="var">IDLE</span> <span class="id" title="var">NONE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_prefix_inclusion"><span class="id" title="lemma">schedule_up_to_prefix_inclusion</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> <span class="id" title="var">IDLE</span> <span class="id" title="var">NONE</span> ⇒ [<span class="id" title="var">IDLE</span> <span class="id" title="var">_</span>| <span class="id" title="var">t'</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> -&gt;]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_empty"><span class="id" title="lemma">schedule_up_to_empty</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.analysis.facts.transform.replace_at.html#replace_at_def"><span class="id" title="lemma">replace_at_def</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> <span class="id" title="var">IDLE</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.WorkConservation.H_non_idling"><span class="id" title="variable">H_non_idling</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+From the preceding fact, we conclude that the generated schedule is
+        indeed work-conserving. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a id="np_schedule_work_conserving" class="idref" href="#np_schedule_work_conserving"><span class="id" title="lemma">np_schedule_work_conserving</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.schedule.work_conserving.html#work_conserving"><span class="id" title="definition">work_conserving</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">ARRIVES</span> <span class="id" title="var">BACKLOGGED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (@<a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#ideal_proc_model_sched_case_analysis"><span class="id" title="lemma">ideal_proc_model_sched_case_analysis</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <span class="id" title="var">t</span>) ⇒ [<span class="id" title="var">IDLE</span>|<span class="id" title="var">SCHED</span>]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">exact</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">exfalso</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">NON_EMPTY</span>: <span class="id" title="var">j</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.schedule.work_conserving.html#jobs_backlogged_at"><span class="id" title="definition">jobs_backlogged_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <span class="id" title="var">t</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.backlogged.html#mem_backlogged_jobs"><span class="id" title="lemma">mem_backlogged_jobs</span></a> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">clear</span> <span class="id" title="var">BACKLOGGED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#idle_schedule_no_backlogged_jobs"><span class="id" title="lemma">idle_schedule_no_backlogged_jobs</span></a> <span class="id" title="var">t</span> <span class="id" title="var">IDLE</span>) ⇒ <span class="id" title="var">EMPTY</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">EMPTY</span> <span class="id" title="tactic">in</span> <span class="id" title="var">NON_EMPTY</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.WorkConservation"><span class="id" title="section">WorkConservation</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The next result establishes that the generated preemption-model-aware
+      schedule is structurally valid, meaning all jobs stem from the arrival
+      sequence and only ready jobs are scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="NPUniprocessorScheduler.Validity" class="idref" href="#NPUniprocessorScheduler.Validity"><span class="id" title="section">Validity</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Any reasonable job selection policy will not create jobs "out of thin
+        air," i.e., if a job is selected, it was among those given to choose
+        from. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.Validity.H_chooses_from_set" class="idref" href="#NPUniprocessorScheduler.Validity.H_chooses_from_set"><span class="id" title="variable">H_chooses_from_set</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:16" class="idref" href="#t:16"><span class="id" title="binder">t</span></a> <a id="s:17" class="idref" href="#s:17"><span class="id" title="binder">s</span></a> <a id="j:18" class="idref" href="#j:18"><span class="id" title="binder">j</span></a>, <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:16"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#s:17"><span class="id" title="variable">s</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:18"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:18"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#s:17"><span class="id" title="variable">s</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For the schedule to be valid, we require the notion of readiness to be
+        consistent with the preemption model: a non-preemptive job remains
+        ready until (at least) the end of its current non-preemptive
+        section. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.Validity.H_valid_preemption_behavior" class="idref" href="#NPUniprocessorScheduler.Validity.H_valid_preemption_behavior"><span class="id" title="variable">H_valid_preemption_behavior</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.readiness.html#valid_nonpreemptive_readiness"><span class="id" title="definition">valid_nonpreemptive_readiness</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.RM"><span class="id" title="variable">RM</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we show that if a job is chosen from the list of backlogged jobs, then it must be ready. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="choose_job_implies_job_ready" class="idref" href="#choose_job_implies_job_ready"><span class="id" title="lemma">choose_job_implies_job_ready</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:21" class="idref" href="#t:21"><span class="id" title="binder">t</span></a> <a id="j:22" class="idref" href="#j:22"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.choose_job"><span class="id" title="variable">choose_job</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:21"><span class="id" title="variable">t</span></a><span class="id" title="notation">.+1</span> (<a class="idref" href="prosa.model.schedule.work_conserving.html#jobs_backlogged_at"><span class="id" title="definition">jobs_backlogged_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:21"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:21"><span class="id" title="variable">t</span></a><span class="id" title="notation">.+1</span>) <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:22"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:22"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:21"><span class="id" title="variable">t</span></a><span class="id" title="notation">.+1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">j</span> <span class="id" title="var">IN</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity.H_chooses_from_set"><span class="id" title="variable">H_chooses_from_set</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">IN</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">mem_filter</span> /<a class="idref" href="prosa.behavior.ready.html#backlogged"><span class="id" title="definition">backlogged</span></a> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">READY</span> <span class="id" title="var">_</span>]  <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -(<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.H_nonclairvoyant_job_readiness"><span class="id" title="variable">H_nonclairvoyant_job_readiness</span></a> (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <span class="id" title="var">t</span>) <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_identical_prefix"><span class="id" title="lemma">schedule_up_to_identical_prefix</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we show that, under these natural assumptions, the generated schedule is valid. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <a id="np_schedule_valid" class="idref" href="#np_schedule_valid"><span class="id" title="lemma">np_schedule_valid</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#valid_schedule"><span class="id" title="definition">valid_schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>; <span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span>; <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#generic_schedule"><span class="id" title="definition">generic_schedule</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> ⇒ [/<span class="id" title="lemma">eqP</span> | <span class="id" title="var">t'</span>  <span class="id" title="var">IH</span> /<span class="id" title="lemma">eqP</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> ⇒ <span class="id" title="var">IN</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity.H_chooses_from_set"><span class="id" title="variable">H_chooses_from_set</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">IN</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.backlogged.html#backlogged_job_arrives_in"><span class="id" title="lemma">backlogged_job_arrives_in</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span>: (<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a>  (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t'</span>) <span class="id" title="var">t'</span><span class="id" title="notation">.+1</span>) ⇒ [|<span class="id" title="var">IN</span>];<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Peano.html#pred_Sn"><span class="id" title="lemma">pred_Sn</span></a> ⇒ <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">IH</span>; <span class="id" title="tactic">apply</span> /<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity.H_chooses_from_set"><span class="id" title="variable">H_chooses_from_set</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">IN</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.readiness.backlogged.html#backlogged_job_arrives_in"><span class="id" title="lemma">backlogged_job_arrives_in</span></a>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> ⇒ [/<span class="id" title="lemma">eqP</span> |<span class="id" title="var">t'</span>  <span class="id" title="var">IH</span> /<span class="id" title="lemma">eqP</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> ⇒ <span class="id" title="var">IN</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity.H_chooses_from_set"><span class="id" title="variable">H_chooses_from_set</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">IN</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">mem_filter</span> /<a class="idref" href="prosa.behavior.ready.html#backlogged"><span class="id" title="definition">backlogged</span></a> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">READY</span> <span class="id" title="var">_</span>]  <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -(<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.H_nonclairvoyant_job_readiness"><span class="id" title="variable">H_nonclairvoyant_job_readiness</span></a> (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#empty_schedule"><span class="id" title="definition">empty_schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a>) <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <span class="id" title="var">j</span> 0).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a>  /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span>: (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t'</span> <span class="id" title="var">t'</span>) ⇒ [<span class="id" title="var">j'</span> | <span class="id" title="var">IN</span>]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#choose_job_implies_job_ready"><span class="id" title="lemma">choose_job_implies_job_ready</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="definition">job_preemptable</span></a> <span class="id" title="var">j'</span> <span class="id" title="var">_</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">NP</span> ⇒ [<span class="id" title="var">EQ</span>|<span class="id" title="var">IN</span>]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#choose_job_implies_job_ready"><span class="id" title="lemma">choose_job_implies_job_ready</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity.H_valid_preemption_behavior"><span class="id" title="variable">H_valid_preemption_behavior</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">injection</span> <span class="id" title="var">EQ</span> ⇒ &lt;-.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">NP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> &lt;-: (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <span class="id" title="var">t'</span>) <span class="id" title="var">j'</span> <span class="id" title="var">t'</span><span class="id" title="notation">.+1</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> (<span class="id" title="keyword">fun</span> <a id="t:23" class="idref" href="#t:23"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> ⇒ <a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:23"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:23"><span class="id" title="variable">t</span></a>) <span class="id" title="var">j'</span> <span class="id" title="var">t'</span><span class="id" title="notation">.+1</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#equal_prefix_implies_same_service_during"><span class="id" title="lemma">equal_prefix_implies_same_service_during</span></a> ⇒ <span class="id" title="var">t</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">BOUND</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> (<a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_prefix_inclusion"><span class="id" title="lemma">schedule_up_to_prefix_inclusion</span></a> <span class="id" title="var">_</span>  <span class="id" title="var">_</span> <span class="id" title="var">t</span> <span class="id" title="var">t'</span>). }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.Validity"><span class="id" title="section">Validity</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we observe that the resulting schedule is consistent with the
+      definition of "preemption times". 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="NPUniprocessorScheduler.PreemptionTimes" class="idref" href="#NPUniprocessorScheduler.PreemptionTimes"><span class="id" title="section">PreemptionTimes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For notational convenience, recall the definition of a prefix of the
+        schedule based on which the next decision is made. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="NPUniprocessorScheduler.PreemptionTimes.prefix" class="idref" href="#NPUniprocessorScheduler.PreemptionTimes.prefix"><span class="id" title="variable">prefix</span></a> <a id="t:24" class="idref" href="#t:24"><span class="id" title="binder">t</span></a> := <span class="id" title="keyword">if</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:24"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">is</span> <span class="id" title="var">t'</span><span class="id" title="notation">.+1</span> <span class="id" title="keyword">then</span> <a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <span class="id" title="var">t'</span> <span class="id" title="keyword">else</span> <a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#empty_schedule"><span class="id" title="definition">empty_schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we observe that non-preemptive jobs remain scheduled as long as
+        they are non-preemptive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="np_job_remains_scheduled" class="idref" href="#np_job_remains_scheduled"><span class="id" title="lemma">np_job_remains_scheduled</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:26" class="idref" href="#t:26"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionTimes.prefix"><span class="id" title="variable">prefix</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:26"><span class="id" title="variable">t</span></a><span class="id" title="notation">.-1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span> ⇒ [|<span class="id" title="var">t</span> <span class="id" title="var">_</span>] //  <span class="id" title="var">NP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ifT"><span class="id" title="lemma">ifT</span></a> // -<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Peano.html#pred_Sn"><span class="id" title="lemma">pred_Sn</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_widen"><span class="id" title="lemma">schedule_up_to_widen</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+From this, we conclude that the predicate used to determine whether the
+        previously scheduled job is nonpreemptive in the computation of
+        <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a></span> is consistent with the existing notion of a
+        <span class="inlinecode"><a class="idref" href="prosa.model.schedule.preemption_time.html#preemption_time"><span class="id" title="definition">preemption_time</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="np_consistent" class="idref" href="#np_consistent"><span class="id" title="lemma">np_consistent</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:27" class="idref" href="#t:27"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionTimes.prefix"><span class="id" title="variable">prefix</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:27"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:27"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.schedule.preemption_time.html#preemption_time"><span class="id" title="definition">preemption_time</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t:27"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span> ⇒ [|<span class="id" title="var">t</span> <span class="id" title="var">_</span>]; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a> /<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#generic_schedule"><span class="id" title="definition">generic_schedule</span></a> /<a class="idref" href="prosa.model.schedule.preemption_time.html#preemption_time"><span class="id" title="definition">preemption_time</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_def"><span class="id" title="lemma">schedule_up_to_def</span></a> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionTimes.prefix"><span class="id" title="variable">prefix</span></a> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#allocation_at"><span class="id" title="definition">allocation_at</span></a> ⇒ <span class="id" title="var">NP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ifT"><span class="id" title="lemma">ifT</span></a> // -<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Peano.html#pred_Sn"><span class="id" title="lemma">pred_Sn</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">NP</span>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span>: (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <span class="id" title="var">t</span> <span class="id" title="var">t</span>) ⇒ // <span class="id" title="var">j</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> -&gt;: (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> (<span class="id" title="keyword">fun</span> <a id="t0:28" class="idref" href="#t0:28"><span class="id" title="binder">t0</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> ⇒ <a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t0:28"><span class="id" title="variable">t0</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#t0:28"><span class="id" title="variable">t0</span></a>) <span class="id" title="var">j</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> (<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#schedule_up_to"><span class="id" title="definition">schedule_up_to</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.policy"><span class="id" title="variable">policy</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.idle_state"><span class="id" title="variable">idle_state</span></a> <span class="id" title="var">t</span>) <span class="id" title="var">j</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#equal_prefix_implies_same_service_during"><span class="id" title="lemma">equal_prefix_implies_same_service_during</span></a> ⇒ <span class="id" title="var">t'</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">BOUND</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> (<a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_prefix_inclusion"><span class="id" title="lemma">schedule_up_to_prefix_inclusion</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t'</span> <span class="id" title="var">t</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionTimes"><span class="id" title="section">PreemptionTimes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we establish the main feature: the generated schedule respects
+      the preemption-model semantics. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="NPUniprocessorScheduler.PreemptionCompliance" class="idref" href="#NPUniprocessorScheduler.PreemptionCompliance"><span class="id" title="section">PreemptionCompliance</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+As a minimal validity requirement (which is a part of
+        <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#valid_preemption_model"><span class="id" title="definition">valid_preemption_model</span></a></span>), we require that any job in <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a></span> must
+        start execution to become nonpreemptive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="NPUniprocessorScheduler.PreemptionCompliance.H_valid_preemption_function" class="idref" href="#NPUniprocessorScheduler.PreemptionCompliance.H_valid_preemption_function"><span class="id" title="variable">H_valid_preemption_function</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:29" class="idref" href="#j:29"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:29"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_cannot_become_nonpreemptive_before_execution"><span class="id" title="definition">job_cannot_become_nonpreemptive_before_execution</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#j:29"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Given such a valid preemption model, we establish that the generated
+        schedule indeed respects the preemption model semantics. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="np_respects_preemption_model" class="idref" href="#np_respects_preemption_model"><span class="id" title="lemma">np_respects_preemption_model</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.schedule.limited_preemptive.html#schedule_respects_preemption_model"><span class="id" title="definition">schedule_respects_preemption_model</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span> ⇒ [| <span class="id" title="var">t'</span> <span class="id" title="var">IH</span>]; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service0"><span class="id" title="lemma">service0</span></a> ⇒ <span class="id" title="var">ARR</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="var">NP</span>; <span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionCompliance.H_valid_preemption_function"><span class="id" title="variable">H_valid_preemption_function</span></a> <span class="id" title="var">j</span> <span class="id" title="var">ARR</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">ARR</span> <span class="id" title="var">NP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span>: <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#contraT"><span class="id" title="lemma">contraT</span></a> ⇒ <span class="id" title="var">NOT_SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.analysis.facts.behavior.service.html#not_scheduled_implies_no_service"><span class="id" title="lemma">not_scheduled_implies_no_service</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">NOT_SCHED</span>) ⇒ <span class="id" title="var">NO_SERVICE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -(<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_last_plus_before"><span class="id" title="lemma">service_last_plus_before</span></a>) <span class="id" title="var">NO_SERVICE</span> <span class="id" title="lemma">addn0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">NP</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">IH</span> <span class="id" title="tactic">in</span> <span class="id" title="var">NP</span> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">NOT_SCHED</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> !<a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a> /<a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a>/<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a>/<a class="idref" href="prosa.implementation.definitions.generic_scheduler.html#generic_schedule"><span class="id" title="definition">generic_schedule</span></a> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<span class="id" title="var">SCHED</span> (<a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_prefix_inclusion"><span class="id" title="lemma">schedule_up_to_prefix_inclusion</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t'</span> <span class="id" title="var">t'</span><span class="id" title="notation">.+1</span>) // <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#np_job_remains_scheduled"><span class="id" title="lemma">np_job_remains_scheduled</span></a> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#prev_job_nonpreemptive"><span class="id" title="definition">prev_job_nonpreemptive</span></a> <span class="id" title="var">SCHED</span> (<a class="idref" href="prosa.analysis.facts.behavior.service.html#identical_prefix_service"><span class="id" title="lemma">identical_prefix_service</span></a> <span class="id" title="var">_</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.implementation.facts.generic_schedule.html#schedule_up_to_identical_prefix"><span class="id" title="lemma">schedule_up_to_identical_prefix</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.PreemptionCompliance"><span class="id" title="section">PreemptionCompliance</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler"><span class="id" title="section">NPUniprocessorScheduler</span></a>.<br/>
+
+<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

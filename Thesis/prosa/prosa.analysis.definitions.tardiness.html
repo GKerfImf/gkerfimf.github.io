@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.tardiness</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.tardiness</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.schedulability.html#"><span class="id" title="library">prosa.analysis.definitions.schedulability</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab20"></a><h1 class="section">Tardiness</h1>
+
+<div class="paragraph"> </div>
+
+ In the following section we define the notion of bounded tardiness, 
+    i.e., an upper-bound on the difference between the response time of 
+    any job of a task and its relative deadline. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="Tardiness" class="idref" href="#Tardiness"><span class="id" title="section">Tardiness</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks and its deadline, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskDeadline</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any type of jobs associated with these tasks, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobArrival</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobTask</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:7" class="idref" href="#PState:7"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#Tardiness.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, consider any job arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Tardiness.arr_seq" class="idref" href="#Tardiness.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#Tardiness.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and any schedule of these jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Tardiness.sched" class="idref" href="#Tardiness.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#Tardiness.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task that is to be analyzed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Tardiness.tsk" class="idref" href="#Tardiness.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.analysis.definitions.tardiness.html#Tardiness.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then, we say that B is a tardiness bound of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in this schedule ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Tardiness.B" class="idref" href="#Tardiness.B"><span class="id" title="variable">B</span></a>: <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... iff any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in the arrival sequence has
+         completed no more that <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.limited.abstract_RTA.reduction_of_search_space.html#AbstractRTAReduction.SearchSpace.B"><span class="id" title="variable">B</span></a></span> time units after its deadline. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_tardiness_is_bounded" class="idref" href="#task_tardiness_is_bounded"><span class="id" title="definition">task_tardiness_is_bounded</span></a> <a id="arr_seq:12" class="idref" href="#arr_seq:12"><span class="id" title="binder">arr_seq</span></a> <a id="sched:13" class="idref" href="#sched:13"><span class="id" title="binder">sched</span></a> <a id="tsk:14" class="idref" href="#tsk:14"><span class="id" title="binder">tsk</span></a> <a id="B:15" class="idref" href="#B:15"><span class="id" title="binder">B</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.schedulability.html#task_response_time_bound"><span class="id" title="definition">task_response_time_bound</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#arr_seq:12"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#sched:13"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#tsk:14"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.concept.html#task_deadline"><span class="id" title="definition">task_deadline</span></a> <a class="idref" href="prosa.analysis.definitions.tardiness.html#tsk:14"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.definitions.tardiness.html#B:15"><span class="id" title="variable">B</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.tardiness.html#Tardiness"><span class="id" title="section">Tardiness</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

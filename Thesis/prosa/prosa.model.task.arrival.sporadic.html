@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.task.arrival.sporadic</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.task.arrival.sporadic</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab191"></a><h1 class="section">The Sporadic Task Model</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, we define the arrival process commonly known as the
+    sporadic task model, where jobs may arrive at any time provided any two
+    jobs of a task are separated by at least the minimum inter-arrival time (or
+    period) of the task. 
+<div class="paragraph"> </div>
+
+<a id="lab192"></a><h2 class="section">Task Parameter for the Sporadic Task Model</h2>
+
+<div class="paragraph"> </div>
+
+ Under the sporadic task model, each task is characterized by its minimum
+    inter-arrival time, which we denote as <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.sporadic.html#task_min_inter_arrival_time"><span class="id" title="projection">task_min_inter_arrival_time</span></a></span>. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Class</span> <a id="SporadicModel" class="idref" href="#SporadicModel"><span class="id" title="record">SporadicModel</span></a> (<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) :=<br/>
+&nbsp;&nbsp;<a id="task_min_inter_arrival_time" class="idref" href="#task_min_inter_arrival_time"><span class="id" title="projection">task_min_inter_arrival_time</span></a> : <a class="idref" href="prosa.model.task.arrival.sporadic.html#Task:1"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab193"></a><h2 class="section">Model Validity</h2>
+
+<div class="paragraph"> </div>
+
+ Next, we define the semantics of the sporadic task model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ValidSporadicTaskModel" class="idref" href="#ValidSporadicTaskModel"><span class="id" title="section">ValidSporadicTaskModel</span></a>.<br/>
+</div>
+
+<div class="doc">
+Consider any type of sporadic tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:4" class="idref" href="#Task:4"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>} `{<a id="H:5" class="idref" href="#H:5"><span class="id" title="binder">SporadicModel</span></a> <a id="H:5" class="idref" href="#H:5"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A valid sporadic task should have a non-zero minimum inter-arrival
+      time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_task_min_inter_arrival_time" class="idref" href="#valid_task_min_inter_arrival_time"><span class="id" title="definition">valid_task_min_inter_arrival_time</span></a> <a id="tsk:6" class="idref" href="#tsk:6"><span class="id" title="binder">tsk</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.sporadic.html#task_min_inter_arrival_time"><span class="id" title="definition">task_min_inter_arrival_time</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:6"><span class="id" title="variable">tsk</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, in the context of a set of such tasks, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSporadicTaskModel.ts" class="idref" href="#ValidSporadicTaskModel.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskSet"><span class="id" title="definition">TaskSet</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... every task in the set should have a valid inter-arrival time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_taskset_inter_arrival_times" class="idref" href="#valid_taskset_inter_arrival_times"><span class="id" title="definition">valid_taskset_inter_arrival_times</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:8" class="idref" href="#tsk:8"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.Task"><span class="id" title="variable">Task</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:8"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#valid_task_min_inter_arrival_time"><span class="id" title="definition">valid_task_min_inter_arrival_time</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:8"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any type of jobs stemming from these tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:9" class="idref" href="#Job:9"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} `{<a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">JobTask</span></a> <a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">Job</span></a> <a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">Task</span></a>} `{<a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">JobArrival</span></a> <a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and an arbitrary arrival sequence of such jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSporadicTaskModel.arr_seq" class="idref" href="#ValidSporadicTaskModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a task respects the sporadic task model if the arrivals of
+      its jobs in the arrival sequence are appropriately spaced in time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_sporadic_task_model" class="idref" href="#respects_sporadic_task_model"><span class="id" title="definition">respects_sporadic_task_model</span></a> (<a id="tsk:13" class="idref" href="#tsk:13"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="j:14" class="idref" href="#j:14"><span class="id" title="binder">j</span></a> <a id="j':15" class="idref" href="#j':15"><span class="id" title="binder">j'</span></a>: <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.Job"><span class="id" title="variable">Job</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Given two different jobs j and j' ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.sporadic.html#j:14"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;&gt;'_x"><span class="id" title="notation">≠</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j':15"><span class="id" title="variable">j'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+...that belong to the arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j:14"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j':15"><span class="id" title="variable">j'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+... and that stem from the given task, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j:14"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:13"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j':15"><span class="id" title="variable">j'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:13"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+... if the arrival of j precedes the arrival of j' ...,  
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j:14"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j':15"><span class="id" title="variable">j'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+then the arrival of j and the arrival of j' are separated by at least
+          one period. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j':15"><span class="id" title="variable">j'</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#j:14"><span class="id" title="variable">j</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.model.task.arrival.sporadic.html#task_min_inter_arrival_time"><span class="id" title="definition">task_min_inter_arrival_time</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:13"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on the above definition, we define the sporadic task model as
+      follows. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_sporadic_task_model" class="idref" href="#taskset_respects_sporadic_task_model"><span class="id" title="definition">taskset_respects_sporadic_task_model</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="tsk:16" class="idref" href="#tsk:16"><span class="id" title="binder">tsk</span></a>, <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:16"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#respects_sporadic_task_model"><span class="id" title="definition">respects_sporadic_task_model</span></a> <a class="idref" href="prosa.model.task.arrival.sporadic.html#tsk:16"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.sporadic.html#ValidSporadicTaskModel"><span class="id" title="section">ValidSporadicTaskModel</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

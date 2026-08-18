@@ -1,0 +1,424 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.abstract.definitions</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.abstract.definitions</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">path</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Throughout this file, we assume ideal uni-processor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab3"></a><h1 class="section">Definitions for Abstract Response-Time Analysis</h1>
+ In this module, we propose a set of definitions for the general framework for response-time analysis (RTA) 
+    of uni-processor scheduling of real-time tasks with arbitrary arrival models. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="AbstractRTADefinitions" class="idref" href="#AbstractRTADefinitions"><span class="id" title="section">AbstractRTADefinitions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we introduce all the abstract notions required by the analysis. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="AbstractRTADefinitions.Definitions" class="idref" href="#AbstractRTADefinitions.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of job associated with any type of tasks... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:2" class="idref" href="#Task:2"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">JobTask</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Job</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... with arrival times and costs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobArrival</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of processor state model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:6" class="idref" href="#PState:6"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="AbstractRTADefinitions.Definitions.arr_seq" class="idref" href="#AbstractRTADefinitions.Definitions.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any schedule of this arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="AbstractRTADefinitions.Definitions.sched" class="idref" href="#AbstractRTADefinitions.Definitions.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task that is to be analyzed 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="AbstractRTADefinitions.Definitions.tsk" class="idref" href="#AbstractRTADefinitions.Definitions.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For simplicity, let's define some local names. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="AbstractRTADefinitions.Definitions.job_scheduled_at" class="idref" href="#AbstractRTADefinitions.Definitions.job_scheduled_at"><span class="id" title="variable">job_scheduled_at</span></a> := <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="AbstractRTADefinitions.Definitions.job_completed_by" class="idref" href="#AbstractRTADefinitions.Definitions.job_completed_by"><span class="id" title="variable">job_completed_by</span></a> := <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Recall that a job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is pending_earlier_and_at a time instant <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> iff job
+       <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> arrived before time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> and is still not completed by time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="AbstractRTADefinitions.Definitions.job_pending_earlier_and_at" class="idref" href="#AbstractRTADefinitions.Definitions.job_pending_earlier_and_at"><span class="id" title="variable">job_pending_earlier_and_at</span></a> := <a class="idref" href="prosa.behavior.service.html#pending_earlier_and_at"><span class="id" title="definition">pending_earlier_and_at</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We are going to introduce two main variables of the analysis: 
+       (a) interference, and (b) interfering workload. 
+<div class="paragraph"> </div>
+
+ a) Interference  Execution of a job may be postponed by the environment and/or the system due to different
+       factors (preemption by higher-priority jobs, jitter, black-out periods in hierarchical 
+       scheduling, lack of budget, etc.), which we call interference. 
+
+<div class="paragraph"> </div>
+
+       Besides, note that even the subsequent activation of a task can suffer from interference at 
+       the beginning of its busy interval (despite the fact that this job hasn’t even arrived 
+       at that moment!). Thus, it makes more sense (at least for the current busy-interval 
+       analysis) to think about interference of a job as any interference within the 
+       corresponding busy interval, and not after release of the job.
+
+<div class="paragraph"> </div>
+
+       Based on that, assume a predicate that expresses whether a job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> under consideration 
+       incurs interference at a given time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> (in the context of the schedule under consideration).
+       This will be used later to upper-bound job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>'s response time. Note that a concrete 
+       realization of the function may depend on the schedule, but here we do not require this 
+       for the sake of simplicity and generality. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="AbstractRTADefinitions.Definitions.interference" class="idref" href="#AbstractRTADefinitions.Definitions.interference"><span class="id" title="variable">interference</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+b) Interfering Workload  In addition to interference, the analysis assumes that at any time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, we know an upper 
+       bound on the potential cumulative interference that can be incurred in the future by any
+       job (i.e., the total remaining potential delays). Based on that, assume a function 
+       interfering_workload that indicates for any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>, at any time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, the amount of potential 
+       interference for job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> that is introduced into the system at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. This function will be
+       later used to upper-bound the length of the busy window of a job.
+       One example of workload function is the "total cost of jobs that arrive at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> and 
+       have higher-or-equal priority than job j". In some task models, this function expresses 
+       the amount of the potential interference on job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> that "arrives" in the system at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="AbstractRTADefinitions.Definitions.interfering_workload" class="idref" href="#AbstractRTADefinitions.Definitions.interfering_workload"><span class="id" title="variable">interfering_workload</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In order to bound the response time of a job, we must to consider the cumulative 
+       interference and cumulative interfering workload. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="cumul_interference" class="idref" href="#cumul_interference"><span class="id" title="definition">cumul_interference</span></a> <a id="j:12" class="idref" href="#j:12"><span class="id" title="binder">j</span></a> <a id="t1:13" class="idref" href="#t1:13"><span class="id" title="binder">t1</span></a> <a id="t2:14" class="idref" href="#t2:14"><span class="id" title="binder">t2</span></a> := <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.analysis.abstract.definitions.html#t1:13"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:17" class="idref" href="#t:17"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:14"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.interference"><span class="id" title="variable">interference</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:12"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:15"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="cumul_interfering_workload" class="idref" href="#cumul_interfering_workload"><span class="id" title="definition">cumul_interfering_workload</span></a> <a id="j:18" class="idref" href="#j:18"><span class="id" title="binder">j</span></a> <a id="t1:19" class="idref" href="#t1:19"><span class="id" title="binder">t1</span></a> <a id="t2:20" class="idref" href="#t2:20"><span class="id" title="binder">t2</span></a> := <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.analysis.abstract.definitions.html#t1:19"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:23" class="idref" href="#t:23"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:20"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.interfering_workload"><span class="id" title="variable">interfering_workload</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:18"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:21"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Definition of Busy Interval  Further analysis will be based on the notion of a busy interval. The overall idea of the 
+       busy interval is to take into account the workload that cause a job under consideration to 
+       incur interference. In this section, we provide a definition of an abstract busy interval. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="AbstractRTADefinitions.Definitions.BusyInterval" class="idref" href="#AbstractRTADefinitions.Definitions.BusyInterval"><span class="id" title="section">BusyInterval</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that time instant <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> is a quiet time for job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> iff two conditions hold. 
+         First, the cumulative interference at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> must be equal to the cumulative
+         interfering workload, to indicate that the potential interference seen so far 
+         has been fully "consumed" (i.e., there is no more higher-priority work or other 
+         kinds of delay pending). Second, job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> cannot be pending at any time earlier
+         than <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> <i>and</i> at time instant <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> (i.e., either it was pending earlier but is no 
+         longer pending now, or it was previously not pending and may or may not be 
+         released now), to ensure that the busy window captures the execution of job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="quiet_time" class="idref" href="#quiet_time"><span class="id" title="definition">quiet_time</span></a> (<a id="j:24" class="idref" href="#j:24"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:25" class="idref" href="#t:25"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#cumul_interference"><span class="id" title="definition">cumul_interference</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:24"><span class="id" title="variable">j</span></a> 0 <a class="idref" href="prosa.analysis.abstract.definitions.html#t:25"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#cumul_interfering_workload"><span class="id" title="definition">cumul_interfering_workload</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:24"><span class="id" title="variable">j</span></a> 0 <a class="idref" href="prosa.analysis.abstract.definitions.html#t:25"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.job_pending_earlier_and_at"><span class="id" title="variable">job_pending_earlier_and_at</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:24"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:25"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on the definition of quiet time, we say that interval <code>[t1, t2)</code> is 
+         a (potentially unbounded) busy-interval prefix w.r.t. job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> iff the 
+         interval (a) contains the arrival of job j, (b) starts with a quiet
+         time and (c) remains non-quiet. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="busy_interval_prefix" class="idref" href="#busy_interval_prefix"><span class="id" title="definition">busy_interval_prefix</span></a> (<a id="j:26" class="idref" href="#j:26"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a>) (<a id="t1:27" class="idref" href="#t1:27"><span class="id" title="binder">t1</span></a> <a id="t2:28" class="idref" href="#t2:28"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:27"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:26"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:28"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#quiet_time"><span class="id" title="definition">quiet_time</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:26"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:27"><span class="id" title="variable">t1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="t:29" class="idref" href="#t:29"><span class="id" title="binder">t</span></a>, <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:27"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:29"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:28"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#63a68285c81db8f9bc456233bb9ed181"><span class="id" title="notation">¬</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#quiet_time"><span class="id" title="definition">quiet_time</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:26"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:29"><span class="id" title="variable">t</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we say that an interval <code>[t1, t2)</code> is a busy interval iff
+         <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>,</span> <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a>)</span> <span class="inlinecode"><span class="id" title="keyword">is</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">busy</span>-<span class="id" title="var">interval</span></span> <span class="inlinecode"><a class="idref" href="prosa.util.list.html#prefix"><span class="id" title="definition">prefix</span></a></span> <span class="inlinecode"><span class="id" title="var">and</span></span> <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span> <span class="inlinecode"><span class="id" title="keyword">is</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> <span class="inlinecode"><span class="id" title="var">quiet</span></span> <span class="inlinecode"><a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.</span> <span class="inlinecode"></span>
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="busy_interval" class="idref" href="#busy_interval"><span class="id" title="definition">busy_interval</span></a> (<a id="j:30" class="idref" href="#j:30"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Job"><span class="id" title="variable">Job</span></a>) (<a id="t1:31" class="idref" href="#t1:31"><span class="id" title="binder">t1</span></a> <a id="t2:32" class="idref" href="#t2:32"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval_prefix"><span class="id" title="definition">busy_interval_prefix</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:30"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:31"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:32"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#quiet_time"><span class="id" title="definition">quiet_time</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:30"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:32"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Note that the busy interval, if it exists, is unique. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="busy_interval_is_unique" class="idref" href="#busy_interval_is_unique"><span class="id" title="lemma">busy_interval_is_unique</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:33" class="idref" href="#j:33"><span class="id" title="binder">j</span></a> <a id="t1:34" class="idref" href="#t1:34"><span class="id" title="binder">t1</span></a> <a id="t2:35" class="idref" href="#t2:35"><span class="id" title="binder">t2</span></a> <a id="t1':36" class="idref" href="#t1':36"><span class="id" title="binder">t1'</span></a> <a id="t2':37" class="idref" href="#t2':37"><span class="id" title="binder">t2'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval"><span class="id" title="definition">busy_interval</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:33"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:34"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:35"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval"><span class="id" title="definition">busy_interval</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:33"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1':36"><span class="id" title="variable">t1'</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2':37"><span class="id" title="variable">t2'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:34"><span class="id" title="variable">t1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1':36"><span class="id" title="variable">t1'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:35"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2':37"><span class="id" title="variable">t2'</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ? ? ? ? <span class="id" title="var">BUSY</span> <span class="id" title="var">BUSY'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EQ</span>: <span class="id" title="var">t1</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="var">t1'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negPn"><span class="id" title="lemma">negPn</span></a>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">CONTR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">BUSY</span> ⇒ [[<span class="id" title="var">IN</span> [<span class="id" title="var">QT1</span> <span class="id" title="var">NQ</span>]] <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">BUSY'</span> ⇒ [[<span class="id" title="var">IN'</span> [<span class="id" title="var">QT1'</span> <span class="id" title="var">NQ'</span>]] <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">CONTR</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">neq_ltn</span>; <span class="id" title="tactic">move</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">LT</span>|<span class="id" title="var">GT</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">NQ</span> <span class="id" title="keyword">with</span> <span class="id" title="var">t1'</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">NQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">IN</span> <span class="id" title="var">IN'</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">T1</span>] /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">T2</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <span class="id" title="var">j</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">NQ'</span> <span class="id" title="keyword">with</span> <span class="id" title="var">t1</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">NQ'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">IN</span> <span class="id" title="var">IN'</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">T1</span> <span class="id" title="var">_</span>] /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">T2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <span class="id" title="var">j</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="id" title="tactic">subst</span> <span class="id" title="var">t1'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EQ</span>: <span class="id" title="var">t2</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="var">t2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negPn"><span class="id" title="lemma">negPn</span></a>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">CONTR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">BUSY</span> ⇒ [[<span class="id" title="var">IN</span> [<span class="id" title="var">_</span> <span class="id" title="var">NQ</span>]] <span class="id" title="var">QT2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">BUSY'</span> ⇒ [[<span class="id" title="var">IN'</span> [<span class="id" title="var">_</span> <span class="id" title="var">NQ'</span>]] <span class="id" title="var">QT2'</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">CONTR</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">neq_ltn</span>; <span class="id" title="tactic">move</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">LT</span>|<span class="id" title="var">GT</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">NQ'</span> <span class="id" title="keyword">with</span> <span class="id" title="var">t2</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">NQ'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">IN</span> <span class="id" title="var">IN'</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">T1</span>] /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">T2</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <span class="id" title="var">j</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">NQ</span> <span class="id" title="keyword">with</span> <span class="id" title="var">t2'</span>; <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">NQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">IN</span> <span class="id" title="var">IN'</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">T1</span> <span class="id" title="var">_</span>] /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">T2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <span class="id" title="var">j</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} <span class="id" title="tactic">by</span> <span class="id" title="tactic">subst</span> <span class="id" title="var">t2'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.BusyInterval"><span class="id" title="section">BusyInterval</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we introduce some assumptions about the
+       busy interval that are fundamental for the analysis. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="AbstractRTADefinitions.Definitions.BusyIntervalProperties" class="idref" href="#AbstractRTADefinitions.Definitions.BusyIntervalProperties"><span class="id" title="section">BusyIntervalProperties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a schedule is "work_conserving" iff for any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> from task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> and 
+         at any time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> within a busy interval, there are only two options:
+         either (a) interference(j, t) holds or (b) job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="work_conserving" class="idref" href="#work_conserving"><span class="id" title="definition">work_conserving</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:38" class="idref" href="#j:38"><span class="id" title="binder">j</span></a> <a id="t1:39" class="idref" href="#t1:39"><span class="id" title="binder">t1</span></a> <a id="t2:40" class="idref" href="#t2:40"><span class="id" title="binder">t2</span></a> <a id="t:41" class="idref" href="#t:41"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval"><span class="id" title="definition">busy_interval</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:39"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:40"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:39"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:41"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:40"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#63a68285c81db8f9bc456233bb9ed181"><span class="id" title="notation">¬</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.interference"><span class="id" title="variable">interference</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:41"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.job_scheduled_at"><span class="id" title="variable">job_scheduled_at</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:38"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t:41"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we say that busy intervals of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> are bounded by <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.L"><span class="id" title="variable">L</span></a></span> iff, for any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> of task
+         <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>, there exists a busy interval with length at most L. Note that the existence of such a
+         bounded busy interval is not guaranteed if the schedule is overloaded with work. 
+         Therefore, in the later concrete analyses, we will have to introduce an additional 
+         condition that prevents overload. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="busy_intervals_are_bounded_by" class="idref" href="#busy_intervals_are_bounded_by"><span class="id" title="definition">busy_intervals_are_bounded_by</span></a> <a id="L:42" class="idref" href="#L:42"><span class="id" title="binder">L</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:43" class="idref" href="#j:43"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:43"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:43"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:43"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a id="t1:44" class="idref" href="#t1:44"><span class="id" title="binder">t1</span></a> <a id="t2:45" class="idref" href="#t2:45"><span class="id" title="binder">t2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:44"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:43"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:45"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t2:45"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:44"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#L:42"><span class="id" title="variable">L</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval"><span class="id" title="definition">busy_interval</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:43"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:44"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:45"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Although we have defined the notion of cumulative interference of a job, it cannot be used in 
+         a response-time analysis because of the variability of job parameters. To address this 
+         issue, we define the notion of an interference bound. Note that according to the definition of
+         a work conserving schedule, interference does <i>not</i> include execution of a job itself. Therefore,
+         an interference bound is not obliged to take into account the execution of this job. We say that 
+         the job interference is bounded by an interference_bound_function (<span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#AbstractRTAforFIFOwithArrivalCurves.IBF"><span class="id" title="variable">IBF</span></a></span>) iff for any job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> of 
+         task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> the cumulative interference incurred by <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> in the sub-interval <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>,</span> <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a></span> <span class="inlinecode">+</span> <span class="inlinecode"><span class="id" title="keyword">delta</span>)</span> <span class="inlinecode"><span class="id" title="keyword">of</span></span> <span class="inlinecode"><span class="id" title="var">busy</span></span>
+         <span class="inlinecode"><span class="id" title="var">interval</span></span> <span class="inlinecode">[<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>,</span> <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a>)</span> <span class="inlinecode"><span class="id" title="var">does</span></span> <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#not"><span class="id" title="definition">not</span></a></span> <span class="inlinecode"><span class="id" title="var">exceed</span></span> <span class="inlinecode">[<a class="idref" href="prosa.classic.model.schedule.uni.limited.abstract_RTA.reduction_of_search_space.html#AbstractRTAReduction.SearchSpace.interference_bound_function"><span class="id" title="variable">interference_bound_function</span></a>(<a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a>,</span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.A"><span class="id" title="variable">A</span></a>,</span> <span class="inlinecode"><span class="id" title="keyword">delta</span>)],</span> <span class="inlinecode"><span class="id" title="keyword">where</span></span> <span class="inlinecode">[<a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.A"><span class="id" title="variable">A</span></a>]</span> <span class="inlinecode"><span class="id" title="keyword">is</span></span> <span class="inlinecode"><span class="id" title="var">a</span></span> 
+         <span class="inlinecode"><span class="id" title="var">relative</span></span> <span class="inlinecode"><span class="id" title="var">arrival</span></span> <span class="inlinecode"><a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a></span> <span class="inlinecode"><span class="id" title="keyword">of</span></span> <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.end_time.html#end_time.Task.Lemmas.job"><span class="id" title="variable">job</span></a></span> <span class="inlinecode">[<a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a>]</span> <span class="inlinecode">(<span class="id" title="keyword">with</span></span> <span class="inlinecode"><span class="id" title="var">respect</span></span> <span class="inlinecode"><span class="id" title="var">to</span></span> <span class="inlinecode"><a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a></span> <span class="inlinecode">[<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>]).</span> <span class="inlinecode"></span>
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="job_interference_is_bounded_by" class="idref" href="#job_interference_is_bounded_by"><span class="id" title="definition">job_interference_is_bounded_by</span></a> (<a id="interference_bound_function:46" class="idref" href="#interference_bound_function:46"><span class="id" title="binder">interference_bound_function</span></a>: <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Let's examine this definition in more detail. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:47" class="idref" href="#t1:47"><span class="id" title="binder">t1</span></a> <a id="t2:48" class="idref" href="#t2:48"><span class="id" title="binder">t2</span></a> <a id="delta:49" class="idref" href="#delta:49"><span class="id" title="binder">delta</span></a> <a id="j:50" class="idref" href="#j:50"><span class="id" title="binder">j</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+First, we require <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> to be a job of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_of_task"><span class="id" title="definition">job_of_task</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Next, we require the IBF to bound the interference only within the interval <code>[t1, t1 + delta)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#busy_interval"><span class="id" title="definition">busy_interval</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:48"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#delta:49"><span class="id" title="variable">delta</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t2:48"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Next, we require the IBF to bound the interference only until the job is 
+             completed, after which the function can behave arbitrarily. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.job_completed_by"><span class="id" title="variable">job_completed_by</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#delta:49"><span class="id" title="variable">delta</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+And finally, the IBF function might depend not only on the length 
+             of the interval, but also on the relative arrival time of job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> (offset).  While the first three conditions are needed for discarding excessive cases, offset adds 
+             flexibility to the IBF, which is important, for instance, when analyzing EDF scheduling. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">let</span> <a id="offset:51" class="idref" href="#offset:51"><span class="id" title="binder">offset</span></a> := <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> <span class="id" title="tactic">in</span> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.abstract.definitions.html#cumul_interference"><span class="id" title="definition">cumul_interference</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#j:50"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> (<a class="idref" href="prosa.analysis.abstract.definitions.html#t1:47"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#delta:49"><span class="id" title="variable">delta</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#interference_bound_function:46"><span class="id" title="variable">interference_bound_function</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#offset:51"><span class="id" title="variable">offset</span></a> <a class="idref" href="prosa.analysis.abstract.definitions.html#delta:49"><span class="id" title="variable">delta</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions.BusyIntervalProperties"><span class="id" title="section">BusyIntervalProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.abstract.definitions.html#AbstractRTADefinitions"><span class="id" title="section">AbstractRTADefinitions</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.uni.workload</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.uni.workload</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#"><span class="id" title="library">prosa.classic.model.priority</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Workload" class="idref" href="#Workload"><span class="id" title="module">Workload</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="keyword">Time</span> <span class="id" title="var">ArrivalSequence</span> <span class="id" title="var">Priority</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.WorkloadDefs" class="idref" href="#Workload.WorkloadDefs"><span class="id" title="section">WorkloadDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.job_arrival" class="idref" href="#Workload.WorkloadDefs.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.job_cost" class="idref" href="#Workload.WorkloadDefs.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.job_task" class="idref" href="#Workload.WorkloadDefs.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.arr_seq" class="idref" href="#Workload.WorkloadDefs.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.jobs" class="idref" href="#Workload.WorkloadDefs.jobs"><span class="id" title="variable">jobs</span></a>: <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.WorkloadDefs.WorkloadOfJobs" class="idref" href="#Workload.WorkloadDefs.WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.WorkloadOfJobs.P" class="idref" href="#Workload.WorkloadDefs.WorkloadOfJobs.P"><span class="id" title="variable">P</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#bool"><span class="id" title="inductive">bool</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Workload.workload_of_jobs" class="idref" href="#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> := <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j:11" class="idref" href="#j:11"><span class="id" title="binder">j</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.jobs"><span class="id" title="variable">jobs</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.WorkloadOfJobs.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#j:9"><span class="id" title="variable">j</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#j:9"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.WorkloadOfJobs"><span class="id" title="section">WorkloadOfJobs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.WorkloadDefs.PerTaskPriority" class="idref" href="#Workload.WorkloadDefs.PerTaskPriority"><span class="id" title="section">PerTaskPriority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.PerTaskPriority.higher_eq_priority" class="idref" href="#Workload.WorkloadDefs.PerTaskPriority.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.PerTaskPriority.tsk" class="idref" href="#Workload.WorkloadDefs.PerTaskPriority.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="Workload.WorkloadDefs.PerTaskPriority.of_higher_or_equal_priority" class="idref" href="#Workload.WorkloadDefs.PerTaskPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a> <a id="j:14" class="idref" href="#j:14"><span class="id" title="binder">j</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerTaskPriority.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a> (<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#j:14"><span class="id" title="variable">j</span></a>) <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerTaskPriority.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Workload.workload_of_higher_or_equal_priority_tasks" class="idref" href="#Workload.workload_of_higher_or_equal_priority_tasks"><span class="id" title="definition">workload_of_higher_or_equal_priority_tasks</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerTaskPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerTaskPriority"><span class="id" title="section">PerTaskPriority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.WorkloadDefs.PerJobPriority" class="idref" href="#Workload.WorkloadDefs.PerJobPriority"><span class="id" title="section">PerJobPriority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.PerJobPriority.higher_eq_priority" class="idref" href="#Workload.WorkloadDefs.PerJobPriority.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_policy"><span class="id" title="definition">JLFP_policy</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.WorkloadDefs.PerJobPriority.j" class="idref" href="#Workload.WorkloadDefs.PerJobPriority.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="Workload.WorkloadDefs.PerJobPriority.of_higher_or_equal_priority" class="idref" href="#Workload.WorkloadDefs.PerJobPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a> <a id="j_hp:17" class="idref" href="#j_hp:17"><span class="id" title="binder">j_hp</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerJobPriority.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#j_hp:17"><span class="id" title="variable">j_hp</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerJobPriority.j"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Workload.workload_of_higher_or_equal_priority_jobs" class="idref" href="#Workload.workload_of_higher_or_equal_priority_jobs"><span class="id" title="definition">workload_of_higher_or_equal_priority_jobs</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerJobPriority.of_higher_or_equal_priority"><span class="id" title="variable">of_higher_or_equal_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs.PerJobPriority"><span class="id" title="section">PerJobPriority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.WorkloadDefs"><span class="id" title="section">WorkloadDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.TaskWorkload" class="idref" href="#Workload.TaskWorkload"><span class="id" title="section">TaskWorkload</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:18" class="idref" href="#Task:18"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:19" class="idref" href="#Job:19"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.TaskWorkload.job_arrival" class="idref" href="#Workload.TaskWorkload.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.TaskWorkload.job_cost" class="idref" href="#Workload.TaskWorkload.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.TaskWorkload.job_task" class="idref" href="#Workload.TaskWorkload.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.TaskWorkload.arr_seq" class="idref" href="#Workload.TaskWorkload.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.TaskWorkload.tsk" class="idref" href="#Workload.TaskWorkload.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="Workload.TaskWorkload.of_task_tsk" class="idref" href="#Workload.TaskWorkload.of_task_tsk"><span class="id" title="variable">of_task_tsk</span></a> <a id="j:25" class="idref" href="#j:25"><span class="id" title="binder">j</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#j:25"><span class="id" title="variable">j</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Workload.task_workload" class="idref" href="#Workload.task_workload"><span class="id" title="definition">task_workload</span></a> <a id="jobs:26" class="idref" href="#jobs:26"><span class="id" title="binder">jobs</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#jobs:26"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.of_task_tsk"><span class="id" title="variable">of_task_tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Workload.task_workload_between" class="idref" href="#Workload.task_workload_between"><span class="id" title="definition">task_workload_between</span></a> (<a id="t1:27" class="idref" href="#t1:27"><span class="id" title="binder">t1</span></a> <a id="t2:28" class="idref" href="#t2:28"><span class="id" title="binder">t2</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.task_workload"><span class="id" title="definition">task_workload</span></a> (<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.jobs_arrived_between"><span class="id" title="definition">jobs_arrived_between</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t1:27"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t2:28"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.TaskWorkload"><span class="id" title="section">TaskWorkload</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Workload.BasicLemmas" class="idref" href="#Workload.BasicLemmas"><span class="id" title="section">BasicLemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:29" class="idref" href="#Job:29"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.BasicLemmas.job_arrival" class="idref" href="#Workload.BasicLemmas.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.BasicLemmas.job_cost" class="idref" href="#Workload.BasicLemmas.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Workload.BasicLemmas.arr_seq" class="idref" href="#Workload.BasicLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="Workload.BasicLemmas.arrivals_between" class="idref" href="#Workload.BasicLemmas.arrivals_between"><span class="id" title="variable">arrivals_between</span></a> := <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.jobs_arrived_between"><span class="id" title="definition">jobs_arrived_between</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Workload.workload_of_jobs_cat" class="idref" href="#Workload.workload_of_jobs_cat"><span class="id" title="lemma">workload_of_jobs_cat</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:33" class="idref" href="#t:33"><span class="id" title="binder">t</span></a> <a id="t1:34" class="idref" href="#t1:34"><span class="id" title="binder">t1</span></a> <a id="t2:35" class="idref" href="#t2:35"><span class="id" title="binder">t2</span></a> <a id="P:36" class="idref" href="#P:36"><span class="id" title="binder">P</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t1:34"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t:33"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t2:35"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.job_cost"><span class="id" title="variable">job_cost</span></a> (<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.arrivals_between"><span class="id" title="variable">arrivals_between</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t1:34"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t2:35"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#P:36"><span class="id" title="variable">P</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.job_cost"><span class="id" title="variable">job_cost</span></a> (<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.arrivals_between"><span class="id" title="variable">arrivals_between</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t1:34"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t:33"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#P:36"><span class="id" title="variable">P</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.job_cost"><span class="id" title="variable">job_cost</span></a> (<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.arrivals_between"><span class="id" title="variable">arrivals_between</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t:33"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#t2:35"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#P:36"><span class="id" title="variable">P</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> <span class="id" title="var">P</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GE</span> <span class="id" title="var">LE</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> /<a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas.arrivals_between"><span class="id" title="variable">arrivals_between</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> (<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.job_arrived_between_cat"><span class="id" title="lemma">job_arrived_between_cat</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) // <span class="id" title="lemma">big_cat</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload.BasicLemmas"><span class="id" title="section">BasicLemmas</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.workload.html#Workload"><span class="id" title="module">Workload</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

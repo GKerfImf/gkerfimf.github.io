@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.uni.susp.valid_schedule</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.uni.susp.valid_schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.priority.html#"><span class="id" title="library">prosa.classic.model.priority</span></a> <a class="idref" href="prosa.classic.model.suspension.html#"><span class="id" title="library">prosa.classic.model.suspension</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.susp.schedule</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.platform.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.susp.platform</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="ValidSuspensionAwareSchedule" class="idref" href="#ValidSuspensionAwareSchedule"><span class="id" title="module">ValidSuspensionAwareSchedule</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">ScheduleWithSuspensions</span> <span class="id" title="var">Suspension</span> <span class="id" title="var">Priority</span> <span class="id" title="var">PlatformWithSuspensions</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Basic Setup &amp; Setting
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule"><span class="id" title="section">DefiningValidSchedule</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.job_task" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.arr_seq" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.higher_eq_priority" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.JLDP_policy"><span class="id" title="definition">JLDP_policy</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.job_suspension_duration" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_suspension_duration"><span class="id" title="variable">job_suspension_duration</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.job_suspension"><span class="id" title="definition">job_suspension</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Definition of the Suspension-Aware Schedule 
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H1_jobs_come_from_arrival_sequence" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H1_jobs_come_from_arrival_sequence"><span class="id" title="variable">H1_jobs_come_from_arrival_sequence</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H2_jobs_must_arrive_to_execute" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H2_jobs_must_arrive_to_execute"><span class="id" title="variable">H2_jobs_must_arrive_to_execute</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H3_completed_jobs_dont_execute" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H3_completed_jobs_dont_execute"><span class="id" title="variable">H3_completed_jobs_dont_execute</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H4_work_conserving" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H4_work_conserving"><span class="id" title="variable">H4_work_conserving</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.platform.html#PlatformWithSuspensions.work_conserving"><span class="id" title="definition">work_conserving</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_suspension_duration"><span class="id" title="variable">job_suspension_duration</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H5_respects_priority" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H5_respects_priority"><span class="id" title="variable">H5_respects_priority</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.platform.html#PlatformWithSuspensions.respects_JLDP_policy"><span class="id" title="definition">respects_JLDP_policy</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_suspension_duration"><span class="id" title="variable">job_suspension_duration</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.arr_seq"><span class="id" title="variable">arr_seq</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ValidSuspensionAwareSchedule.DefiningValidSchedule.H6_respects_self_suspensions" class="idref" href="#ValidSuspensionAwareSchedule.DefiningValidSchedule.H6_respects_self_suspensions"><span class="id" title="variable">H6_respects_self_suspensions</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.suspension_intervals.html#SuspensionIntervals.respects_self_suspensions"><span class="id" title="definition">respects_self_suspensions</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.job_suspension_duration"><span class="id" title="variable">job_suspension_duration</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.sched_susp"><span class="id" title="variable">sched_susp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ValidSuspensionAwareSchedule.valid_suspension_aware_schedule" class="idref" href="#ValidSuspensionAwareSchedule.valid_suspension_aware_schedule"><span class="id" title="definition">valid_suspension_aware_schedule</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H1_jobs_come_from_arrival_sequence"><span class="id" title="variable">H1_jobs_come_from_arrival_sequence</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H2_jobs_must_arrive_to_execute"><span class="id" title="variable">H2_jobs_must_arrive_to_execute</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H3_completed_jobs_dont_execute"><span class="id" title="variable">H3_completed_jobs_dont_execute</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H4_work_conserving"><span class="id" title="variable">H4_work_conserving</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H5_respects_priority"><span class="id" title="variable">H5_respects_priority</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule.H6_respects_self_suspensions"><span class="id" title="variable">H6_respects_self_suspensions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule.DefiningValidSchedule"><span class="id" title="section">DefiningValidSchedule</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.valid_schedule.html#ValidSuspensionAwareSchedule"><span class="id" title="module">ValidSuspensionAwareSchedule</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

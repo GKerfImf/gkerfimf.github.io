@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.priority.sequential</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.priority.sequential</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#"><span class="id" title="library">prosa.analysis.definitions.always_higher_priority</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.busy_interval.priority_inversion.html#"><span class="id" title="library">prosa.analysis.facts.busy_interval.priority_inversion</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove that, given two jobs <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, if
+    job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> arrives earlier than job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> always has higher
+    priority than <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, then <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> is scheduled only after <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> is
+    completed. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="SequentialJLFP" class="idref" href="#SequentialJLFP"><span class="id" title="section">SequentialJLFP</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="Arrival:2" class="idref" href="#Arrival:2"><span class="id" title="binder">Arrival</span></a> : <a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="Cost:3" class="idref" href="#Cost:3"><span class="id" title="binder">Cost</span></a> : <a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SequentialJLFP.arr_seq" class="idref" href="#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider a JLFP-policy that indicates a higher-or-equal priority
+      relation, and assume that this relation is transitive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:5" class="idref" href="#H:5"><span class="id" title="binder">JLFP_policy</span></a> <a id="H:5" class="idref" href="#H:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_priority_is_transitive" class="idref" href="#SequentialJLFP.H_priority_is_transitive"><span class="id" title="variable">H_priority_is_transitive</span></a> : <a class="idref" href="prosa.model.priority.classes.html#transitive_priorities"><span class="id" title="definition">transitive_priorities</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uni-processor schedule of this arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SequentialJLFP.sched" class="idref" href="#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... allow for any work-bearing notion of job readiness, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">@</span></a><a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">JobReady</span></a> <a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">Job</span></a> <a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">(</span></a><a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">ideal.processor_state</span></a> <a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">Job</span></a><a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">)</span></a> <a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">Cost</span></a> <a id="H0:8" class="idref" href="#H0:8"><span class="id" title="binder">Arrival</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_job_ready" class="idref" href="#SequentialJLFP.H_job_ready"><span class="id" title="variable">H_job_ready</span></a> : <a class="idref" href="prosa.analysis.definitions.work_bearing_readiness.html#work_bearing_readiness"><span class="id" title="definition">work_bearing_readiness</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and assume that the schedule is valid. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_sched_valid" class="idref" href="#SequentialJLFP.H_sched_valid"><span class="id" title="variable">H_sched_valid</span></a> : <a class="idref" href="prosa.behavior.ready.html#valid_schedule"><span class="id" title="definition">valid_schedule</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In addition, we assume the existence of a function mapping jobs
+      to their preemption points ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">JobPreemptable</span></a> <a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and assume that it defines a valid preemption model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_valid_preemption_model" class="idref" href="#SequentialJLFP.H_valid_preemption_model"><span class="id" title="variable">H_valid_preemption_model</span></a> : <a class="idref" href="prosa.model.preemption.parameter.html#valid_preemption_model"><span class="id" title="definition">valid_preemption_model</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we assume that the schedule respects the policy defined by
+     the <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> function (i.e., jobs have bounded
+     non-preemptive segments)... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_respects_policy" class="idref" href="#SequentialJLFP.H_respects_policy"><span class="id" title="variable">H_respects_policy</span></a> : <a class="idref" href="prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and that jobs must arrive to execute. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialJLFP.H_jobs_must_arrive_to_execute" class="idref" href="#SequentialJLFP.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that, given two jobs <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, if job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> arrives
+      earlier than job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> always has higher priority than
+      <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, then <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> is scheduled only after <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> is completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="early_hep_job_is_scheduled" class="idref" href="#early_hep_job_is_scheduled"><span class="id" title="lemma">early_hep_job_is_scheduled</span></a> : <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j1:15" class="idref" href="#j1:15"><span class="id" title="binder">j1</span></a> <a id="j2:16" class="idref" href="#j2:16"><span class="id" title="binder">j2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j1:15"><span class="id" title="variable">j1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j1:15"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j2:16"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#always_higher_priority"><span class="id" title="definition">always_higher_priority</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j1:15"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j2:16"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:17" class="idref" href="#t:17"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j2:16"><span class="id" title="variable">j2</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#t:17"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#j1:15"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#t:17"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> <span class="id" title="var">ARR</span> <span class="id" title="var">LE</span> <span class="id" title="var">AHP</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negPn"><span class="id" title="lemma">negPn</span></a>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">NCOMPL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.H_sched_valid"><span class="id" title="variable">H_sched_valid</span></a> ⇒ [<span class="id" title="var">COARR</span> <span class="id" title="var">MBR</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">edestruct</span> <a class="idref" href="prosa.analysis.facts.model.preemption.html#scheduling_of_any_segment_starts_with_preemption_time"><span class="id" title="lemma">scheduling_of_any_segment_starts_with_preemption_time</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">as</span> [<span class="id" title="var">pt</span> [<span class="id" title="var">LET</span> [<span class="id" title="var">PT</span> <span class="id" title="var">ALL_SCHED</span>]]]; <span class="id" title="tactic">try</span> <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">LET</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">LE1</span> <span class="id" title="var">LE2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">ALL_SCHED</span> <span class="id" title="var">pt</span>); <span class="id" title="var">feed</span> <span class="id" title="var">ALL_SCHED</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">PEND1</span>: <a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j1</span> <span class="id" title="var">pt</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.arrival_sequence.html#has_arrived"><span class="id" title="definition">has_arrived</span></a>; <span class="id" title="var">ssrlia</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">NCOMPL</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#contra"><span class="id" title="lemma">contra</span></a>, <a class="idref" href="prosa.analysis.facts.behavior.completion.html#completion_monotonic"><span class="id" title="lemma">completion_monotonic</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.H_job_ready"><span class="id" title="variable">H_job_ready</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">PEND1</span> ⇒ //; <span class="id" title="tactic">destruct</span> <span class="id" title="var">PEND1</span> <span class="id" title="keyword">as</span> [<span class="id" title="var">j3</span> [<span class="id" title="var">ARR3</span> [<span class="id" title="var">READY3</span> <span class="id" title="var">HEP3</span>]]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">AHP</span> <span class="id" title="var">pt</span>) ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>[<span class="id" title="var">HEP</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="var">NHEP</span>]; <span class="id" title="tactic">eapply</span> <span class="id" title="var">NHEP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.H_priority_is_transitive"><span class="id" title="variable">H_priority_is_transitive</span></a>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">HEP3</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP.H_respects_policy"><span class="id" title="variable">H_respects_policy</span></a>; <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">SCHED2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EQ</span> := <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#ideal_proc_model_is_a_uniprocessor_model"><span class="id" title="lemma">ideal_proc_model_is_a_uniprocessor_model</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">pt</span> <span class="id" title="var">SCHED2</span> <span class="id" title="var">ALL_SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">subst</span> <span class="id" title="var">j2</span>; <span class="id" title="tactic">rename</span> <span class="id" title="var">j3</span> <span class="id" title="var">into</span> <span class="id" title="var">j</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">specialize</span> (<span class="id" title="var">AHP</span> 0); <span class="id" title="tactic">destruct</span> <span class="id" title="var">AHP</span>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#SequentialJLFP"><span class="id" title="section">SequentialJLFP</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

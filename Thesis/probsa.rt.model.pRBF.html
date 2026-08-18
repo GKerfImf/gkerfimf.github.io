@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>probsa.rt.model.pRBF</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library probsa.rt.model.pRBF</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">prosa.model</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa/prosa.model.task.arrival.curves.html#"><span class="id" title="library">task.arrival.curves</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">probsa.probability</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="probsa.probability.pmf.html#"><span class="id" title="library">pmf</span></a>.<br/>
+
+<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="ProbRBF" class="idref" href="#ProbRBF"><span class="id" title="section">ProbRBF</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa/prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="dbe7daa3f4200dd60831b0ac13fea06b" class="idref" href="#dbe7daa3f4200dd60831b0ac13fea06b"><span class="id" title="binder">α</span></a> : <a class="idref" href="prosa/prosa.model.task.arrival.curves.html#MaxArrivals"><span class="id" title="class">MaxArrivals</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#Task:1"><span class="id" title="variable">Task</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="pWCET_pmf:3" class="idref" href="#pWCET_pmf:3"><span class="id" title="binder">pWCET_pmf</span></a> : <a class="idref" href="probsa.rt.model.task.html#ProbWCET"><span class="id" title="class">ProbWCET</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#Task:1"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="to_distrib" class="idref" href="#to_distrib"><span class="id" title="definition">to_distrib</span></a> (<a id="pWCET:4" class="idref" href="#pWCET:4"><span class="id" title="binder">pWCET</span></a> : <a class="idref" href="probsa.rt.model.task.html#ProbWCET"><span class="id" title="class">ProbWCET</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#ProbRBF.Task"><span class="id" title="variable">Task</span></a>) : <a class="idref" href="probsa.rt.model.pRBF.html#ProbRBF.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <span class="id" title="record">distrib</span> <span class="id" title="notation">[</span><span class="id" title="notation">countType</span> <span class="id" title="notation">of</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a><span class="id" title="notation">]</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <a id="tsk:5" class="idref" href="#tsk:5"><span class="id" title="binder">tsk</span></a> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">match</span> <a class="idref" href="probsa.rt.model.pRBF.html#pWCET:4"><span class="id" title="variable">pWCET</span></a> <span class="id" title="keyword">with</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| <a class="idref" href="probsa.rt.model.task.html#Build_ProbWCET"><span class="id" title="constructor">Build_ProbWCET</span></a> <span class="id" title="var">pmf</span> <span class="id" title="var">pos</span> <span class="id" title="var">sum1</span> ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="constructor">mkDistrib</span> <span class="id" title="notation">[</span><span class="id" title="notation">countType</span> <span class="id" title="notation">of</span> <a class="idref" href="prosa/prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a><span class="id" title="notation">]</span> (<span class="id" title="var">pmf</span> <a class="idref" href="probsa.rt.model.pRBF.html#tsk:5"><span class="id" title="variable">tsk</span></a>) (<span class="id" title="var">pos</span> <a class="idref" href="probsa.rt.model.pRBF.html#tsk:5"><span class="id" title="variable">tsk</span></a>) (<span class="id" title="var">sum1</span> <a class="idref" href="probsa.rt.model.pRBF.html#tsk:5"><span class="id" title="variable">tsk</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">end</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pRBF" class="idref" href="#pRBF"><span class="id" title="definition">pRBF</span></a> (<a id="tsk:7" class="idref" href="#tsk:7"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="probsa.rt.model.pRBF.html#ProbRBF.Task"><span class="id" title="variable">Task</span></a>) (<a id="be45bd3545ff15616ff7876dda6137a7" class="idref" href="#be45bd3545ff15616ff7876dda6137a7"><span class="id" title="binder">Δ</span></a> : <a class="idref" href="prosa/prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) : <span class="id" title="record">distrib</span> <span class="id" title="notation">[</span><span class="id" title="notation">countType</span> <span class="id" title="notation">of</span> <a class="idref" href="prosa/prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a><span class="id" title="notation">]</span> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="probsa.probability.pmf.html#cdce1cce9ea2f853bd64e872563b4669"><span class="id" title="notation">⨁</span></a><a class="idref" href="probsa.probability.pmf.html#cdce1cce9ea2f853bd64e872563b4669"><span class="id" title="notation">_</span></a><a class="idref" href="probsa.probability.pmf.html#cdce1cce9ea2f853bd64e872563b4669"><span class="id" title="notation">{</span></a><a id="i:11" class="idref" href="#i:11"><span class="id" title="binder">i</span></a> <a class="idref" href="probsa.probability.pmf.html#cdce1cce9ea2f853bd64e872563b4669"><span class="id" title="notation">&lt;</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#0d0cc921be1fa9871d6b97a0d77e23d0"><span class="id" title="variable">α</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#tsk:7"><span class="id" title="variable">tsk</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#be45bd3545ff15616ff7876dda6137a7"><span class="id" title="variable">Δ</span></a><a class="idref" href="probsa.probability.pmf.html#cdce1cce9ea2f853bd64e872563b4669"><span class="id" title="notation">}</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#to_distrib"><span class="id" title="definition">to_distrib</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#ProbRBF.pWCET_pmf"><span class="id" title="variable">pWCET_pmf</span></a> <a class="idref" href="probsa.rt.model.pRBF.html#tsk:7"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="probsa.rt.model.pRBF.html#ProbRBF"><span class="id" title="section">ProbRBF</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

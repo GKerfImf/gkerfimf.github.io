@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.uni.susp.schedule</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.uni.susp.schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.suspension.html#"><span class="id" title="library">prosa.classic.model.suspension</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#"><span class="id" title="library">prosa.classic.model.priority</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.suspension_intervals.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.susp.suspension_intervals</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="ScheduleWithSuspensions" class="idref" href="#ScheduleWithSuspensions"><span class="id" title="module">ScheduleWithSuspensions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">UniprocessorSchedule</span> <span class="id" title="var">SuspensionIntervals</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ScheduleWithSuspensions.Definitions" class="idref" href="#ScheduleWithSuspensions.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleWithSuspensions.Definitions.job_arrival" class="idref" href="#ScheduleWithSuspensions.Definitions.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleWithSuspensions.Definitions.job_cost" class="idref" href="#ScheduleWithSuspensions.Definitions.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleWithSuspensions.Definitions.next_suspension" class="idref" href="#ScheduleWithSuspensions.Definitions.next_suspension"><span class="id" title="variable">next_suspension</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.job_suspension"><span class="id" title="definition">job_suspension</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleWithSuspensions.Definitions.sched" class="idref" href="#ScheduleWithSuspensions.Definitions.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ScheduleWithSuspensions.Definitions.job_pending_at" class="idref" href="#ScheduleWithSuspensions.Definitions.job_pending_at"><span class="id" title="variable">job_pending_at</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ScheduleWithSuspensions.Definitions.job_scheduled_at" class="idref" href="#ScheduleWithSuspensions.Definitions.job_scheduled_at"><span class="id" title="variable">job_scheduled_at</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="ScheduleWithSuspensions.Definitions.job_suspended_at" class="idref" href="#ScheduleWithSuspensions.Definitions.job_suspended_at"><span class="id" title="variable">job_suspended_at</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.susp.suspension_intervals.html#SuspensionIntervals.suspended_at"><span class="id" title="definition">suspended_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.next_suspension"><span class="id" title="variable">next_suspension</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ScheduleWithSuspensions.Definitions.BackloggedJob" class="idref" href="#ScheduleWithSuspensions.Definitions.BackloggedJob"><span class="id" title="section">BackloggedJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleWithSuspensions.Definitions.BackloggedJob.j" class="idref" href="#ScheduleWithSuspensions.Definitions.BackloggedJob.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ScheduleWithSuspensions.backlogged" class="idref" href="#ScheduleWithSuspensions.backlogged"><span class="id" title="definition">backlogged</span></a> (<a id="t:8" class="idref" href="#t:8"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_pending_at"><span class="id" title="variable">job_pending_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.BackloggedJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#t:8"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_scheduled_at"><span class="id" title="variable">job_scheduled_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.BackloggedJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#t:8"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.job_suspended_at"><span class="id" title="variable">job_suspended_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.BackloggedJob.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#t:8"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions.BackloggedJob"><span class="id" title="section">BackloggedJob</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions.Definitions"><span class="id" title="section">Definitions</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.susp.schedule.html#ScheduleWithSuspensions"><span class="id" title="module">ScheduleWithSuspensions</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

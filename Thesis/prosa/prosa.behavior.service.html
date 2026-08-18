@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.behavior.service</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.behavior.service</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.schedule.html#"><span class="id" title="library">prosa.behavior.schedule</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="Service" class="idref" href="#Service"><span class="id" title="section">Service</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab76"></a><h1 class="section">Service of a Job</h1>
+
+<div class="paragraph"> </div>
+
+ Consider any kind of jobs and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<a id="PState:2" class="idref" href="#PState:2"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.behavior.service.html#Job:1"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Service.sched" class="idref" href="#Service.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.behavior.service.html#Service.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we define whether a job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="scheduled_at" class="idref" href="#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> (<a id="j:4" class="idref" href="#j:4"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:5" class="idref" href="#t:5"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.schedule.html#scheduled_in"><span class="id" title="definition">scheduled_in</span></a> <a class="idref" href="prosa.behavior.service.html#j:4"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#Service.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.service.html#t:5"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and the instantaneous service received by job j at time t. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="service_at" class="idref" href="#service_at"><span class="id" title="definition">service_at</span></a> (<a id="j:6" class="idref" href="#j:6"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:7" class="idref" href="#t:7"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="definition">service_in</span></a> <a class="idref" href="prosa.behavior.service.html#j:6"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.service.html#Service.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.behavior.service.html#t:7"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> receives service at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> if
+      <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.service_at"><span class="id" title="definition">service_at</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> is positive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="receives_service_at" class="idref" href="#receives_service_at"><span class="id" title="definition">receives_service_at</span></a> (<a id="j:8" class="idref" href="#j:8"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:9" class="idref" href="#t:9"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := 0 <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.behavior.service.html#j:8"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:9"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on the notion of instantaneous service, we define the cumulative
+      service received by job j during any interval from <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a></span> until (but not
+      including) <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="service_during" class="idref" href="#service_during"><span class="id" title="definition">service_during</span></a> (<a id="j:10" class="idref" href="#j:10"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t1:11" class="idref" href="#t1:11"><span class="id" title="binder">t1</span></a> <a id="t2:12" class="idref" href="#t2:12"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.behavior.service.html#t1:11"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:15" class="idref" href="#t:15"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.behavior.service.html#t2:12"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.behavior.service.html#j:10"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:13"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the previous definition, we define the cumulative service received
+      by job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> up to (but not including) time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="service" class="idref" href="#service"><span class="id" title="definition">service</span></a> (<a id="j:16" class="idref" href="#j:16"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:17" class="idref" href="#t:17"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.behavior.service.html#j:16"><span class="id" title="variable">j</span></a> 0 <a class="idref" href="prosa.behavior.service.html#t:17"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab77"></a><h1 class="section">Job Completion and Response Time</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, consider jobs that have a cost, a deadline, and an
+      arbitrary arrival time. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:18" class="idref" href="#H:18"><span class="id" title="binder">JobCost</span></a> <a id="H:18" class="idref" href="#H:18"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:19" class="idref" href="#H0:19"><span class="id" title="binder">JobDeadline</span></a> <a id="H0:19" class="idref" href="#H0:19"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:20" class="idref" href="#H1:20"><span class="id" title="binder">JobArrival</span></a> <a id="H1:20" class="idref" href="#H1:20"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> has completed by time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> if it received all required
+      service in the interval from <span class="inlinecode">0</span> until (but not including) <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="completed_by" class="idref" href="#completed_by"><span class="id" title="definition">completed_by</span></a> (<a id="j:21" class="idref" href="#j:21"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:22" class="idref" href="#t:22"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.behavior.service.html#j:21"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:22"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.behavior.service.html#j:21"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> completes at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> if it has completed by time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> but
+      not by time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">-</span> <span class="inlinecode">1</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="completes_at" class="idref" href="#completes_at"><span class="id" title="definition">completes_at</span></a> (<a id="j:23" class="idref" href="#j:23"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:24" class="idref" href="#t:24"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:23"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:24"><span class="id" title="variable">t</span></a><span class="id" title="notation">.-1</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:23"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:24"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a constant <span class="inlinecode"><a class="idref" href="prosa.util.supremum.html#SelectSupremum.R"><span class="id" title="variable">R</span></a></span> is a response time bound of a job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> if <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>
+      has completed by <span class="inlinecode"><a class="idref" href="prosa.util.supremum.html#SelectSupremum.R"><span class="id" title="variable">R</span></a></span> units after its arrival. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="job_response_time_bound" class="idref" href="#job_response_time_bound"><span class="id" title="definition">job_response_time_bound</span></a> (<a id="j:25" class="idref" href="#j:25"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="R:26" class="idref" href="#R:26"><span class="id" title="binder">R</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:25"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.behavior.service.html#j:25"><span class="id" title="variable">j</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.behavior.service.html#R:26"><span class="id" title="variable">R</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a job meets its deadline if it completes by its absolute deadline. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="job_meets_deadline" class="idref" href="#job_meets_deadline"><span class="id" title="definition">job_meets_deadline</span></a> (<a id="j:27" class="idref" href="#j:27"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:27"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_deadline"><span class="id" title="definition">job_deadline</span></a> <a class="idref" href="prosa.behavior.service.html#j:27"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab78"></a><h1 class="section">Pending or Incomplete Jobs</h1>
+
+<div class="paragraph"> </div>
+
+ Job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is pending at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> iff it has arrived but has not yet completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pending" class="idref" href="#pending"><span class="id" title="definition">pending</span></a> (<a id="j:28" class="idref" href="#j:28"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:29" class="idref" href="#t:29"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.behavior.arrival_sequence.html#has_arrived"><span class="id" title="definition">has_arrived</span></a> <a class="idref" href="prosa.behavior.service.html#j:28"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:29"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:28"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:29"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is pending earlier and at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> iff it has arrived before time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>
+      and has not been completed yet. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pending_earlier_and_at" class="idref" href="#pending_earlier_and_at"><span class="id" title="definition">pending_earlier_and_at</span></a> (<a id="j:30" class="idref" href="#j:30"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.behavior.service.html#Service.Job"><span class="id" title="variable">Job</span></a>) (<a id="t:31" class="idref" href="#t:31"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrived_before"><span class="id" title="definition">arrived_before</span></a> <a class="idref" href="prosa.behavior.service.html#j:30"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:31"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.behavior.service.html#j:30"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:31"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let's define the remaining cost of job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> as the amount of service that
+      has yet to be received for it to complete. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="remaining_cost" class="idref" href="#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a id="j:32" class="idref" href="#j:32"><span class="id" title="binder">j</span></a> <a id="t:33" class="idref" href="#t:33"><span class="id" title="binder">t</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.behavior.service.html#j:32"><span class="id" title="variable">j</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.behavior.service.html#j:32"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.behavior.service.html#t:33"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.behavior.service.html#Service"><span class="id" title="section">Service</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.uni.schedule_of_task</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.uni.schedule_of_task</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.time.html#"><span class="id" title="library">prosa.classic.model.time</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.uni.schedule</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="ScheduleOfTask" class="idref" href="#ScheduleOfTask"><span class="id" title="module">ScheduleOfTask</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Export</span> <span class="id" title="var">SporadicTaskset</span> <span class="id" title="var">UniprocessorSchedule</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ScheduleOfTask.ScheduleProperties" class="idref" href="#ScheduleOfTask.ScheduleProperties"><span class="id" title="section">ScheduleProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.ScheduleProperties.job_cost" class="idref" href="#ScheduleOfTask.ScheduleProperties.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.ScheduleProperties.job_task" class="idref" href="#ScheduleOfTask.ScheduleProperties.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.ScheduleProperties.sched" class="idref" href="#ScheduleOfTask.ScheduleProperties.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ScheduleOfTask.ScheduleProperties.TaskProperties" class="idref" href="#ScheduleOfTask.ScheduleProperties.TaskProperties"><span class="id" title="section">TaskProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.ScheduleProperties.TaskProperties.tsk" class="idref" href="#ScheduleOfTask.ScheduleProperties.TaskProperties.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ScheduleOfTask.task_scheduled_at" class="idref" href="#ScheduleOfTask.task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> (<a id="t:7" class="idref" href="#t:7"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">if</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t:7"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">is</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">j</span> <span class="id" title="keyword">then</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.job_task"><span class="id" title="variable">job_task</span></a> <span class="id" title="var">j</span> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.TaskProperties.tsk"><span class="id" title="variable">tsk</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">else</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ScheduleOfTask.task_service_at" class="idref" href="#ScheduleOfTask.task_service_at"><span class="id" title="definition">task_service_at</span></a> (<a id="t:8" class="idref" href="#t:8"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) : <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a> := <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t:8"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ScheduleOfTask.task_service_during" class="idref" href="#ScheduleOfTask.task_service_during"><span class="id" title="definition">task_service_during</span></a> (<a id="t1:9" class="idref" href="#t1:9"><span class="id" title="binder">t1</span></a> <a id="t2:10" class="idref" href="#t2:10"><span class="id" title="binder">t2</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t1:9"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:13" class="idref" href="#t:13"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t2:10"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.task_service_at"><span class="id" title="definition">task_service_at</span></a> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t:11"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="ScheduleOfTask.task_service" class="idref" href="#ScheduleOfTask.task_service"><span class="id" title="definition">task_service</span></a> (<a id="t2:14" class="idref" href="#t2:14"><span class="id" title="binder">t2</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) := <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.task_service_during"><span class="id" title="definition">task_service_during</span></a> 0 <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#t2:14"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties.TaskProperties"><span class="id" title="section">TaskProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask.ScheduleProperties"><span class="id" title="section">ScheduleProperties</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.uni.schedule_of_task.html#ScheduleOfTask"><span class="id" title="module">ScheduleOfTask</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.completion_sequence</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.completion_sequence</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">seq</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.behavior.service.html#"><span class="id" title="library">prosa.behavior.service</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This module contains basic definitions and properties of job
+    completion sequences. 
+<div class="paragraph"> </div>
+
+<a id="lab12"></a><h1 class="section">Notion of a Completion Sequence</h1>
+
+<div class="paragraph"> </div>
+
+ We begin by defining a job completion sequence. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="CompletionSequence" class="idref" href="#CompletionSequence"><span class="id" title="section">CompletionSequence</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of jobs with a cost
+     and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">JobCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Job</span></a>} {<a id="PState:3" class="idref" href="#PState:3"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#Job:1"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CompletionSequence.arr_seq" class="idref" href="#CompletionSequence.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CompletionSequence.sched" class="idref" href="#CompletionSequence.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For each instant <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, the completion sequence returns all
+     arrived jobs that have completed at <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="completion_sequence" class="idref" href="#completion_sequence"><span class="id" title="definition">completion_sequence</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence.Job"><span class="id" title="variable">Job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> <a id="t:6" class="idref" href="#t:6"><span class="id" title="binder">t</span></a> ⇒ <span class="id" title="notation">[</span><span class="id" title="notation">seq</span> <a id="j:7" class="idref" href="#j:7"><span class="id" title="binder">j</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_up_to"><span class="id" title="definition">arrivals_up_to</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#t:6"><span class="id" title="variable">t</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.behavior.service.html#completes_at"><span class="id" title="definition">completes_at</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#j:7"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#t:6"><span class="id" title="variable">t</span></a><span class="id" title="notation">]</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.completion_sequence.html#CompletionSequence"><span class="id" title="section">CompletionSequence</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

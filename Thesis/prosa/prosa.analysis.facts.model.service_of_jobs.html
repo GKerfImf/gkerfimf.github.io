@@ -1,0 +1,728 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.model.service_of_jobs</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.model.service_of_jobs</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.aggregate.workload.html#"><span class="id" title="library">prosa.model.aggregate.workload</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#"><span class="id" title="library">prosa.model.aggregate.service_of_jobs</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#"><span class="id" title="library">prosa.analysis.facts.behavior.completion</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#"><span class="id" title="library">prosa.analysis.facts.model.ideal_schedule</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab38"></a><h1 class="section">Lemmas about Service Received by Sets of Jobs</h1>
+ In this file, we establish basic facts about the service received by <i>sets</i> of jobs. 
+<div class="paragraph"> </div>
+
+ To begin with, we provide some basic properties of service
+   of a set of jobs in case of a generic scheduling model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="GenericModelLemmas" class="idref" href="#GenericModelLemmas"><span class="id" title="section">GenericModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">JobTask</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Job</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobArrival</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of processor state model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:6" class="idref" href="#PState:6"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... any job arrival sequence with consistent arrivals, .... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="GenericModelLemmas.arr_seq" class="idref" href="#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="GenericModelLemmas.H_arrival_times_are_consistent" class="idref" href="#GenericModelLemmas.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any schedule of this arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="GenericModelLemmas.sched" class="idref" href="#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where jobs do not execute before their arrival or after completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="GenericModelLemmas.H_jobs_must_arrive_to_execute" class="idref" href="#GenericModelLemmas.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="GenericModelLemmas.H_completed_jobs_dont_execute" class="idref" href="#GenericModelLemmas.H_completed_jobs_dont_execute"><span class="id" title="variable">H_completed_jobs_dont_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let P be any predicate over jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="GenericModelLemmas.P" class="idref" href="#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#pred"><span class="id" title="definition">pred</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that the total service of jobs released in a time interval <code>[t1,t2)</code>
+      during <code>[t1,t2)</code> is equal to the sum of:
+      (1) the total service of jobs released in time interval <code>[t1, t)</code> during time <code>[t1, t)</code>
+      (2) the total service of jobs released in time interval <code>[t1, t)</code> during time <code>[t, t2)</code>
+      and (3) the total service of jobs released in time interval <code>[t, t2)</code> during time <code>[t, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_of_jobs_cat_scheduling_interval" class="idref" href="#service_of_jobs_cat_scheduling_interval"><span class="id" title="lemma">service_of_jobs_cat_scheduling_interval</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:13" class="idref" href="#t1:13"><span class="id" title="binder">t1</span></a> <a id="t2:14" class="idref" href="#t2:14"><span class="id" title="binder">t2</span></a> <a id="t:15" class="idref" href="#t:15"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">+</span> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:13"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">+</span> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:15"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:14"><span class="id" title="variable">t2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> <span class="id" title="var">t</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GEt</span> <span class="id" title="var">LEt</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#arrivals_between_cat"><span class="id" title="lemma">arrivals_between_cat</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> {1}/<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="lemma">big_cat</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">exchange_big</span> //= (@<span class="id" title="lemma">big_cat_nat</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) //=;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> [<span class="id" title="tactic">in</span> <span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#X:16"><span class="id" title="variable">X</span></a> <span class="id" title="notation">+</span> <span class="id" title="var">_</span> <span class="id" title="notation">+</span> <span class="id" title="var">_</span>]<span class="id" title="lemma">exchange_big</span> //= [<span class="id" title="tactic">in</span> <span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#X:17"><span class="id" title="variable">X</span></a> <span class="id" title="notation">+</span> <span class="id" title="var">_</span>]<span class="id" title="lemma">exchange_big</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> -!<span class="id" title="lemma">addnA</span> <span class="id" title="lemma">eqn_add2l</span> <span class="id" title="lemma">eqn_add2l</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">exchange_big</span> //= (@<span class="id" title="lemma">big_cat_nat</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) //= [<span class="id" title="tactic">in</span> <span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#X:18"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">exchange_big</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -[<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span>]<span class="id" title="lemma">add0n</span> /<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="lemma">eqn_add2r</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_nat_cond</span> <span class="id" title="lemma">big1</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">x</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GEi</span> <span class="id" title="var">LTi</span>] <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_seq_cond</span> <span class="id" title="lemma">big1</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">ARR</span> <span class="id" title="var">Ps</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_before_job_arrival_zero"><span class="id" title="lemma">service_before_job_arrival_zero</span></a> <span class="id" title="keyword">with</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.H0"><span class="id" title="variable">H0</span></a>; <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived_between"><span class="id" title="lemma">in_arrivals_implies_arrived_between</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">ARR</span>; <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">ARR</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">N1</span> <span class="id" title="var">N2</span>]; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that the total service of jobs released in a time interval <code>[t1, t2)</code>
+       during <code>[t, t2)</code> is equal to the sum of:
+       (1) the total service of jobs released in a time interval <code>[t1, t)</code> during <code>[t, t2)</code>
+       and (2) the total service of jobs released in a time interval <code>[t, t2)</code> during <code>[t, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_of_jobs_cat_arrival_interval" class="idref" href="#service_of_jobs_cat_arrival_interval"><span class="id" title="lemma">service_of_jobs_cat_arrival_interval</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:19" class="idref" href="#t1:19"><span class="id" title="binder">t1</span></a> <a id="t2:20" class="idref" href="#t2:20"><span class="id" title="binder">t2</span></a> <a id="t:21" class="idref" href="#t:21"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:19"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:19"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:19"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">+</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.P"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:21"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:20"><span class="id" title="variable">t2</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t1</span> <span class="id" title="var">t2</span> <span class="id" title="var">t</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GEt</span> <span class="id" title="var">LEt</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">eq_sym</span>; <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> [<span class="id" title="tactic">in</span> <span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#X:22"><span class="id" title="variable">X</span></a>](<a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#arrivals_between_cat"><span class="id" title="lemma">arrivals_between_cat</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t</span>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> {3}/<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> -<span class="id" title="lemma">big_cat</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#GenericModelLemmas"><span class="id" title="section">GenericModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove some properties about service
+    of sets of jobs for unit-service processor models. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="UnitServiceModelLemmas" class="idref" href="#UnitServiceModelLemmas"><span class="id" title="section">UnitServiceModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:23" class="idref" href="#Task:23"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:24" class="idref" href="#Job:24"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:25" class="idref" href="#H:25"><span class="id" title="binder">JobTask</span></a> <a id="H:25" class="idref" href="#H:25"><span class="id" title="binder">Job</span></a> <a id="H:25" class="idref" href="#H:25"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:26" class="idref" href="#H0:26"><span class="id" title="binder">JobArrival</span></a> <a id="H0:26" class="idref" href="#H0:26"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:27" class="idref" href="#H1:27"><span class="id" title="binder">JobCost</span></a> <a id="H1:27" class="idref" href="#H1:27"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of unit-service processor state model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:28" class="idref" href="#PState:28"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceModelLemmas.H_unit_service_proc_model" class="idref" href="#UnitServiceModelLemmas.H_unit_service_proc_model"><span class="id" title="variable">H_unit_service_proc_model</span></a> : <a class="idref" href="prosa.model.processor.platform_properties.html#unit_service_proc_model"><span class="id" title="definition">unit_service_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceModelLemmas.arr_seq" class="idref" href="#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceModelLemmas.H_arrival_times_are_consistent" class="idref" href="#UnitServiceModelLemmas.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any unit-service schedule of this arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceModelLemmas.sched" class="idref" href="#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceModelLemmas.H_jobs_come_from_arrival_sequence" class="idref" href="#UnitServiceModelLemmas.H_jobs_come_from_arrival_sequence"><span class="id" title="variable">H_jobs_come_from_arrival_sequence</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where jobs do not execute before their arrival or after completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceModelLemmas.H_jobs_must_arrive_to_execute" class="idref" href="#UnitServiceModelLemmas.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceModelLemmas.H_completed_jobs_dont_execute" class="idref" href="#UnitServiceModelLemmas.H_completed_jobs_dont_execute"><span class="id" title="variable">H_completed_jobs_dont_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let P be any predicate over jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceModelLemmas.P" class="idref" href="#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#pred"><span class="id" title="definition">pred</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we prove that the service received by any set of jobs is
+      upper-bounded by the corresponding workload. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_of_jobs_le_workload" class="idref" href="#service_of_jobs_le_workload"><span class="id" title="lemma">service_of_jobs_le_workload</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="jobs:37" class="idref" href="#jobs:37"><span class="id" title="binder">jobs</span></a> : <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.Job"><span class="id" title="variable">Job</span></a>) (<a id="t1:38" class="idref" href="#t1:38"><span class="id" title="binder">t1</span></a> <a id="t2:39" class="idref" href="#t2:39"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#jobs:37"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:38"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:39"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#jobs:37"><span class="id" title="variable">jobs</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">jobs</span> <span class="id" title="var">t1</span> <span class="id" title="var">t2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_sum</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">j</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#cumulative_service_le_job_cost"><span class="id" title="lemma">cumulative_service_le_job_cost</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we introduce a connection between the cumulative
+      service, cumulative workload, and completion of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion"><span class="id" title="section">WorkloadServiceAndCompletion</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider an arbitrary time interval <code>[t1, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variables</span> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion.t2" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t2"><span class="id" title="variable">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let jobs be a set of all jobs arrived during <code>[t1, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t2"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we consider some time instant <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.service.html#Service.ExtraLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And state the proposition that all jobs are completed by time
+       <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.service.html#Service.ExtraLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a></span>. Next we show that this proposition is equivalent to
+       the fact that <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.global.workload.html#Workload.workload"><span class="id" title="definition">workload</span></a></span> <span class="inlinecode"><span class="id" title="keyword">of</span></span> <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> <span class="inlinecode">=</span> <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.service"><span class="id" title="definition">service</span></a></span> <span class="inlinecode"><span class="id" title="keyword">of</span></span> <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="UnitServiceModelLemmas.WorkloadServiceAndCompletion.all_jobs_completed_by" class="idref" href="#UnitServiceModelLemmas.WorkloadServiceAndCompletion.all_jobs_completed_by"><span class="id" title="variable">all_jobs_completed_by</span></a> <a id="t_compl:43" class="idref" href="#t_compl:43"><span class="id" title="binder">t_compl</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:44" class="idref" href="#j:44"><span class="id" title="binder">j</span></a>, <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:44"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:44"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:44"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t_compl:43"><span class="id" title="variable">t_compl</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we prove that if the workload of <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> is equal to the
+        service of <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span>, then any job in <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> is completed by time
+        <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.service.html#Service.ExtraLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="workload_eq_service_impl_all_jobs_have_completed" class="idref" href="#workload_eq_service_impl_all_jobs_have_completed"><span class="id" title="lemma">workload_eq_service_impl_all_jobs_have_completed</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.all_jobs_completed_by"><span class="id" title="variable">all_jobs_completed_by</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">jobs</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">EQ</span> <span class="id" title="var">j</span> <span class="id" title="var">ARR</span> <span class="id" title="var">Pj</span>; <span class="id" title="tactic">move</span>: (<span class="id" title="var">ARR</span>) ⇒ <span class="id" title="var">ARR2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived_between"><span class="id" title="lemma">in_arrivals_implies_arrived_between</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">ARR</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">ARR</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">T1</span> <span class="id" title="var">T2</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">F1</span>: <span class="id" title="keyword">∀</span> <a id="a:45" class="idref" href="#a:45"><span class="id" title="binder">a</span></a> <a id="b:46" class="idref" href="#b:46"><span class="id" title="binder">b</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#a:45"><span class="id" title="variable">a</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#b:46"><span class="id" title="variable">b</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">||</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#a:45"><span class="id" title="variable">a</span></a> <span class="id" title="notation">≥</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#b:46"><span class="id" title="variable">b</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">destruct</span> (<span class="id" title="var">a</span> <span class="id" title="notation">&lt;</span> <span class="id" title="var">b</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">EQU</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id" title="tactic">by</span> <span class="id" title="tactic">left</span> |<span class="id" title="tactic">right</span>]; <span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negbT"><span class="id" title="lemma">negbT</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQU</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leqNgt</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">F1</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a>) ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [<span class="id" title="var">LT</span> | <span class="id" title="var">GT</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> /<a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">exchange_big</span> <span class="id" title="lemma">big_geq</span> //= <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltnW</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<span class="id" title="lemma">big_rem</span> <span class="id" title="var">j</span>) ?<span class="id" title="var">Pj</span> //= <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> ⇒ /<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addn_eq0</span>; <span class="id" title="tactic">move</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">CZ</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a>, <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">service.completed_by</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">CZ</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">CZ</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">CZ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a>, <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">EQ</span>; <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a>, <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">service.completed_by</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> -(<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_during_cat"><span class="id" title="lemma">service_during_cat</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a>); <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#cumulative_service_before_job_arrival_zero"><span class="id" title="lemma">cumulative_service_before_job_arrival_zero</span></a> // <span class="id" title="lemma">add0n</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <a class="idref" href="prosa.util.sum.html#sum_majorant_eqn"><span class="id" title="lemma">sum_majorant_eqn</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">E1</span> := <span class="id" title="keyword">fun</span> <a id="j:53" class="idref" href="#j:53"><span class="id" title="binder">j</span></a> ⇒ <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:47"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">xs</span> := <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t2"><span class="id" title="variable">t2</span></a>) (<span class="id" title="var">P</span> := <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a>); <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#cumulative_service_le_job_cost"><span class="id" title="lemma">cumulative_service_le_job_cost</span></a>; <span class="id" title="tactic">auto</span> <span class="id" title="keyword">using</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#ideal_proc_model_provides_unit_service"><span class="id" title="lemma">ideal_proc_model_provides_unit_service</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+And vice versa, the fact that any job in <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> is completed by time <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.service.html#Service.ExtraLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a></span>
+       implies that the workload of <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> is equal to the service of <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="all_jobs_have_completed_impl_workload_eq_service" class="idref" href="#all_jobs_have_completed_impl_workload_eq_service"><span class="id" title="lemma">all_jobs_have_completed_impl_workload_eq_service</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.all_jobs_completed_by"><span class="id" title="variable">all_jobs_completed_by</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <span class="id" title="var">jobs</span>; <span class="id" title="tactic">intros</span> <span class="id" title="var">COMPL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">F</span>: <span class="id" title="keyword">∀</span> <a id="j:54" class="idref" href="#j:54"><span class="id" title="binder">j</span></a> <a id="t:55" class="idref" href="#t:55"><span class="id" title="binder">t</span></a>, <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:55"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:54"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t2"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:54"><span class="id" title="variable">j</span></a> 0 <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:55"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">intros</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">LE</span> <span class="id" title="var">ARR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#in_arrivals_implies_arrived_between"><span class="id" title="lemma">in_arrivals_implies_arrived_between</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">ARR</span>; <span class="id" title="tactic">eauto</span> 2; <span class="id" title="tactic">move</span>: <span class="id" title="var">ARR</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GE</span> <span class="id" title="var">LT</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#cumulative_service_before_job_arrival_zero"><span class="id" title="lemma">cumulative_service_before_job_arrival_zero</span></a>; <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a>) <span class="id" title="var">eqn</span>:<span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a>. <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">exchange_big</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_geq</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <span class="id" title="lemma">big1_seq</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">j</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">Pj</span> <span class="id" title="var">ARR</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">COMPL</span> <span class="id" title="var">_</span> <span class="id" title="var">ARR</span> <span class="id" title="var">Pj</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> &lt;- <span class="id" title="var">F</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">j</span> := <span class="id" title="var">j</span>) (<span class="id" title="var">t</span> := <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a>); <span class="id" title="tactic">try</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">eqn_leq</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">COMPL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#service_at_most_cost"><span class="id" title="lemma">service_at_most_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">eqn_leq</span>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="var">last</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#service_of_jobs_le_workload"><span class="id" title="lemma">service_of_jobs_le_workload</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <span class="id" title="lemma">big_seq_cond</span> [<span class="id" title="var">X</span> <span class="id" title="tactic">in</span> <span class="id" title="var">_</span> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#X:56"><span class="id" title="variable">X</span></a>]<span class="id" title="lemma">big_seq_cond</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_sum</span> // ⇒ <span class="id" title="var">j</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">ARR</span> <span class="id" title="var">Pj</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">COMPL</span> <span class="id" title="var">_</span> <span class="id" title="var">ARR</span> <span class="id" title="var">Pj</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -[<a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> ]<span class="id" title="lemma">add0n</span> -(<span class="id" title="var">F</span> <span class="id" title="var">j</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a>) //= -(<span class="id" title="lemma">big_cat_nat</span>) //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EQ</span> =&gt;/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span> ⇒ <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">ltnW</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Using the lemmas above, we prove the equivalence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="all_jobs_have_completed_equiv_workload_eq_service" class="idref" href="#all_jobs_have_completed_equiv_workload_eq_service"><span class="id" title="lemma">all_jobs_have_completed_equiv_workload_eq_service</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.all_jobs_completed_by"><span class="id" title="variable">all_jobs_completed_by</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.workload.html#workload_of_jobs"><span class="id" title="definition">workload_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t1"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion.t_compl"><span class="id" title="variable">t_compl</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#all_jobs_have_completed_impl_workload_eq_service"><span class="id" title="lemma">all_jobs_have_completed_impl_workload_eq_service</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#workload_eq_service_impl_all_jobs_have_completed"><span class="id" title="lemma">workload_eq_service_impl_all_jobs_have_completed</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas.WorkloadServiceAndCompletion"><span class="id" title="section">WorkloadServiceAndCompletion</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceModelLemmas"><span class="id" title="section">UnitServiceModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove some properties about service
+    of sets of jobs for unit-service uniprocessor models. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="UnitServiceUniProcessorModelLemmas" class="idref" href="#UnitServiceUniProcessorModelLemmas"><span class="id" title="section">UnitServiceUniProcessorModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:57" class="idref" href="#Task:57"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:58" class="idref" href="#Job:58"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:59" class="idref" href="#H:59"><span class="id" title="binder">JobTask</span></a> <a id="H:59" class="idref" href="#H:59"><span class="id" title="binder">Job</span></a> <a id="H:59" class="idref" href="#H:59"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:60" class="idref" href="#H0:60"><span class="id" title="binder">JobArrival</span></a> <a id="H0:60" class="idref" href="#H0:60"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:61" class="idref" href="#H1:61"><span class="id" title="binder">JobCost</span></a> <a id="H1:61" class="idref" href="#H1:61"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kind of unit-service uniprocessor state model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:62" class="idref" href="#PState:62"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_unit_service_proc_model" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_unit_service_proc_model"><span class="id" title="variable">H_unit_service_proc_model</span></a> : <a class="idref" href="prosa.model.processor.platform_properties.html#unit_service_proc_model"><span class="id" title="definition">unit_service_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_uniprocessor_model" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_uniprocessor_model"><span class="id" title="variable">H_uniprocessor_model</span></a> : <a class="idref" href="prosa.model.processor.platform_properties.html#uniprocessor_model"><span class="id" title="definition">uniprocessor_model</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceUniProcessorModelLemmas.arr_seq" class="idref" href="#UnitServiceUniProcessorModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_arrival_times_are_consistent" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any unit-service uni-processor schedule of this arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceUniProcessorModelLemmas.sched" class="idref" href="#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.PState"><span class="id" title="variable">PState</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_jobs_come_from_arrival_sequence" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_jobs_come_from_arrival_sequence"><span class="id" title="variable">H_jobs_come_from_arrival_sequence</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where jobs do not execute before their arrival or after completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_jobs_must_arrive_to_execute" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.H_completed_jobs_dont_execute" class="idref" href="#UnitServiceUniProcessorModelLemmas.H_completed_jobs_dont_execute"><span class="id" title="variable">H_completed_jobs_dont_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.P"><span class="id" title="variable">P</span></a></span> be any predicate over jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceUniProcessorModelLemmas.P" class="idref" href="#UnitServiceUniProcessorModelLemmas.P"><span class="id" title="variable">P</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#pred"><span class="id" title="definition">pred</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove that the service received by any set of jobs
+      is upper-bounded by the corresponding interval length. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength" class="idref" href="#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength"><span class="id" title="section">ServiceOfJobsIsBoundedByLength</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> denote any set of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs" class="idref" href="#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a> : <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.H_no_duplicate_jobs" class="idref" href="#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.H_no_duplicate_jobs"><span class="id" title="variable">H_no_duplicate_jobs</span></a> : <span class="id" title="definition">uniq</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that the overall service of <span class="inlinecode"><a class="idref" href="prosa.results.edf.rta.bounded_pi.html#AbstractRTAforEDFwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.TaskInterferenceIsBoundedByIBF_other.Inequalities.jobs"><span class="id" title="variable">jobs</span></a></span> at a single time instant is at most <span class="inlinecode">1</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_of_jobs_le_1" class="idref" href="#service_of_jobs_le_1"><span class="id" title="lemma">service_of_jobs_le_1</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:74" class="idref" href="#t:74"><span class="id" title="binder">t</span></a>, <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j:77" class="idref" href="#j:77"><span class="id" title="binder">j</span></a> <span class="id" title="notation">&lt;-</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a> <span class="id" title="notation">|</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:75"><span class="id" title="variable">j</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:75"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:74"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> 1.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <span class="id" title="lemma">leq_trans</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#leq_sum_seq_pred"><span class="id" title="lemma">leq_sum_seq_pred</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">P2</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#predT"><span class="id" title="definition">predT</span></a>); <span class="id" title="tactic">intros</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">simpl</span>; <span class="id" title="tactic">induction</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a> <span class="id" title="keyword">as</span> [ | <span class="id" title="var">j</span> <span class="id" title="var">js</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_nil</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="var">feed</span> <span class="id" title="var">IHjs</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.H_no_duplicate_jobs"><span class="id" title="variable">H_no_duplicate_jobs</span></a>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">cons_uniq</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">U</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_cons</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_is_zero_or_one"><span class="id" title="lemma">service_is_zero_or_one</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.H_unit_service_proc_model"><span class="id" title="variable">H_unit_service_proc_model</span></a>  <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span>) <span class="id" title="keyword">as</span> [<span class="id" title="var">Z</span> | <span class="id" title="var">O</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">Z</span> (<a class="idref" href="prosa.util.setoid.html#leqRW"><span class="id" title="definition">leqRW</span></a> <span class="id" title="var">IHjs</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="var">have</span> → : <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a id="j:80" class="idref" href="#j:80"><span class="id" title="binder">j</span></a> <span class="id" title="notation">&lt;-</span> <span class="id" title="var">js</span><span class="id" title="notation">)</span> <a class="idref" href="prosa.behavior.schedule.html#service_in"><span class="id" title="definition">service_in</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#j:78"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">t</span>) <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">O</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">POS</span>: <a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="notation">&gt;</span> 0 <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">O</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_at_implies_scheduled_at"><span class="id" title="lemma">service_at_implies_scheduled_at</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">POS</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_seq</span> <span class="id" title="lemma">big1</span> //; <span class="id" title="tactic">intros</span> <span class="id" title="var">j'</span> <span class="id" title="var">IN</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">leqn0</span> <span class="id" title="lemma">leqNgt</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#contra"><span class="id" title="lemma">contra</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j'</span> <span class="id" title="var">t</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">first</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_at_implies_scheduled_at"><span class="id" title="lemma">service_at_implies_scheduled_at</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.H_uniprocessor_model"><span class="id" title="variable">H_uniprocessor_model</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">POS</span> <span class="id" title="var">SCHED</span>); <span class="id" title="tactic">subst</span> <span class="id" title="var">j'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.H_no_duplicate_jobs"><span class="id" title="variable">H_no_duplicate_jobs</span></a>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">cons_uniq</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a> <span class="id" title="var">NIN</span> <span class="id" title="var">_</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we prove that the service received by those jobs is no larger 
+        than their workload. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="service_of_jobs_le_length_of_interval" class="idref" href="#service_of_jobs_le_length_of_interval"><span class="id" title="lemma">service_of_jobs_le_length_of_interval</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t:81" class="idref" href="#t:81"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) (<a id="42b20782d80c7be37cb29a65fa5b7625" class="idref" href="#42b20782d80c7be37cb29a65fa5b7625"><span class="id" title="binder">Δ</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:81"><span class="id" title="variable">t</span></a> (<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:81"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#42b20782d80c7be37cb29a65fa5b7625"><span class="id" title="variable">Δ</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#42b20782d80c7be37cb29a65fa5b7625"><span class="id" title="variable">Δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EQ</span>: <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><span class="id" title="var">t</span> <span class="id" title="notation">≤</span> <a id="x:85" class="idref" href="#x:85"><span class="id" title="binder">x</span></a> <span class="id" title="notation">&lt;</span> <span class="id" title="var">t</span> <span class="id" title="notation">+</span> <span class="id" title="var">Δ</span><span class="id" title="notation">)</span> 1 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="var">Δ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_const_nat</span> <span class="id" title="lemma">iter_addn</span> <span class="id" title="lemma">mul1n</span> <span class="id" title="lemma">addn0</span> -{2}[<span class="id" title="var">t</span>]<span class="id" title="lemma">addn0</span> <span class="id" title="lemma">subnDl</span> <span class="id" title="lemma">subn0</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -{2}<span class="id" title="var">EQ</span> {<span class="id" title="var">EQ</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a>/<a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a>/<a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <span class="id" title="lemma">exchange_big</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_sum</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t'</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#service_of_jobs_le_1"><span class="id" title="lemma">service_of_jobs_le_1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+The same holds for two time instants. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="service_of_jobs_le_length_of_interval'" class="idref" href="#service_of_jobs_le_length_of_interval'"><span class="id" title="lemma">service_of_jobs_le_length_of_interval'</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:86" class="idref" href="#t1:86"><span class="id" title="binder">t1</span></a> <a id="t2:87" class="idref" href="#t2:87"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.P"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength.jobs"><span class="id" title="variable">jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:86"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:87"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:87"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:86"><span class="id" title="variable">t1</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> &lt;-: <span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><span class="id" title="var">t1</span> <span class="id" title="notation">≤</span> <a id="x:90" class="idref" href="#x:90"><span class="id" title="binder">x</span></a> <span class="id" title="notation">&lt;</span> <span class="id" title="var">t2</span><span class="id" title="notation">)</span> 1 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="var">t2</span> <span class="id" title="notation">-</span> <span class="id" title="var">t1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">big_const_nat</span> <span class="id" title="lemma">iter_addn</span> <span class="id" title="lemma">mul1n</span> <span class="id" title="lemma">addn0</span>. } <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="lemma">exchange_big</span> //=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_sum</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t'</span> <span class="id" title="var">_</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">SE</span> :=  <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#service_of_jobs_le_1"><span class="id" title="lemma">service_of_jobs_le_1</span></a> <span class="id" title="var">t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <span class="id" title="lemma">leq_trans</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">eassumption</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_sum</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas.ServiceOfJobsIsBoundedByLength"><span class="id" title="section">ServiceOfJobsIsBoundedByLength</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#UnitServiceUniProcessorModelLemmas"><span class="id" title="section">UnitServiceUniProcessorModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove some properties about service
+   of sets of jobs for ideal uni-processor model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="IdealModelLemmas" class="idref" href="#IdealModelLemmas"><span class="id" title="section">IdealModelLemmas</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:91" class="idref" href="#Task:91"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:92" class="idref" href="#Job:92"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:93" class="idref" href="#H:93"><span class="id" title="binder">JobTask</span></a> <a id="H:93" class="idref" href="#H:93"><span class="id" title="binder">Job</span></a> <a id="H:93" class="idref" href="#H:93"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:94" class="idref" href="#H0:94"><span class="id" title="binder">JobArrival</span></a> <a id="H0:94" class="idref" href="#H0:94"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:95" class="idref" href="#H1:95"><span class="id" title="binder">JobCost</span></a> <a id="H1:95" class="idref" href="#H1:95"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence with consistent arrivals. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="IdealModelLemmas.arr_seq" class="idref" href="#IdealModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="IdealModelLemmas.H_arrival_times_are_consistent" class="idref" href="#IdealModelLemmas.H_arrival_times_are_consistent"><span class="id" title="variable">H_arrival_times_are_consistent</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#consistent_arrival_times"><span class="id" title="definition">consistent_arrival_times</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uni-processor schedule of this arrival sequence ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="IdealModelLemmas.sched" class="idref" href="#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.Job"><span class="id" title="variable">Job</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="IdealModelLemmas.H_jobs_come_from_arrival_sequence" class="idref" href="#IdealModelLemmas.H_jobs_come_from_arrival_sequence"><span class="id" title="variable">H_jobs_come_from_arrival_sequence</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_come_from_arrival_sequence"><span class="id" title="definition">jobs_come_from_arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... where jobs do not execute before their arrival or after completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="IdealModelLemmas.H_jobs_must_arrive_to_execute" class="idref" href="#IdealModelLemmas.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="IdealModelLemmas.H_completed_jobs_dont_execute" class="idref" href="#IdealModelLemmas.H_completed_jobs_dont_execute"><span class="id" title="variable">H_completed_jobs_dont_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.P"><span class="id" title="variable">P</span></a></span> be any predicate over jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="IdealModelLemmas.P" class="idref" href="#IdealModelLemmas.P"><span class="id" title="variable">P</span></a> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#pred"><span class="id" title="definition">pred</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that if the total service within some time interval <code>[t1,t2)</code>
+      is smaller than <code>t2 - t1</code>, then there is an idle time instant <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">∈</span> <span class="inlinecode">[<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>,<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a>)].</span> <span class="inlinecode"></span>
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="low_service_implies_existence_of_idle_time" class="idref" href="#low_service_implies_existence_of_idle_time"><span class="id" title="lemma">low_service_implies_existence_of_idle_time</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:103" class="idref" href="#t1:103"><span class="id" title="binder">t1</span></a> <a id="t2:104" class="idref" href="#t2:104"><span class="id" title="binder">t2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#predT"><span class="id" title="definition">predT</span></a> (<a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.arr_seq"><span class="id" title="variable">arr_seq</span></a> 0 <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:104"><span class="id" title="variable">t2</span></a>) <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:103"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:104"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:104"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:103"><span class="id" title="variable">t1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a id="t:105" class="idref" href="#t:105"><span class="id" title="binder">t</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">,</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t1:103"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:105"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t2:104"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.model.processor.ideal.html#is_idle"><span class="id" title="definition">is_idle</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#t:105"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ? <span class="id" title="var">SERV</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span> (<span class="id" title="var">t1</span> <span class="id" title="notation">≤</span> <span class="id" title="var">t2</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">LE</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">first</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">move</span>: <span class="id" title="var">LE</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">LT</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">ltnW</span> <span class="id" title="tactic">in</span> <span class="id" title="var">LT</span>; <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">subn_eq0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">LT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>: <span class="id" title="var">LT</span> ⇒ /<span class="id" title="lemma">eqP</span> → <span class="id" title="tactic">in</span> <span class="id" title="var">SERV</span>; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltn0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">SERV</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">EX</span>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a id="b35f9338affc3f84bb0c8216974ec04c" class="idref" href="#b35f9338affc3f84bb0c8216974ec04c"><span class="id" title="binder">δ</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">,</span></a> <span class="id" title="var">t2</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <span class="id" title="var">t1</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#b35f9338affc3f84bb0c8216974ec04c"><span class="id" title="variable">δ</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">by</span> <span class="id" title="tactic">∃</span> (<span class="id" title="var">t2</span> <span class="id" title="notation">-</span> <span class="id" title="var">t1</span>); <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">subnKC</span> // <span class="id" title="lemma">ltnW</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">EX</span> ⇒ [<span class="id" title="var">δ</span> <span class="id" title="var">EQ</span>]; <span class="id" title="tactic">subst</span> <span class="id" title="var">t2</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">LE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> {3}[<span class="id" title="var">t1</span> <span class="id" title="notation">+</span> <span class="id" title="var">δ</span>]<span class="id" title="lemma">addnC</span> -<span class="id" title="lemma">addnBA</span> // <span class="id" title="lemma">subnn</span> <span class="id" title="lemma">addn0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">SERV</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.aggregate.service_of_jobs.html#service_of_jobs"><span class="id" title="definition">service_of_jobs</span></a> <span class="id" title="lemma">exchange_big</span> //= <span class="id" title="tactic">in</span> <span class="id" title="var">SERV</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.util.sum.html#sum_le_summation_range"><span class="id" title="lemma">sum_le_summation_range</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">SERV</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SERV</span> ⇒ [<span class="id" title="var">x</span> [/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">GEx</span> <span class="id" title="var">LEx</span>] <span class="id" title="var">L</span>]].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">∃</span> <span class="id" title="var">x</span>; <span class="id" title="tactic">split</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negPn"><span class="id" title="lemma">negPn</span></a>; <span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negP"><span class="id" title="lemma">negP</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">NIDLE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.processor.ideal.html#is_idle"><span class="id" title="definition">is_idle</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">NIDLE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">destruct</span>(<a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">x</span>) <span class="id" title="var">eqn</span>:<span class="id" title="var">SCHED</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="var">done</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SCHED</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">clear</span> <span class="id" title="var">NIDLE</span>; <span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a>/= <span class="id" title="tactic">in</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">L</span> ⇒ /<span class="id" title="lemma">eqP</span>; <span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.util.sum.html#sum_nat_eq0_nat"><span class="id" title="lemma">sum_nat_eq0_nat</span></a>; <span class="id" title="tactic">move</span> ⇒ /<span class="id" title="lemma">allP</span> <span class="id" title="var">L</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">specialize</span> (<span class="id" title="var">L</span> <span class="id" title="var">s</span>); <span class="id" title="var">feed</span> <span class="id" title="var">L</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.behavior.arrival_sequence.html#arrivals_between"><span class="id" title="definition">arrivals_between</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#arrived_between_implies_in_arrivals"><span class="id" title="lemma">arrived_between_implies_in_arrivals</span></a>; <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> <span class="id" title="tactic">in</span> <span class="id" title="var">SCHED</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> <span class="id" title="var">x</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;} <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SCHED</span> <span class="id" title="var">L</span> ⇒ /=.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#scheduled_at_def"><span class="id" title="lemma">scheduled_at_def</span></a> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#service_at_def"><span class="id" title="lemma">service_at_def</span></a> ⇒ /<span class="id" title="lemma">eqP</span>→ /<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="abbreviation">eqxx</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.model.service_of_jobs.html#IdealModelLemmas"><span class="id" title="section">IdealModelLemmas</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

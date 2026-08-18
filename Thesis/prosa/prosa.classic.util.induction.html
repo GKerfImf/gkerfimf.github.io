@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.util.induction</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.util.induction</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.tactics.html#"><span class="id" title="library">prosa.classic.util.tactics</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="NatInduction" class="idref" href="#NatInduction"><span class="id" title="section">NatInduction</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="strong_ind" class="idref" href="#strong_ind"><span class="id" title="lemma">strong_ind</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="P:1" class="idref" href="#P:1"><span class="id" title="binder">P</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="n:2" class="idref" href="#n:2"><span class="id" title="binder">n</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="k:3" class="idref" href="#k:3"><span class="id" title="binder">k</span></a>, <a class="idref" href="prosa.classic.util.induction.html#k:3"><span class="id" title="variable">k</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.util.induction.html#n:2"><span class="id" title="variable">n</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.util.induction.html#P:1"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.classic.util.induction.html#k:3"><span class="id" title="variable">k</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.util.induction.html#P:1"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.classic.util.induction.html#n:2"><span class="id" title="variable">n</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="n:4" class="idref" href="#n:4"><span class="id" title="binder">n</span></a>, <a class="idref" href="prosa.classic.util.induction.html#P:1"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.classic.util.induction.html#n:4"><span class="id" title="variable">n</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">P</span> <span class="id" title="var">ALL</span> <span class="id" title="var">n</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">n</span>; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="var">ins</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">k</span> <span class="id" title="var">LTkSn</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">k0</span> <span class="id" title="var">LTk0k</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">IHn</span>, <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <span class="id" title="var">k</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="leq_as_delta" class="idref" href="#leq_as_delta"><span class="id" title="lemma">leq_as_delta</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="x1:5" class="idref" href="#x1:5"><span class="id" title="binder">x1</span></a> (<a id="P:6" class="idref" href="#P:6"><span class="id" title="binder">P</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <span class="id" title="keyword">Prop</span>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="x2:7" class="idref" href="#x2:7"><span class="id" title="binder">x2</span></a>, <a class="idref" href="prosa.classic.util.induction.html#x1:5"><span class="id" title="variable">x1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.util.induction.html#x2:7"><span class="id" title="variable">x2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.util.induction.html#P:6"><span class="id" title="variable">P</span></a> <a class="idref" href="prosa.classic.util.induction.html#x2:7"><span class="id" title="variable">x2</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="delta:8" class="idref" href="#delta:8"><span class="id" title="binder">delta</span></a>, <a class="idref" href="prosa.classic.util.induction.html#P:6"><span class="id" title="variable">P</span></a> (<a class="idref" href="prosa.classic.util.induction.html#x1:5"><span class="id" title="variable">x1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.util.induction.html#delta:8"><span class="id" title="variable">delta</span></a>)<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">)</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">ins</span>; <span class="id" title="tactic">split</span>; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">ALL</span> <span class="id" title="var">x2</span> <span class="id" title="var">LE</span>; <span class="id" title="tactic">rewrite</span> -(<span class="id" title="lemma">subnK</span> <span class="id" title="var">LE</span>) <span class="id" title="lemma">addnC</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">ALL</span>; <span class="id" title="tactic">induction</span> <span class="id" title="keyword">delta</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addn0</span>; <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>, <span class="id" title="lemma">leqnn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">ALL</span>; <span class="id" title="tactic">rewrite</span> -{1}[<span class="id" title="var">x1</span>]<span class="id" title="lemma">addn0</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_add</span>; [<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leqnn</span> | <span class="id" title="tactic">by</span> <span class="id" title="var">ins</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.util.induction.html#NatInduction"><span class="id" title="section">NatInduction</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

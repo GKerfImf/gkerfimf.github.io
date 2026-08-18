@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.schedule.apa.affinity</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.schedule.apa.affinity</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#"><span class="id" title="library">prosa.classic.model.schedule.global.basic.schedule</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">fintype</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Affinity" class="idref" href="#Affinity"><span class="id" title="module">Affinity</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">ArrivalSequence</span> <span class="id" title="var">ScheduleOfSporadicTask</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.AffinityDefs" class="idref" href="#Affinity.AffinityDefs"><span class="id" title="section">AffinityDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.AffinityDefs.sporadic_task" class="idref" href="#Affinity.AffinityDefs.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.AffinityDefs.num_cpus" class="idref" href="#Affinity.AffinityDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.affinity" class="idref" href="#Affinity.affinity"><span class="id" title="definition">affinity</span></a> := <a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">{</span></a><a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">set</span></a> <a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.processor"><span class="id" title="definition">processor</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.AffinityDefs.num_cpus"><span class="id" title="variable">num_cpus</span></a><a class="idref" href="prosa.util.seqset.html#3da50d1a8143a7812fb380d639643f2e"><span class="id" title="notation">)}</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.task_affinity" class="idref" href="#Affinity.task_affinity"><span class="id" title="definition">task_affinity</span></a> := <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.AffinityDefs.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.affinity"><span class="id" title="definition">affinity</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.AffinityDefs"><span class="id" title="section">AffinityDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties" class="idref" href="#Affinity.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="sporadic_task:3" class="idref" href="#sporadic_task:3"><span class="id" title="binder">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="num_cpus:4" class="idref" href="#num_cpus:4"><span class="id" title="binder">num_cpus</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties.JobProperties" class="idref" href="#Affinity.Properties.JobProperties"><span class="id" title="section">JobProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.JobProperties.alpha" class="idref" href="#Affinity.Properties.JobProperties.alpha"><span class="id" title="variable">alpha</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.task_affinity"><span class="id" title="definition">task_affinity</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.JobProperties.tsk" class="idref" href="#Affinity.Properties.JobProperties.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.JobProperties.cpu" class="idref" href="#Affinity.Properties.JobProperties.cpu"><span class="id" title="variable">cpu</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.processor"><span class="id" title="definition">processor</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.can_execute_on" class="idref" href="#Affinity.can_execute_on"><span class="id" title="definition">can_execute_on</span></a> := <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.JobProperties.cpu"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.JobProperties.alpha"><span class="id" title="variable">alpha</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.JobProperties.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.JobProperties"><span class="id" title="section">JobProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties.ScheduleProperties" class="idref" href="#Affinity.Properties.ScheduleProperties"><span class="id" title="section">ScheduleProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:8" class="idref" href="#Job:8"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.ScheduleProperties.job_task" class="idref" href="#Affinity.Properties.ScheduleProperties.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.ScheduleProperties.sched" class="idref" href="#Affinity.Properties.ScheduleProperties.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#Schedule.schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.ScheduleProperties.alpha" class="idref" href="#Affinity.Properties.ScheduleProperties.alpha"><span class="id" title="variable">alpha</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.affinity"><span class="id" title="definition">affinity</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.task_scheduled_on_affinity" class="idref" href="#Affinity.task_scheduled_on_affinity"><span class="id" title="definition">task_scheduled_on_affinity</span></a> (<a id="tsk:12" class="idref" href="#tsk:12"><span class="id" title="binder">tsk</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>) (<a id="t:13" class="idref" href="#t:13"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">[</span><span class="id" title="notation">∃</span> <a id="cpu:16" class="idref" href="#cpu:16"><span class="id" title="binder">cpu</span></a><span class="id" title="notation">,</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#cpu:14"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties.alpha"><span class="id" title="variable">alpha</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="prosa.classic.model.schedule.global.basic.schedule.html#ScheduleOfSporadicTask.task_scheduled_on"><span class="id" title="definition">task_scheduled_on</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#tsk:12"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#cpu:14"><span class="id" title="variable">cpu</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#t:13"><span class="id" title="variable">t</span></a><span class="id" title="notation">]</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.ScheduleProperties"><span class="id" title="section">ScheduleProperties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties.Subset" class="idref" href="#Affinity.Properties.Subset"><span class="id" title="section">Subset</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Affinity.Properties.Subset.alpha'" class="idref" href="#Affinity.Properties.Subset.alpha'"><span class="id" title="variable">alpha'</span></a> <a id="Affinity.Properties.Subset.alpha" class="idref" href="#Affinity.Properties.Subset.alpha"><span class="id" title="variable">alpha</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.affinity"><span class="id" title="definition">affinity</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.is_subaffinity" class="idref" href="#Affinity.is_subaffinity"><span class="id" title="definition">is_subaffinity</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ca592708f529c7c7ee5f3dbd6cf93463"><span class="id" title="notation">{</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ca592708f529c7c7ee5f3dbd6cf93463"><span class="id" title="notation">subset</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha'"><span class="id" title="variable">alpha'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ca592708f529c7c7ee5f3dbd6cf93463"><span class="id" title="notation">≤</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha"><span class="id" title="variable">alpha</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ca592708f529c7c7ee5f3dbd6cf93463"><span class="id" title="notation">}</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties.Subset.Lemmas" class="idref" href="#Affinity.Properties.Subset.Lemmas"><span class="id" title="section">Lemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="Affinity.Properties.Subset.Lemmas.H_subaffinity" class="idref" href="#Affinity.Properties.Subset.Lemmas.H_subaffinity"><span class="id" title="variable">H_subaffinity</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.is_subaffinity"><span class="id" title="definition">is_subaffinity</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Affinity.leq_subaffinity" class="idref" href="#Affinity.leq_subaffinity"><span class="id" title="lemma">leq_subaffinity</span></a> : <span class="id" title="notation">#|</span><a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha'"><span class="id" title="variable">alpha'</span></a><span class="id" title="notation">|</span> <span class="id" title="notation">≤</span> <span class="id" title="notation">#|</span><a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha"><span class="id" title="variable">alpha</span></a><span class="id" title="notation">|</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">UNIQ</span>: <span class="id" title="definition">uniq</span> (<a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha"><span class="id" title="variable">alpha</span></a>)). <span class="id" title="tactic">by</span> <span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha"><span class="id" title="variable">alpha</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">assert</span> (<span class="id" title="var">UNIQ'</span>: <span class="id" title="definition">uniq</span> (<a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha'"><span class="id" title="variable">alpha'</span></a>)). <span class="id" title="tactic">by</span> <span class="id" title="tactic">destruct</span> (<a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.alpha'"><span class="id" title="variable">alpha'</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">UNIQ</span>) (<span class="id" title="var">UNIQ'</span>) ⇒ /<span class="id" title="lemma">card_uniqP</span> → /<span class="id" title="lemma">card_uniqP</span> →.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">uniq_leq_size</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset.Lemmas"><span class="id" title="section">Lemmas</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.Subset"><span class="id" title="section">Subset</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Affinity.Properties.IntersectingAffinities" class="idref" href="#Affinity.Properties.IntersectingAffinities"><span class="id" title="section">IntersectingAffinities</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Affinity.affinity_intersects" class="idref" href="#Affinity.affinity_intersects"><span class="id" title="definition">affinity_intersects</span></a> (<a id="alpha:20" class="idref" href="#alpha:20"><span class="id" title="binder">alpha</span></a> <a id="alpha':21" class="idref" href="#alpha':21"><span class="id" title="binder">alpha'</span></a>: <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.affinity"><span class="id" title="definition">affinity</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.num_cpus"><span class="id" title="variable">num_cpus</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">[</span><span class="id" title="notation">∃</span> <a id="cpu:24" class="idref" href="#cpu:24"><span class="id" title="binder">cpu</span></a><span class="id" title="notation">,</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#cpu:22"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#alpha:20"><span class="id" title="variable">alpha</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#cpu:22"><span class="id" title="variable">cpu</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#alpha':21"><span class="id" title="variable">alpha'</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a><span class="id" title="notation">]</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties.IntersectingAffinities"><span class="id" title="section">IntersectingAffinities</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.schedule.apa.affinity.html#Affinity"><span class="id" title="module">Affinity</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.suspension</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.suspension</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span> <span class="id" title="library">bigop</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Suspension" class="idref" href="#Suspension"><span class="id" title="module">Suspension</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">ArrivalSequence</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Suspension.SuspensionTimes" class="idref" href="#Suspension.SuspensionTimes"><span class="id" title="section">SuspensionTimes</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.SuspensionTimes.Job" class="idref" href="#Suspension.SuspensionTimes.Job"><span class="id" title="variable">Job</span></a>: <span class="id" title="abbreviation">eqType</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Suspension.job_suspension" class="idref" href="#Suspension.job_suspension"><span class="id" title="definition">job_suspension</span></a> := <a class="idref" href="prosa.classic.model.suspension.html#Suspension.SuspensionTimes.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a>    <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a>   <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.time.html#Time.duration"><span class="id" title="definition">duration</span></a>. 
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.SuspensionTimes"><span class="id" title="section">SuspensionTimes</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Suspension.TotalSuspensionTime" class="idref" href="#Suspension.TotalSuspensionTime"><span class="id" title="section">TotalSuspensionTime</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.TotalSuspensionTime.job_cost" class="idref" href="#Suspension.TotalSuspensionTime.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.TotalSuspensionTime.next_suspension" class="idref" href="#Suspension.TotalSuspensionTime.next_suspension"><span class="id" title="variable">next_suspension</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.job_suspension"><span class="id" title="definition">job_suspension</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.TotalSuspensionTime.j" class="idref" href="#Suspension.TotalSuspensionTime.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Suspension.total_suspension" class="idref" href="#Suspension.total_suspension"><span class="id" title="definition">total_suspension</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span>0 <span class="id" title="notation">≤</span> <a id="t:8" class="idref" href="#t:8"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.j"><span class="id" title="variable">j</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">(</span><a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.next_suspension"><span class="id" title="variable">next_suspension</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.classic.model.suspension.html#t:6"><span class="id" title="variable">t</span></a><span class="id" title="notation">)</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.TotalSuspensionTime"><span class="id" title="section">TotalSuspensionTime</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Suspension.DynamicSuspensions" class="idref" href="#Suspension.DynamicSuspensions"><span class="id" title="section">DynamicSuspensions</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:9" class="idref" href="#Task:9"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:10" class="idref" href="#Job:10"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.DynamicSuspensions.job_cost" class="idref" href="#Suspension.DynamicSuspensions.job_cost"><span class="id" title="variable">job_cost</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.DynamicSuspensions.job_task" class="idref" href="#Suspension.DynamicSuspensions.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.DynamicSuspensions.next_suspension" class="idref" href="#Suspension.DynamicSuspensions.next_suspension"><span class="id" title="variable">next_suspension</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.job_suspension"><span class="id" title="definition">job_suspension</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="Suspension.DynamicSuspensions.total_job_suspension" class="idref" href="#Suspension.DynamicSuspensions.total_job_suspension"><span class="id" title="variable">total_job_suspension</span></a> := <a class="idref" href="prosa.classic.model.suspension.html#Suspension.total_suspension"><span class="id" title="definition">total_suspension</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.next_suspension"><span class="id" title="variable">next_suspension</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Suspension.DynamicSuspensions.suspension_bound" class="idref" href="#Suspension.DynamicSuspensions.suspension_bound"><span class="id" title="variable">suspension_bound</span></a>: <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Suspension.dynamic_suspension_model" class="idref" href="#Suspension.dynamic_suspension_model"><span class="id" title="definition">dynamic_suspension_model</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:15" class="idref" href="#j:15"><span class="id" title="binder">j</span></a>, <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.total_job_suspension"><span class="id" title="variable">total_job_suspension</span></a> <a class="idref" href="prosa.classic.model.suspension.html#j:15"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.suspension_bound"><span class="id" title="variable">suspension_bound</span></a> (<a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.suspension.html#j:15"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension.DynamicSuspensions"><span class="id" title="section">DynamicSuspensions</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.suspension.html#Suspension"><span class="id" title="module">Suspension</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

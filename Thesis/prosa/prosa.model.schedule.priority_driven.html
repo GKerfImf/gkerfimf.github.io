@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.schedule.priority_driven</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.schedule.priority_driven</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.priority.classes.html#"><span class="id" title="library">prosa.model.priority.classes</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.schedule.preemption_time.html#"><span class="id" title="library">prosa.model.schedule.preemption_time</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab169"></a><h1 class="section">Priority-Driven Schedules</h1>
+
+<div class="paragraph"> </div>
+
+ We now define what it means for a schedule to respect a priority in the
+    presence of jobs with non-preemptive segments.  We only specify a
+    definition for JLDP policies since JLFP and FP policies can be used with
+    this definition through the canonical conversions (see
+    model.priority.classes).
+
+<div class="paragraph"> </div>
+
+    NB: For legacy reasons, the below definition is currently specific to ideal
+        uniprocessor schedules. Removal of this limitation is future work. 
+<div class="paragraph"> </div>
+
+ Throughout this file, we assume ideal uniprocessor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="Priority" class="idref" href="#Priority"><span class="id" title="section">Priority</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:2" class="idref" href="#Job:2"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">JobTask</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Job</span></a> <a id="H:3" class="idref" href="#H:3"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose jobs have an arrival time, a cost, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobArrival</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and consider any preemption model and notion of readiness. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobPreemptable</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="jr:7" class="idref" href="#jr:7"><span class="id" title="binder">jr</span></a> : <a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.Job"><span class="id" title="variable">Job</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.Job"><span class="id" title="variable">Job</span></a>)}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Given any job arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.arr_seq" class="idref" href="#Priority.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and an ideal uniprocessor schedule of these jobs, 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.sched" class="idref" href="#Priority.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+we say that a JLDP policy ...
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">JLDP_policy</span></a> <a id="H3:10" class="idref" href="#H3:10"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...is respected by the schedule iff, at every preemption point, the
+     priority of the scheduled job is higher than or equal to the priority of
+     any backlogged job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_policy_at_preemption_point" class="idref" href="#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:11" class="idref" href="#j:11"><span class="id" title="binder">j</span></a> <a id="j_hp:12" class="idref" href="#j_hp:12"><span class="id" title="binder">j_hp</span></a> <a id="t:13" class="idref" href="#t:13"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#j:11"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.schedule.preemption_time.html#preemption_time"><span class="id" title="definition">preemption_time</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#backlogged"><span class="id" title="definition">backlogged</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#j:11"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#j_hp:12"><span class="id" title="variable">j_hp</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#j_hp:12"><span class="id" title="variable">j_hp</span></a> <a class="idref" href="prosa.model.schedule.priority_driven.html#j:11"><span class="id" title="variable">j</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.schedule.priority_driven.html#Priority"><span class="id" title="section">Priority</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

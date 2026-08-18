@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.implementation.facts.ideal_uni.prio_aware</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.implementation.facts.ideal_uni.prio_aware</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <span class="id" title="var">prosa.implementation.facts.ideal_uni.preemption_aware</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab135"></a><h1 class="section">Ideal Uniprocessor Scheduler Properties</h1>
+
+<div class="paragraph"> </div>
+
+ This file establishes facts about the reference model of a priority- and
+    preemption-model-aware ideal uniprocessor scheduler. 
+<div class="paragraph"> </div>
+
+ The following results assume ideal uniprocessor schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="var">prosa.model.processor.ideal</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <span class="id" title="var">PrioAwareUniprocessorScheduler</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs with costs and arrival times, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">Job</span> : <span class="id" title="var">JobType</span>} {<span class="id" title="var">JC</span> : <span class="id" title="var">JobCost</span> <span class="id" title="var">Job</span>} {<span class="id" title="var">JA</span> : <span class="id" title="var">JobArrival</span> <span class="id" title="var">Job</span>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... in the context of an ideal uniprocessor model. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <span class="id" title="var">PState</span> := <span class="id" title="var">ideal.processor_state</span> <span class="id" title="var">Job</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <span class="id" title="var">idle_state</span> : <span class="id" title="var">PState</span> := <span class="id" title="var">None</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose we are given a consistent arrival sequence of such jobs, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <span class="id" title="var">arr_seq</span> : <span class="id" title="var">arrival_sequence</span> <span class="id" title="var">Job</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_consistent_arrival_times</span>: <span class="id" title="var">consistent_arrival_times</span> <span class="id" title="var">arr_seq</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... a non-clairvoyant readiness model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<span class="id" title="var">RM</span>: <span class="id" title="var">JobReady</span> <span class="id" title="var">Job</span> (<span class="id" title="var">ideal.processor_state</span> <span class="id" title="var">Job</span>)}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_nonclairvoyant_job_readiness</span>: <span class="id" title="var">nonclairvoyant_readiness</span> <span class="id" title="var">RM</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... a preemption model that is consistent with the readiness model, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">JobPreemptable</span> <span class="id" title="var">Job</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_valid_preemption_behavior</span>: <span class="id" title="var">valid_nonpreemptive_readiness</span> <span class="id" title="var">RM</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and reflexive, total, and transitive JLDP priority policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<span class="id" title="var">JLDP_policy</span> <span class="id" title="var">Job</span>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_reflexive_priorities</span>: <span class="id" title="var">reflexive_priorities</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_total</span>: <span class="id" title="var">total_priorities</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_transitive</span>: <span class="id" title="var">transitive_priorities</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider the schedule generated by the preemption-policy- and
+      priority-aware ideal uniprocessor scheduler. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <span class="id" title="var">schedule</span> := <span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+First, we note that the priority-aware job selection policy obviously
+     maintains work-conservation. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <span class="id" title="var">uni_schedule_work_conserving</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">work_conserving</span> <span class="id" title="var">arr_seq</span> <span class="id" title="var">schedule</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">np_schedule_work_conserving</span> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">jobs</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<span class="id" title="var">choose_highest_prio_job</span>; <span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">supremum_none</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>⇒ →.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Second, we similarly note that schedule validity is also maintained. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <span class="id" title="var">uni_schedule_valid</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">valid_schedule</span> <span class="id" title="var">schedule</span> <span class="id" title="var">arr_seq</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">np_schedule_valid</span> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">jobs</span> <span class="id" title="var">j</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">supremum_in</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Third, the schedule respects also the preemption model semantics. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <span class="id" title="var">PreemptionCompliance</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Suppose that every job in <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a></span> adheres to the basic validity
+        requirement that jobs must start execution to become nonpreemptive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <span class="id" title="var">H_valid_preemption_function</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">arrives_in</span> <span class="id" title="var">arr_seq</span> <span class="id" title="var">j</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">job_cannot_become_nonpreemptive_before_execution</span> <span class="id" title="var">j</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Since <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#uni_schedule"><span class="id" title="definition">uni_schedule</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a></span> is an instance of <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a></span>, the
+        compliance of <span class="inlinecode"><a class="idref" href="prosa.implementation.facts.ideal_uni.preemption_aware.html#NPUniprocessorScheduler.schedule"><span class="id" title="variable">schedule</span></a></span> with the preemption model follows trivially
+        from the compliance of <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#np_uni_schedule"><span class="id" title="definition">np_uni_schedule</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <span class="id" title="var">schedule_respects_preemption_model</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">schedule_respects_preemption_model</span> <span class="id" title="var">arr_seq</span> <span class="id" title="var">schedule</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">np_respects_preemption_model</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <span class="id" title="var">PreemptionCompliance</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Now we proceed to the main property of the priority-aware scheduler: in
+      the following section we establish that <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#uni_schedule"><span class="id" title="definition">uni_schedule</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a></span> is
+      compliant with the given priority policy whenever jobs are
+      preemptable. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <span class="id" title="var">Priority</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For notational convenience, recall the definitions of the job-selection
+        policy and a prefix of the schedule based on which the next decision is
+        made. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <span class="id" title="var">policy</span> := <span class="id" title="var">allocation_at</span> <span class="id" title="var">arr_seq</span> <span class="id" title="var">choose_highest_prio_job</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <span class="id" title="var">prefix</span> <span class="id" title="var">t</span> := <span class="id" title="keyword">if</span> <span class="id" title="var">t</span> <span class="id" title="keyword">is</span> <span class="id" title="var">t'</span>.+1<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">then</span> <span class="id" title="var">schedule_up_to</span> <span class="id" title="var">policy</span> <span class="id" title="var">idle_state</span> <span class="id" title="var">t'</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">else</span> <span class="id" title="var">empty_schedule</span> <span class="id" title="var">idle_state</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To start, we observe that, at preemption times, the scheduled job is a
+        supremum w.r.t. to the priority order and the set of backlogged
+        jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">scheduled_job_is_supremum</span>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">scheduled_at</span> <span class="id" title="var">schedule</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">preemption_time</span> <span class="id" title="var">schedule</span> <span class="id" title="var">t</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">supremum</span> (<span class="id" title="var">hep_job_at</span> <span class="id" title="var">t</span>) (<span class="id" title="var">jobs_backlogged_at</span> <span class="id" title="var">arr_seq</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">t</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">j</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span> <span class="id" title="var">PREEMPT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">NOT_NP</span>: ~~ <span class="id" title="var">prev_job_nonpreemptive</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">contraL</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">preemption_time</span> (<span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>) <span class="id" title="var">t</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">np_consistent</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">scheduled_at_def</span> ⇒ /<span class="id" title="var">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> {1}/<span class="id" title="var">schedule</span>/<span class="id" title="var">uni_schedule</span>/<span class="id" title="var">np_uni_schedule</span>/<span class="id" title="var">generic_schedule</span> <span class="id" title="var">schedule_up_to_def</span> /<span class="id" title="var">allocation_at</span> -/(<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">ifF</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">negbTE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <span class="id" title="var">scheduled_job_is_supremum_new</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">supremum</span> (<span class="id" title="var">hep_job_at</span> <span class="id" title="var">t</span>) (<span class="id" title="var">jobs_backlogged_at</span> <span class="id" title="var">arr_seq</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">t</span>) = <span class="id" title="var">Some</span> <span class="id" title="var">j</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">preemption_time</span> <span class="id" title="var">schedule</span> <span class="id" title="var">t</span> →<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">scheduled_at</span> <span class="id" title="var">schedule</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">SUP</span> <span class="id" title="var">PREEMPT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">NOT_NP</span>: ~~ <span class="id" title="var">prev_job_nonpreemptive</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">contraL</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <span class="id" title="var">preemption_time</span> (<span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>) <span class="id" title="var">t</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">np_consistent</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SUP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">scheduled_at_def</span> ⇒ /<span class="id" title="var">eqP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> {1}/<span class="id" title="var">schedule</span>/<span class="id" title="var">uni_schedule</span>/<span class="id" title="var">np_uni_schedule</span>/<span class="id" title="var">generic_schedule</span> <span class="id" title="var">schedule_up_to_def</span> /<span class="id" title="var">allocation_at</span> -/(<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="var">ifF</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">negbTE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+From the preceding facts, we conclude that <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#uni_schedule"><span class="id" title="definition">uni_schedule</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a></span>
+        respects the priority policy at preemption times. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Theorem</span> <span class="id" title="var">schedule_respects_policy</span> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">respects_policy_at_preemption_point</span> <span class="id" title="var">arr_seq</span> <span class="id" title="var">schedule</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> <span class="id" title="var">t</span> <span class="id" title="var">ARRIVES</span> <span class="id" title="var">PREEMPT</span> <span class="id" title="var">BACK_j1</span> <span class="id" title="var">SCHED_j2</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span>: (<span class="id" title="var">boolP</span> (<span class="id" title="var">scheduled_at</span> (<span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>) <span class="id" title="var">j1</span> <span class="id" title="var">t</span>)) ⇒ [<span class="id" title="var">SCHED_j1</span>|<span class="id" title="var">NOT_SCHED_j1</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="var">have</span> &lt;-: <span class="id" title="var">j1</span> = <span class="id" title="var">j2</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> (<span class="id" title="var">ideal_proc_model_is_a_uniprocessor_model</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> (<span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>) <span class="id" title="var">t</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">H_reflexive_priorities</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">move</span>: <span class="id" title="var">BACK_j1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> -&gt;: <span class="id" title="var">backlogged</span> (<span class="id" title="var">uni_schedule</span> <span class="id" title="var">arr_seq</span>) <span class="id" title="var">j1</span> <span class="id" title="var">t</span> = <span class="id" title="var">backlogged</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">j1</span> <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ <span class="id" title="tactic">apply</span> <span class="id" title="var">backlogged_prefix_invariance'</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">h</span> := <span class="id" title="var">t</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<span class="id" title="var">identical_prefix</span> /<span class="id" title="var">uni_schedule</span> /<span class="id" title="var">prefix</span> ⇒ <span class="id" title="var">t'</span> <span class="id" title="var">LT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">t</span> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<span class="id" title="var">np_uni_schedule</span> /<span class="id" title="var">generic_schedule</span> (<span class="id" title="var">schedule_up_to_prefix_inclusion</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">t'</span> <span class="id" title="var">t</span>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<span class="id" title="var">prefix</span> <span class="id" title="var">scheduled_at_def</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">induction</span> <span class="id" title="var">t</span> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="var">schedule_up_to_empty</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">BACK_j1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">scheduled_job_is_supremum</span> <span class="id" title="var">j2</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED_j2</span> <span class="id" title="var">PREEMPT</span>) ⇒ <span class="id" title="var">SUPREMUM</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="var">supremum_spec</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">s</span> := <span class="id" title="var">jobs_backlogged_at</span> <span class="id" title="var">arr_seq</span> (<span class="id" title="var">prefix</span> <span class="id" title="var">t</span>) <span class="id" title="var">t</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">mem_backlogged_jobs</span>. }<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <span class="id" title="var">Priority</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <span class="id" title="var">PrioAwareUniprocessorScheduler</span>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

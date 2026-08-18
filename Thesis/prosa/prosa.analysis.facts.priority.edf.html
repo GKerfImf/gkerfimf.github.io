@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.priority.edf</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.priority.edf</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.priority.edf.html#"><span class="id" title="library">prosa.model.priority.edf</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.task.absolute_deadline.html#"><span class="id" title="library">prosa.model.task.absolute_deadline</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove a few properties about EDF policy. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="PropertiesOfEDF" class="idref" href="#PropertiesOfEDF"><span class="id" title="section">PropertiesOfEDF</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with relative deadlines ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskDeadline</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="PropertiesOfEDF.arr_seq" class="idref" href="#PropertiesOfEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#PropertiesOfEDF.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+EDF respects sequential tasks hypothesis. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="EDF_respects_sequential_tasks" class="idref" href="#EDF_respects_sequential_tasks"><span class="id" title="lemma">EDF_respects_sequential_tasks</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.priority.classes.html#policy_respects_sequential_tasks"><span class="id" title="definition">policy_respects_sequential_tasks</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> <span class="id" title="var">TSK</span> <span class="id" title="var">ARR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">TSK</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a>, <a class="idref" href="prosa.model.priority.edf.html#EDF"><span class="id" title="instance">EDF</span></a>, <a class="idref" href="prosa.behavior.job.html#job_deadline"><span class="id" title="definition">job_deadline</span></a>, <a class="idref" href="prosa.model.task.absolute_deadline.html#job_deadline_from_task_deadline"><span class="id" title="instance">job_deadline_from_task_deadline</span></a>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_add2r</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.priority.edf.html#PropertiesOfEDF"><span class="id" title="section">PropertiesOfEDF</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We add the above lemma into a "Hint Database" basic_facts, so Coq
+    will be able to apply it automatically. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Hint Resolve</span> <span class="id" title="var">EDF_respects_sequential_tasks</span> : <span class="id" title="var">basic_facts</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.sequentiality.html#"><span class="id" title="library">prosa.model.task.sequentiality</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.busy_interval.priority_inversion.html#"><span class="id" title="library">prosa.analysis.facts.busy_interval.priority_inversion</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#"><span class="id" title="library">prosa.analysis.facts.priority.sequential</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we prove that EDF priority policy 
+    implies that tasks are sequential. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="SequentialEDF" class="idref" href="#SequentialEDF"><span class="id" title="section">SequentialEDF</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:8" class="idref" href="#Task:8"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:9" class="idref" href="#H:9"><span class="id" title="binder">TaskCost</span></a> <a id="H:9" class="idref" href="#H:9"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">TaskDeadline</span></a> <a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... with a bound on the maximum non-preemptive segment length.
+      The bound is needed to ensure that, at any instant, it always 
+      exists a subsequent preemption time in which the scheduler can, 
+      if needed, switch to another higher-priority job. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">TaskMaxNonpreemptiveSegment</span></a> <a id="H1:11" class="idref" href="#H1:11"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, consider any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:12" class="idref" href="#Job:12"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:13" class="idref" href="#H2:13"><span class="id" title="binder">JobTask</span></a> <a id="H2:13" class="idref" href="#H2:13"><span class="id" title="binder">Job</span></a> <a id="H2:13" class="idref" href="#H2:13"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="Arrival:14" class="idref" href="#Arrival:14"><span class="id" title="binder">Arrival</span></a> : <a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="Cost:15" class="idref" href="#Cost:15"><span class="id" title="binder">Cost</span></a> : <a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SequentialEDF.arr_seq" class="idref" href="#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, consider any ideal uni-processor schedule of this arrival sequence, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="SequentialEDF.sched" class="idref" href="#SequentialEDF.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... allow for any work-bearing notion of job readiness, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">@</span></a><a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">JobReady</span></a> <a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">Job</span></a> <a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">(</span></a><a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">ideal.processor_state</span></a> <a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">Job</span></a><a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">)</span></a> <a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">Cost</span></a> <a id="H3:18" class="idref" href="#H3:18"><span class="id" title="binder">Arrival</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialEDF.H_job_ready" class="idref" href="#SequentialEDF.H_job_ready"><span class="id" title="variable">H_job_ready</span></a> : <a class="idref" href="prosa.analysis.definitions.work_bearing_readiness.html#work_bearing_readiness"><span class="id" title="definition">work_bearing_readiness</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and assume that the schedule is valid. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialEDF.H_sched_valid" class="idref" href="#SequentialEDF.H_sched_valid"><span class="id" title="variable">H_sched_valid</span></a> : <a class="idref" href="prosa.behavior.ready.html#valid_schedule"><span class="id" title="definition">valid_schedule</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In addition, we assume the existence of a function mapping jobs
+      to their preemption points ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H4:21" class="idref" href="#H4:21"><span class="id" title="binder">JobPreemptable</span></a> <a id="H4:21" class="idref" href="#H4:21"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and assume that it defines a valid preemption model with
+      bounded non-preemptive segments. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialEDF.H_valid_model_with_bounded_nonpreemptive_segments" class="idref" href="#SequentialEDF.H_valid_model_with_bounded_nonpreemptive_segments"><span class="id" title="variable">H_valid_model_with_bounded_nonpreemptive_segments</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#valid_model_with_bounded_nonpreemptive_segments"><span class="id" title="definition">valid_model_with_bounded_nonpreemptive_segments</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we assume that the schedule respects the policy defined by
+      the <span class="inlinecode"><a class="idref" href="prosa.model.preemption.parameter.html#job_preemptable"><span class="id" title="projection">job_preemptable</span></a></span> function (i.e., jobs have bounded
+      non-preemptive segments). 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="SequentialEDF.H_respects_policy" class="idref" href="#SequentialEDF.H_respects_policy"><span class="id" title="variable">H_respects_policy</span></a> : <a class="idref" href="prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To prove sequentiality, we use lemma
+      <span class="inlinecode"><a class="idref" href="prosa.analysis.facts.priority.sequential.html#early_hep_job_is_scheduled"><span class="id" title="lemma">early_hep_job_is_scheduled</span></a></span>. Clearly, under the EDF priority
+      policy, jobs satisfy the conditions described by the lemma
+      (i.e., given two jobs <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span> from the same task, if <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span>
+      arrives earlier than <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, then <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> always has a higher
+      priority than job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>, and hence completes before <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>);
+      therefore EDF implies sequential tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="EDF_implies_sequential_tasks" class="idref" href="#EDF_implies_sequential_tasks"><span class="id" title="lemma">EDF_implies_sequential_tasks</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.sequentiality.html#sequential_tasks"><span class="id" title="definition">sequential_tasks</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> ? ? ? <span class="id" title="var">ARR1</span> <span class="id" title="var">ARR2</span> <span class="id" title="var">SAME</span> <span class="id" title="var">LT</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">eapply</span> <a class="idref" href="prosa.analysis.facts.priority.sequential.html#early_hep_job_is_scheduled"><span class="id" title="lemma">early_hep_job_is_scheduled</span></a> ⇒ //; <span class="id" title="tactic">eauto</span> 2.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">auto</span> <span class="id" title="keyword">with</span> <span class="id" title="var">basic_facts</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">move</span> : <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF.H_valid_model_with_bounded_nonpreemptive_segments"><span class="id" title="variable">H_valid_model_with_bounded_nonpreemptive_segments</span></a> ⇒ [<span class="id" title="var">VALID</span> <span class="id" title="var">_</span>]; <span class="id" title="tactic">apply</span> <span class="id" title="var">VALID</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">clear</span> <span class="id" title="var">t</span>; <span class="id" title="tactic">intros</span> ?.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">SAME</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">SAME</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> /<a class="idref" href="prosa.model.priority.classes.html#JLFP_to_JLDP"><span class="id" title="instance">JLFP_to_JLDP</span></a> /<a class="idref" href="prosa.model.priority.classes.html#hep_job"><span class="id" title="definition">hep_job</span></a> /<a class="idref" href="prosa.model.priority.edf.html#EDF"><span class="id" title="instance">edf.EDF</span></a> /<a class="idref" href="prosa.behavior.job.html#job_deadline"><span class="id" title="definition">job_deadline</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/<a class="idref" href="prosa.model.task.absolute_deadline.html#job_deadline_from_task_deadline"><span class="id" title="instance">absolute_deadline.job_deadline_from_task_deadline</span></a> <span class="id" title="var">SAME</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">split</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_add2r</span> <span class="id" title="lemma">ltnW</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span> <span class="id" title="lemma">ltn_add2r</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.priority.edf.html#SequentialEDF"><span class="id" title="section">SequentialEDF</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.task.arrival.curves</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.task.arrival.curves</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.rel.html#"><span class="id" title="library">prosa.util.rel</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.arrivals.html#"><span class="id" title="library">prosa.model.task.arrivals</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab177"></a><h1 class="section">The Arbitrary Arrival Curves Model</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, we define the notion of arbitrary arrival curves, which
+    can be used to reason about the frequency of job arrivals. In contrast to
+    the sporadic task model, the arbitrary arrival curves model is well-suited
+    to expressing bursty and irregular arrival processes. 
+<div class="paragraph"> </div>
+
+<a id="lab178"></a><h2 class="section">Task Parameters for the Arrival Curves Model</h2>
+
+<div class="paragraph"> </div>
+
+ The arrival curves model describes tasks by giving an upper bound and,
+    optionally, a lower bound on the number of new job arrivals during any
+    given interval. These bounds are typically called arrival curves. 
+<div class="paragraph"> </div>
+
+ We let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span> denote a bound on the maximum number of
+    arrivals of jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in any interval of length <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MaxArrivals" class="idref" href="#MaxArrivals"><span class="id" title="record">MaxArrivals</span></a> (<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="max_arrivals" class="idref" href="#max_arrivals"><span class="id" title="projection">max_arrivals</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#Task:1"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Conversely, we let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#min_arrivals"><span class="id" title="projection">min_arrivals</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span> denote a bound on the minimum
+    number of arrivals of jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in any interval of length <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MinArrivals" class="idref" href="#MinArrivals"><span class="id" title="record">MinArrivals</span></a> (<a id="Task:4" class="idref" href="#Task:4"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="min_arrivals" class="idref" href="#min_arrivals"><span class="id" title="projection">min_arrivals</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#Task:4"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Alternatively, it is also possible to describe arbitrary arrival processes
+    by specifying the minimum and maximum lengths of an interval in which a
+    given number of jobs arrive. Such bounds are typically called minimum- and
+    maximum-distance functions. 
+<div class="paragraph"> </div>
+
+ We let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#min_separation"><span class="id" title="projection">min_separation</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><span class="id" title="var">N</span></span> denote the minimal length of an interval in
+    which exactly <span class="inlinecode"><span class="id" title="var">N</span></span> jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> arrive. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MinSeparation" class="idref" href="#MinSeparation"><span class="id" title="record">MinSeparation</span></a> (<a id="Task:7" class="idref" href="#Task:7"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="min_separation" class="idref" href="#min_separation"><span class="id" title="projection">min_separation</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#Task:7"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Conversely, we let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_separation"><span class="id" title="projection">max_separation</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><span class="id" title="var">N</span></span> denote the maximal length of an interval in
+    which exactly <span class="inlinecode"><span class="id" title="var">N</span></span> jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> arrive. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MaxSeparation" class="idref" href="#MaxSeparation"><span class="id" title="record">MaxSeparation</span></a> (<a id="Task:10" class="idref" href="#Task:10"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="max_separation" class="idref" href="#max_separation"><span class="id" title="projection">max_separation</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#Task:10"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab179"></a><h2 class="section">Parameter Semantics</h2>
+
+<div class="paragraph"> </div>
+
+ In the following, we precisely define the semantics of the arrival curves
+    model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ArrivalCurves" class="idref" href="#ArrivalCurves"><span class="id" title="section">ArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:13" class="idref" href="#Task:13"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:14" class="idref" href="#Job:14"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:15" class="idref" href="#H:15"><span class="id" title="binder">JobTask</span></a> <a id="H:15" class="idref" href="#H:15"><span class="id" title="binder">Job</span></a> <a id="H:15" class="idref" href="#H:15"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ArrivalCurves.arr_seq" class="idref" href="#ArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab180"></a><h3 class="section">Definition of Arrival Curves</h3>
+
+<div class="paragraph"> </div>
+
+ First, what constitutes a valid arrival bound for a task? 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ArrivalCurves.ArrivalCurves" class="idref" href="#ArrivalCurves.ArrivalCurves"><span class="id" title="section">ArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a given curve <span class="inlinecode"><a class="idref" href="prosa.classic.model.arrival.jitter.task_arrival.html#TaskArrivalWithJitter.DistanceBetweenSporadicJobs.num_arrivals"><span class="id" title="variable">num_arrivals</span></a></span> is a valid arrival curve for
+        task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> iff <span class="inlinecode"><a class="idref" href="prosa.classic.model.arrival.jitter.task_arrival.html#TaskArrivalWithJitter.DistanceBetweenSporadicJobs.num_arrivals"><span class="id" title="variable">num_arrivals</span></a></span> is a monotonic function that equals 0 for
+        the empty interval <span class="inlinecode"><span class="id" title="keyword">delta</span></span> <span class="inlinecode">=</span> <span class="inlinecode">0</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_arrival_curve" class="idref" href="#valid_arrival_curve"><span class="id" title="definition">valid_arrival_curve</span></a> (<a id="num_arrivals:17" class="idref" href="#num_arrivals:17"><span class="id" title="binder">num_arrivals</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#num_arrivals:17"><span class="id" title="variable">num_arrivals</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.rel.html#monotone"><span class="id" title="definition">monotone</span></a> <span class="id" title="definition">leq</span> <a class="idref" href="prosa.model.task.arrival.curves.html#num_arrivals:17"><span class="id" title="variable">num_arrivals</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a></span> is an upper arrival bound for task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>
+        iff, for any interval <code>[t1, t2)</code>, <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="projection">max_arrivals</span></a></span> <span class="inlinecode">(<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span> <span class="inlinecode">-</span> <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>)</span> bounds the
+        number of jobs of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> that arrive in that interval. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_max_arrivals" class="idref" href="#respects_max_arrivals"><span class="id" title="definition">respects_max_arrivals</span></a> (<a id="tsk:18" class="idref" href="#tsk:18"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.Task"><span class="id" title="variable">Task</span></a>) (<a id="max_arrivals:19" class="idref" href="#max_arrivals:19"><span class="id" title="binder">max_arrivals</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:20" class="idref" href="#t1:20"><span class="id" title="binder">t1</span></a> <a id="t2:21" class="idref" href="#t2:21"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#t1:20"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:21"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:18"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:20"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:21"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals:19"><span class="id" title="variable">max_arrivals</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#t2:21"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:20"><span class="id" title="variable">t1</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We analogously define the lower arrival bound.. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_min_arrivals" class="idref" href="#respects_min_arrivals"><span class="id" title="definition">respects_min_arrivals</span></a> (<a id="tsk:22" class="idref" href="#tsk:22"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.Task"><span class="id" title="variable">Task</span></a>) (<a id="min_arrivals:23" class="idref" href="#min_arrivals:23"><span class="id" title="binder">min_arrivals</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:24" class="idref" href="#t1:24"><span class="id" title="binder">t1</span></a> <a id="t2:25" class="idref" href="#t2:25"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#t1:24"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:25"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#min_arrivals:23"><span class="id" title="variable">min_arrivals</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#t2:25"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:24"><span class="id" title="variable">t1</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:22"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:24"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:25"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.ArrivalCurves"><span class="id" title="section">ArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab181"></a><h3 class="section">Definition of Minimum Distance Bounds</h3>
+
+<div class="paragraph"> </div>
+
+ Next, we define the semantics of minimum-distance bounds. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ArrivalCurves.SeparationBound" class="idref" href="#ArrivalCurves.SeparationBound"><span class="id" title="section">SeparationBound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a given function <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#min_separation"><span class="id" title="projection">min_separation</span></a></span> is a lower separation
+        bound iff, for any number of jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span>, <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.curves.html#min_separation"><span class="id" title="projection">min_separation</span></a></span>
+        lower-bounds the minimum interval length in which that many jobs can
+        arrive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_min_separation" class="idref" href="#respects_min_separation"><span class="id" title="definition">respects_min_separation</span></a> (<a id="tsk:26" class="idref" href="#tsk:26"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.Task"><span class="id" title="variable">Task</span></a>) (<a id="min_separation:27" class="idref" href="#min_separation:27"><span class="id" title="binder">min_separation</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:28" class="idref" href="#t1:28"><span class="id" title="binder">t1</span></a> <a id="t2:29" class="idref" href="#t2:29"><span class="id" title="binder">t2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#t1:28"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:29"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#min_separation:27"><span class="id" title="variable">min_separation</span></a> (<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:26"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:28"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:29"><span class="id" title="variable">t2</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:29"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:28"><span class="id" title="variable">t1</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We analogously define in upper separation bounds. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_max_separation" class="idref" href="#respects_max_separation"><span class="id" title="definition">respects_max_separation</span></a> (<a id="tsk:30" class="idref" href="#tsk:30"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.Task"><span class="id" title="variable">Task</span></a>) (<a id="max_separation:31" class="idref" href="#max_separation:31"><span class="id" title="binder">max_separation</span></a>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a>):=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t1:32" class="idref" href="#t1:32"><span class="id" title="binder">t1</span></a> <a id="t2:33" class="idref" href="#t2:33"><span class="id" title="binder">t2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#t1:32"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:33"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.curves.html#t2:33"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:32"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.curves.html#max_separation:31"><span class="id" title="variable">max_separation</span></a> (<a class="idref" href="prosa.model.task.arrivals.html#number_of_task_arrivals"><span class="id" title="definition">number_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:30"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t1:32"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#t2:33"><span class="id" title="variable">t2</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves.SeparationBound"><span class="id" title="section">SeparationBound</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurves"><span class="id" title="section">ArrivalCurves</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab182"></a><h2 class="section">Model Validity</h2>
+
+<div class="paragraph"> </div>
+
+ Based on the just-established semantics, we define the properties of a
+    valid arrival curves model. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="ArrivalCurvesModel" class="idref" href="#ArrivalCurvesModel"><span class="id" title="section">ArrivalCurvesModel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:34" class="idref" href="#Task:34"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:35" class="idref" href="#Job:35"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:36" class="idref" href="#H:36"><span class="id" title="binder">JobTask</span></a> <a id="H:36" class="idref" href="#H:36"><span class="id" title="binder">Job</span></a> <a id="H:36" class="idref" href="#H:36"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ArrivalCurvesModel.arr_seq" class="idref" href="#ArrivalCurvesModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+..and all kinds of arrival and separation curves. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:38" class="idref" href="#H0:38"><span class="id" title="binder">MaxArrivals</span></a> <a id="H0:38" class="idref" href="#H0:38"><span class="id" title="binder">Task</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a id="H1:39" class="idref" href="#H1:39"><span class="id" title="binder">MinArrivals</span></a> <a id="H1:39" class="idref" href="#H1:39"><span class="id" title="binder">Task</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a id="H2:40" class="idref" href="#H2:40"><span class="id" title="binder">MaxSeparation</span></a> <a id="H2:40" class="idref" href="#H2:40"><span class="id" title="binder">Task</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a id="H3:41" class="idref" href="#H3:41"><span class="id" title="binder">MinSeparation</span></a> <a id="H3:41" class="idref" href="#H3:41"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span> be an arbitrary task set. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ArrivalCurvesModel.ts" class="idref" href="#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskSet"><span class="id" title="definition">TaskSet</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that <span class="inlinecode"><a class="idref" href="prosa.classic.implementation.global.basic.schedule.html#ConcreteScheduler.Implementation.ScheduleConstruction.arrivals"><span class="id" title="variable">arrivals</span></a></span> is a valid arrival curve for a task set
+      if it is valid for any task in the task set 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_taskset_arrival_curve" class="idref" href="#valid_taskset_arrival_curve"><span class="id" title="definition">valid_taskset_arrival_curve</span></a> (<a id="arrivals:43" class="idref" href="#arrivals:43"><span class="id" title="binder">arrivals</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:44" class="idref" href="#tsk:44"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:44"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#valid_arrival_curve"><span class="id" title="definition">valid_arrival_curve</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#arrivals:43"><span class="id" title="variable">arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:44"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we lift the per-task semantics of the respective arrival and
+  separation curves to the entire task set.  
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_max_arrivals" class="idref" href="#taskset_respects_max_arrivals"><span class="id" title="definition">taskset_respects_max_arrivals</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:45" class="idref" href="#tsk:45"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:45"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#respects_max_arrivals"><span class="id" title="definition">respects_max_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:45"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#max_arrivals"><span class="id" title="definition">max_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:45"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_min_arrivals" class="idref" href="#taskset_respects_min_arrivals"><span class="id" title="definition">taskset_respects_min_arrivals</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:46" class="idref" href="#tsk:46"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:46"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#respects_min_arrivals"><span class="id" title="definition">respects_min_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:46"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#min_arrivals"><span class="id" title="definition">min_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:46"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_max_separation" class="idref" href="#taskset_respects_max_separation"><span class="id" title="definition">taskset_respects_max_separation</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:47" class="idref" href="#tsk:47"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:47"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#respects_max_separation"><span class="id" title="definition">respects_max_separation</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:47"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#max_separation"><span class="id" title="definition">max_separation</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:47"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_min_separation" class="idref" href="#taskset_respects_min_separation"><span class="id" title="definition">taskset_respects_min_separation</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:48" class="idref" href="#tsk:48"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:48"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#respects_min_separation"><span class="id" title="definition">respects_min_separation</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:48"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.curves.html#min_separation"><span class="id" title="definition">min_separation</span></a> <a class="idref" href="prosa.model.task.arrival.curves.html#tsk:48"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.curves.html#ArrivalCurvesModel"><span class="id" title="section">ArrivalCurvesModel</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

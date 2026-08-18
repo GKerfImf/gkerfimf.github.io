@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>probsa.rt.model.assumptions.pr_must_be_ready</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library probsa.rt.model.assumptions.pr_must_be_ready</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">probsa.rt.behavior</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="probsa.rt.behavior.job.html#"><span class="id" title="library">job</span></a> <a class="idref" href="probsa.rt.behavior.schedule.html#"><span class="id" title="library">schedule</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="PrMustBeReadyToExecture" class="idref" href="#PrMustBeReadyToExecture"><span class="id" title="section">PrMustBeReadyToExecture</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="c3d482fd3513878b11e14abf9e72362d" class="idref" href="#c3d482fd3513878b11e14abf9e72362d"><span class="id" title="binder">Ω</span></a>} {<a id="64252de629bdd27d41a7716d98f42d82" class="idref" href="#64252de629bdd27d41a7716d98f42d82"><span class="id" title="binder">μ</span></a> : <a class="idref" href="probsa.util.notation.html#measure"><span class="id" title="definition">measure</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#c3d482fd3513878b11e14abf9e72362d"><span class="id" title="variable">Ω</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <span class="id" title="abbreviation">finType</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_cost:4" class="idref" href="#job_cost:4"><span class="id" title="binder">job_cost</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobCostRV"><span class="id" title="class">JobCostRV</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#Job:3"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#050a90b0cd5558ec27835f211533de6e"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#0967cf6692dcca6dba70568983dec1cf"><span class="id" title="variable">μ</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_arrival:5" class="idref" href="#job_arrival:5"><span class="id" title="binder">job_arrival</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobArrivalRV"><span class="id" title="class">JobArrivalRV</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#Job:3"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#050a90b0cd5558ec27835f211533de6e"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#0967cf6692dcca6dba70568983dec1cf"><span class="id" title="variable">μ</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:6" class="idref" href="#PState:6"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa/prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="PrMustBeReadyToExecture.sched" class="idref" href="#PrMustBeReadyToExecture.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="probsa.rt.behavior.schedule.html#pr_schedule"><span class="id" title="definition">pr_schedule</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#0967cf6692dcca6dba70568983dec1cf"><span class="id" title="variable">μ</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A probabilistic job readiness model is a family of (deterministic)
+      readiness models indexed by outcomes <span class="inlinecode">ω</span> <span class="inlinecode">:</span> <span class="inlinecode"><a class="idref" href="probsa.rt.analysis.valid_pWCET_remains_valid.html#43669ab37fe33209843e9b9ab41b83b2"><span class="id" title="variable">Ω</span></a></span>. For each outcome, we
+      instantiate the job cost and arrival time by evaluating the corresponding
+      random variables and defaulting to 0 if undefined (via <span class="inlinecode"><a class="idref" href="probsa.probability.nrvar.html#odflt0"><span class="id" title="definition">odflt0</span></a></span>). Since
+      job costs and arrivals are random variables with codomain <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#nat"><span class="id" title="inductive">nat</span></a></span>, we
+      use <span class="inlinecode"><a class="idref" href="probsa.probability.nrvar.html#odflt0"><span class="id" title="definition">odflt0</span></a></span> to extract concrete values, treating <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a></span> as 0. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="PrMustBeReadyToExecture.JobReadyRV" class="idref" href="#PrMustBeReadyToExecture.JobReadyRV"><span class="id" title="variable">JobReadyRV</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="1544baf9c9b1997778bf064543e6961c" class="idref" href="#1544baf9c9b1997778bf064543e6961c"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#050a90b0cd5558ec27835f211533de6e"><span class="id" title="variable">Ω</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa/prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.PState"><span class="id" title="variable">PState</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">jc</span> := <a class="idref" href="probsa.rt.behavior.job.html#sample0_costs"><span class="id" title="definition">sample0_costs</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#1544baf9c9b1997778bf064543e6961c"><span class="id" title="variable">ω</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="var">ja</span> := <a class="idref" href="probsa.rt.behavior.job.html#sample0_arrivals"><span class="id" title="definition">sample0_arrivals</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#1544baf9c9b1997778bf064543e6961c"><span class="id" title="variable">ω</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We lift the deterministic property <span class="inlinecode"><a class="idref" href="prosa/prosa.behavior.ready.html#jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a></span> to the
+      probabilistic setting by requiring it to hold for every outcome <span class="inlinecode">ω</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pr_jobs_must_be_ready_to_execute" class="idref" href="#pr_jobs_must_be_ready_to_execute"><span class="id" title="definition">pr_jobs_must_be_ready_to_execute</span></a> (<a id="job_ready:9" class="idref" href="#job_ready:9"><span class="id" title="binder">job_ready</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.JobReadyRV"><span class="id" title="variable">JobReadyRV</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="d0b23ea306fcd36def43b57e5859d86f" class="idref" href="#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#050a90b0cd5558ec27835f211533de6e"><span class="id" title="variable">Ω</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="prosa/prosa.behavior.ready.html#jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="variable">ω</span></a>) <span class="id" title="var">_</span> <span class="id" title="var">_</span> (<a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#job_ready:9"><span class="id" title="variable">job_ready</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="variable">ω</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="probsa.rt.model.assumptions.pr_must_be_ready.html#PrMustBeReadyToExecture"><span class="id" title="section">PrMustBeReadyToExecture</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

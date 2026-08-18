@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.classic.model.priority</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.classic.model.priority</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.util.all.html#"><span class="id" title="library">prosa.classic.util.all</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.classic.model.arrival.basic.task.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.task</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.job.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.job</span></a> <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#"><span class="id" title="library">prosa.classic.model.arrival.basic.arrival_sequence</span></a>.<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">ssreflect</span> <span class="id" title="library">ssrbool</span> <span class="id" title="library">eqtype</span> <span class="id" title="library">ssrnat</span> <span class="id" title="library">seq</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Module</span> <a id="Priority" class="idref" href="#Priority"><span class="id" title="module">Priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Import</span> <span class="id" title="var">SporadicTaskset</span> <span class="id" title="var">ArrivalSequence</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PriorityDefs" class="idref" href="#Priority.PriorityDefs"><span class="id" title="section">PriorityDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PriorityDefs.Task" class="idref" href="#Priority.PriorityDefs.Task"><span class="id" title="variable">Task</span></a>: <span class="id" title="abbreviation">eqType</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PriorityDefs.Job" class="idref" href="#Priority.PriorityDefs.Job"><span class="id" title="variable">Job</span></a>: <span class="id" title="abbreviation">eqType</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_policy" class="idref" href="#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PriorityDefs.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_policy" class="idref" href="#Priority.JLFP_policy"><span class="id" title="definition">JLFP_policy</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PriorityDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLDP_policy" class="idref" href="#Priority.JLDP_policy"><span class="id" title="definition">JLDP_policy</span></a> := <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#rel"><span class="id" title="definition">rel</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PriorityDefs.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PriorityDefs"><span class="id" title="section">PriorityDefs</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.Generalization" class="idref" href="#Priority.Generalization"><span class="id" title="section">Generalization</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:3" class="idref" href="#Task:3"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:4" class="idref" href="#Job:4"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.Generalization.job_task" class="idref" href="#Priority.Generalization.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_to_JLFP" class="idref" href="#Priority.FP_to_JLFP"><span class="id" title="definition">FP_to_JLFP</span></a> (<a id="task_hp:6" class="idref" href="#task_hp:6"><span class="id" title="binder">task_hp</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> (<a id="jhigh:7" class="idref" href="#jhigh:7"><span class="id" title="binder">jhigh</span></a> <a id="jlow:8" class="idref" href="#jlow:8"><span class="id" title="binder">jlow</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Job"><span class="id" title="variable">Job</span></a>) ⇒<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#task_hp:6"><span class="id" title="variable">task_hp</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#jhigh:7"><span class="id" title="variable">jhigh</span></a>) (<a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#jlow:8"><span class="id" title="variable">jlow</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_to_JLDP" class="idref" href="#Priority.FP_to_JLDP"><span class="id" title="definition">FP_to_JLDP</span></a> (<a id="task_hp:9" class="idref" href="#task_hp:9"><span class="id" title="binder">task_hp</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> (<a id="t:10" class="idref" href="#t:10"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) ⇒ <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_to_JLFP"><span class="id" title="definition">FP_to_JLFP</span></a> <a class="idref" href="prosa.classic.model.priority.html#task_hp:9"><span class="id" title="variable">task_hp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_to_JLDP" class="idref" href="#Priority.JLFP_to_JLDP"><span class="id" title="definition">JLFP_to_JLDP</span></a> (<a id="job_hp:11" class="idref" href="#job_hp:11"><span class="id" title="binder">job_hp</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_policy"><span class="id" title="definition">JLFP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">fun</span> (<a id="t:12" class="idref" href="#t:12"><span class="id" title="binder">t</span></a>: <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>) ⇒ <a class="idref" href="prosa.classic.model.priority.html#job_hp:11"><span class="id" title="variable">job_hp</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.Generalization"><span class="id" title="section">Generalization</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PropertiesFP" class="idref" href="#Priority.PropertiesFP"><span class="id" title="section">PropertiesFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:13" class="idref" href="#Task:13"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:14" class="idref" href="#Job:14"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesFP.job_task" class="idref" href="#Priority.PropertiesFP.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesFP.task_priority" class="idref" href="#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_is_reflexive" class="idref" href="#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_is_irreflexive" class="idref" href="#Priority.FP_is_irreflexive"><span class="id" title="definition">FP_is_irreflexive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#irreflexive"><span class="id" title="definition">irreflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_is_transitive" class="idref" href="#Priority.FP_is_transitive"><span class="id" title="definition">FP_is_transitive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PropertiesFP.Antisymmetry" class="idref" href="#Priority.PropertiesFP.Antisymmetry"><span class="id" title="section">Antisymmetry</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesFP.Antisymmetry.ts" class="idref" href="#Priority.PropertiesFP.Antisymmetry.ts"><span class="id" title="variable">ts</span></a>: <span class="id" title="abbreviation">seq</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_is_total_over_task_set" class="idref" href="#Priority.FP_is_total_over_task_set"><span class="id" title="definition">FP_is_total_over_task_set</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.list.html#total_over_list"><span class="id" title="definition">total_over_list</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Antisymmetry.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.FP_is_antisymmetric_over_task_set" class="idref" href="#Priority.FP_is_antisymmetric_over_task_set"><span class="id" title="definition">FP_is_antisymmetric_over_task_set</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.util.list.html#antisymmetric_over_list"><span class="id" title="definition">antisymmetric_over_list</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.task_priority"><span class="id" title="variable">task_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Antisymmetry.ts"><span class="id" title="variable">ts</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP.Antisymmetry"><span class="id" title="section">Antisymmetry</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesFP"><span class="id" title="section">PropertiesFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PropertiesJLFP" class="idref" href="#Priority.PropertiesJLFP"><span class="id" title="section">PropertiesJLFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:18" class="idref" href="#Task:18"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:19" class="idref" href="#Job:19"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLFP.job_task" class="idref" href="#Priority.PropertiesJLFP.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.Task"><span class="id" title="variable">Task</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLFP.job_arrival" class="idref" href="#Priority.PropertiesJLFP.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLFP.arr_seq" class="idref" href="#Priority.PropertiesJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLFP.job_priority" class="idref" href="#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_policy"><span class="id" title="definition">JLFP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_is_reflexive" class="idref" href="#Priority.JLFP_is_reflexive"><span class="id" title="definition">JLFP_is_reflexive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_is_irreflexive" class="idref" href="#Priority.JLFP_is_irreflexive"><span class="id" title="definition">JLFP_is_irreflexive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#irreflexive"><span class="id" title="definition">irreflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_is_transitive" class="idref" href="#Priority.JLFP_is_transitive"><span class="id" title="definition">JLFP_is_transitive</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_is_total" class="idref" href="#Priority.JLFP_is_total"><span class="id" title="definition">JLFP_is_total</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j1:24" class="idref" href="#j1:24"><span class="id" title="binder">j1</span></a> <a id="j2:25" class="idref" href="#j2:25"><span class="id" title="binder">j2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:24"><span class="id" title="variable">j1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:25"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:24"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:25"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">||</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:25"><span class="id" title="variable">j2</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:24"><span class="id" title="variable">j1</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLFP_respects_sequential_jobs" class="idref" href="#Priority.JLFP_respects_sequential_jobs"><span class="id" title="definition">JLFP_respects_sequential_jobs</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j1:26" class="idref" href="#j1:26"><span class="id" title="binder">j1</span></a> <a id="j2:27" class="idref" href="#j2:27"><span class="id" title="binder">j2</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:26"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">==</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:27"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:26"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:27"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:26"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:27"><span class="id" title="variable">j2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLFP"><span class="id" title="section">PropertiesJLFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PropertiesJLDP" class="idref" href="#Priority.PropertiesJLDP"><span class="id" title="section">PropertiesJLDP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:28" class="idref" href="#Job:28"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLDP.arr_seq" class="idref" href="#Priority.PropertiesJLDP.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PropertiesJLDP.job_priority" class="idref" href="#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.JLDP_policy"><span class="id" title="definition">JLDP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLDP_is_reflexive" class="idref" href="#Priority.JLDP_is_reflexive"><span class="id" title="definition">JLDP_is_reflexive</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:31" class="idref" href="#t:31"><span class="id" title="binder">t</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#t:31"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLDP_is_irreflexive" class="idref" href="#Priority.JLDP_is_irreflexive"><span class="id" title="definition">JLDP_is_irreflexive</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:32" class="idref" href="#t:32"><span class="id" title="binder">t</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#irreflexive"><span class="id" title="definition">irreflexive</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#t:32"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLDP_is_transitive" class="idref" href="#Priority.JLDP_is_transitive"><span class="id" title="definition">JLDP_is_transitive</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:33" class="idref" href="#t:33"><span class="id" title="binder">t</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#t:33"><span class="id" title="variable">t</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.JLDP_is_total" class="idref" href="#Priority.JLDP_is_total"><span class="id" title="definition">JLDP_is_total</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j1:34" class="idref" href="#j1:34"><span class="id" title="binder">j1</span></a> <a id="j2:35" class="idref" href="#j2:35"><span class="id" title="binder">j2</span></a> <a id="t:36" class="idref" href="#t:36"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:34"><span class="id" title="variable">j1</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:35"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#t:36"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:34"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:35"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#081ff67d3116402bb680e8692aa39185"><span class="id" title="notation">||</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP.job_priority"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#t:36"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:35"><span class="id" title="variable">j2</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:34"><span class="id" title="variable">j1</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PropertiesJLDP"><span class="id" title="section">PropertiesJLDP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownFPPolicies" class="idref" href="#Priority.KnownFPPolicies"><span class="id" title="section">KnownFPPolicies</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:37" class="idref" href="#Job:37"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:38" class="idref" href="#Task:38"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownFPPolicies.task_period" class="idref" href="#Priority.KnownFPPolicies.task_period"><span class="id" title="variable">task_period</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownFPPolicies.task_deadline" class="idref" href="#Priority.KnownFPPolicies.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownFPPolicies.job_arrival" class="idref" href="#Priority.KnownFPPolicies.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownFPPolicies.job_task" class="idref" href="#Priority.KnownFPPolicies.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.RM" class="idref" href="#Priority.RM"><span class="id" title="definition">RM</span></a> (<a id="tsk1:43" class="idref" href="#tsk1:43"><span class="id" title="binder">tsk1</span></a> <a id="tsk2:44" class="idref" href="#tsk2:44"><span class="id" title="binder">tsk2</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.priority.html#tsk1:43"><span class="id" title="variable">tsk1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.task_period"><span class="id" title="variable">task_period</span></a> <a class="idref" href="prosa.classic.model.priority.html#tsk2:44"><span class="id" title="variable">tsk2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.DM" class="idref" href="#Priority.DM"><span class="id" title="definition">DM</span></a> (<a id="tsk1:45" class="idref" href="#tsk1:45"><span class="id" title="binder">tsk1</span></a> <a id="tsk2:46" class="idref" href="#tsk2:46"><span class="id" title="binder">tsk2</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.priority.html#tsk1:45"><span class="id" title="variable">tsk1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.task_deadline"><span class="id" title="variable">task_deadline</span></a> <a class="idref" href="prosa.classic.model.priority.html#tsk2:46"><span class="id" title="variable">tsk2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownFPPolicies.Properties" class="idref" href="#Priority.KnownFPPolicies.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.RM_is_reflexive" class="idref" href="#Priority.RM_is_reflexive"><span class="id" title="lemma">RM_is_reflexive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.RM"><span class="id" title="definition">RM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a>, <a class="idref" href="prosa.classic.model.priority.html#Priority.RM"><span class="id" title="definition">RM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">tsk</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leqnn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.RM_is_transitive" class="idref" href="#Priority.RM_is_transitive"><span class="id" title="lemma">RM_is_transitive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_transitive"><span class="id" title="definition">FP_is_transitive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.RM"><span class="id" title="definition">RM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_transitive"><span class="id" title="definition">FP_is_transitive</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a>, <a class="idref" href="prosa.classic.model.priority.html#Priority.RM"><span class="id" title="definition">RM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">y</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.DM_is_reflexive" class="idref" href="#Priority.DM_is_reflexive"><span class="id" title="lemma">DM_is_reflexive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.DM"><span class="id" title="definition">DM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#reflexive"><span class="id" title="definition">reflexive</span></a>, <a class="idref" href="prosa.classic.model.priority.html#Priority.DM"><span class="id" title="definition">DM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">tsk</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leqnn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.DM_is_transitive" class="idref" href="#Priority.DM_is_transitive"><span class="id" title="lemma">DM_is_transitive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_transitive"><span class="id" title="definition">FP_is_transitive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.DM"><span class="id" title="definition">DM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_transitive"><span class="id" title="definition">FP_is_transitive</span></a>, <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#transitive"><span class="id" title="definition">transitive</span></a>, <a class="idref" href="prosa.classic.model.priority.html#Priority.DM"><span class="id" title="definition">DM</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">y</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.any_reflexive_FP_respects_sequential_jobs" class="idref" href="#Priority.any_reflexive_FP_respects_sequential_jobs"><span class="id" title="lemma">any_reflexive_FP_respects_sequential_jobs</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="job_priority:47" class="idref" href="#job_priority:47"><span class="id" title="binder">job_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Task"><span class="id" title="variable">Task</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.FP_is_reflexive"><span class="id" title="definition">FP_is_reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#job_priority:47"><span class="id" title="variable">job_priority</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_respects_sequential_jobs"><span class="id" title="definition">JLFP_respects_sequential_jobs</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.job_arrival"><span class="id" title="variable">job_arrival</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.FP_to_JLFP"><span class="id" title="definition">FP_to_JLFP</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#job_priority:47"><span class="id" title="variable">job_priority</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">HP</span> <span class="id" title="var">REFL</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> <span class="id" title="var">TSK</span> <span class="id" title="var">ARR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">TSK</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_to_JLFP"><span class="id" title="definition">FP_to_JLFP</span></a>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="var">REFL</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownFPPolicies"><span class="id" title="section">KnownFPPolicies</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownJLFPPolicies" class="idref" href="#Priority.KnownJLFPPolicies"><span class="id" title="section">KnownJLFPPolicies</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownJLFPPolicies.EDF" class="idref" href="#Priority.KnownJLFPPolicies.EDF"><span class="id" title="section">EDF</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:48" class="idref" href="#Job:48"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDF.job_arrival" class="idref" href="#Priority.KnownJLFPPolicies.EDF.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDF.job_deadline" class="idref" href="#Priority.KnownJLFPPolicies.EDF.job_deadline"><span class="id" title="variable">job_deadline</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDF.arr_seq" class="idref" href="#Priority.KnownJLFPPolicies.EDF.arr_seq"><span class="id" title="variable">arr_seq</span></a>: <a class="idref" href="prosa.classic.model.arrival.basic.arrival_sequence.html#ArrivalSequence.arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.EDF" class="idref" href="#Priority.EDF"><span class="id" title="definition">EDF</span></a> (<a id="j1:52" class="idref" href="#j1:52"><span class="id" title="binder">j1</span></a> <a id="j2:53" class="idref" href="#j2:53"><span class="id" title="binder">j2</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:52"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.priority.html#j1:52"><span class="id" title="variable">j1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:53"><span class="id" title="variable">j2</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_deadline"><span class="id" title="variable">job_deadline</span></a> <a class="idref" href="prosa.classic.model.priority.html#j2:53"><span class="id" title="variable">j2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownJLFPPolicies.EDF.Properties" class="idref" href="#Priority.KnownJLFPPolicies.EDF.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.EDF_is_reflexive" class="idref" href="#Priority.EDF_is_reflexive"><span class="id" title="lemma">EDF_is_reflexive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_is_reflexive"><span class="id" title="definition">JLFP_is_reflexive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">j</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leqnn</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.EDF_is_transitive" class="idref" href="#Priority.EDF_is_transitive"><span class="id" title="lemma">EDF_is_transitive</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_is_transitive"><span class="id" title="definition">JLFP_is_transitive</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">intros</span> <span class="id" title="var">y</span> <span class="id" title="var">x</span> <span class="id" title="var">z</span>; <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.EDF_is_total" class="idref" href="#Priority.EDF_is_total"><span class="id" title="lemma">EDF_is_total</span></a> : <a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_is_total"><span class="id" title="definition">JLFP_is_total</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a>; <span class="id" title="tactic">intros</span> <span class="id" title="var">x</span> <span class="id" title="var">y</span> <span class="id" title="var">ARRx</span> <span class="id" title="var">ARRy</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span> (<span class="id" title="lemma">leqP</span> (<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_arrival"><span class="id" title="variable">job_arrival</span></a> <span class="id" title="var">x</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_deadline"><span class="id" title="variable">job_deadline</span></a> <span class="id" title="var">x</span>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_arrival"><span class="id" title="variable">job_arrival</span></a> <span class="id" title="var">y</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.job_deadline"><span class="id" title="variable">job_deadline</span></a> <span class="id" title="var">y</span>));<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orTb"><span class="id" title="lemma">orTb</span></a> | <span class="id" title="tactic">by</span> <span class="id" title="tactic">move</span>/<span class="id" title="lemma">ltnW</span> ⇒ -&gt;].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF.Properties"><span class="id" title="section">Properties</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDF"><span class="id" title="section">EDF</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.KnownJLFPPolicies.EDFwithTasks" class="idref" href="#Priority.KnownJLFPPolicies.EDFwithTasks"><span class="id" title="section">EDFwithTasks</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:54" class="idref" href="#Task:54"><span class="id" title="binder">Task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDFwithTasks.task_deadline" class="idref" href="#Priority.KnownJLFPPolicies.EDFwithTasks.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:56" class="idref" href="#Job:56"><span class="id" title="binder">Job</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDFwithTasks.job_arrival" class="idref" href="#Priority.KnownJLFPPolicies.EDFwithTasks.job_arrival"><span class="id" title="variable">job_arrival</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.KnownJLFPPolicies.EDFwithTasks.job_task" class="idref" href="#Priority.KnownJLFPPolicies.EDFwithTasks.job_task"><span class="id" title="variable">job_task</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.job_relative_dealine" class="idref" href="#Priority.job_relative_dealine"><span class="id" title="definition">job_relative_dealine</span></a> (<a id="j:59" class="idref" href="#j:59"><span class="id" title="binder">j</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.Job"><span class="id" title="variable">Job</span></a>) := <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.task_deadline"><span class="id" title="variable">task_deadline</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#j:59"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="Priority.EDF_respects_sequential_jobs" class="idref" href="#Priority.EDF_respects_sequential_jobs"><span class="id" title="lemma">EDF_respects_sequential_jobs</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.JLFP_respects_sequential_jobs"><span class="id" title="definition">JLFP_respects_sequential_jobs</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.job_task"><span class="id" title="variable">job_task</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.job_arrival"><span class="id" title="variable">job_arrival</span></a> (<a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.job_relative_dealine"><span class="id" title="definition">job_relative_dealine</span></a>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">intros</span> <span class="id" title="var">j1</span> <span class="id" title="var">j2</span> <span class="id" title="var">TSK</span> <span class="id" title="var">ARR</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">TSK</span> ⇒ /<span class="id" title="lemma">eqP</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">unfold</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.EDF"><span class="id" title="definition">EDF</span></a>, <a class="idref" href="prosa.classic.model.priority.html#Priority.job_relative_dealine"><span class="id" title="definition">job_relative_dealine</span></a>; <span class="id" title="tactic">rewrite</span> <span class="id" title="var">TSK</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_add2r</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies.EDFwithTasks"><span class="id" title="section">EDFwithTasks</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.KnownJLFPPolicies"><span class="id" title="section">KnownJLFPPolicies</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PossibleInterferingTasks" class="idref" href="#Priority.PossibleInterferingTasks"><span class="id" title="section">PossibleInterferingTasks</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="sporadic_task:60" class="idref" href="#sporadic_task:60"><span class="id" title="binder">sporadic_task</span></a>: <span class="id" title="abbreviation">eqType</span>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.task_cost" class="idref" href="#Priority.PossibleInterferingTasks.task_cost"><span class="id" title="variable">task_cost</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.task_period" class="idref" href="#Priority.PossibleInterferingTasks.task_period"><span class="id" title="variable">task_period</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.task_deadline" class="idref" href="#Priority.PossibleInterferingTasks.task_deadline"><span class="id" title="variable">task_deadline</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.classic.model.time.html#Time.time"><span class="id" title="definition">time</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PossibleInterferingTasks.FP" class="idref" href="#Priority.PossibleInterferingTasks.FP"><span class="id" title="section">FP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.FP.higher_eq_priority" class="idref" href="#Priority.PossibleInterferingTasks.FP.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.FP_policy"><span class="id" title="definition">FP_policy</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.FP.tsk" class="idref" href="#Priority.PossibleInterferingTasks.FP.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.FP.tsk_other" class="idref" href="#Priority.PossibleInterferingTasks.FP.tsk_other"><span class="id" title="variable">tsk_other</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.higher_priority_task" class="idref" href="#Priority.higher_priority_task"><span class="id" title="definition">higher_priority_task</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP.higher_eq_priority"><span class="id" title="variable">higher_eq_priority</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP.tsk_other"><span class="id" title="variable">tsk_other</span></a> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP.tsk"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">(</span></a><a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP.tsk_other"><span class="id" title="variable">tsk_other</span></a> <span class="id" title="notation">!=</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP.tsk"><span class="id" title="variable">tsk</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">)</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.FP"><span class="id" title="section">FP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="Priority.PossibleInterferingTasks.JLFP" class="idref" href="#Priority.PossibleInterferingTasks.JLFP"><span class="id" title="section">JLFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.JLFP.tsk" class="idref" href="#Priority.PossibleInterferingTasks.JLFP.tsk"><span class="id" title="variable">tsk</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="Priority.PossibleInterferingTasks.JLFP.tsk_other" class="idref" href="#Priority.PossibleInterferingTasks.JLFP.tsk_other"><span class="id" title="variable">tsk_other</span></a>: <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.sporadic_task"><span class="id" title="variable">sporadic_task</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="Priority.different_task" class="idref" href="#Priority.different_task"><span class="id" title="definition">different_task</span></a> := <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.JLFP.tsk_other"><span class="id" title="variable">tsk_other</span></a> <span class="id" title="notation">!=</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.JLFP.tsk"><span class="id" title="variable">tsk</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks.JLFP"><span class="id" title="section">JLFP</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority.PossibleInterferingTasks"><span class="id" title="section">PossibleInterferingTasks</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.classic.model.priority.html#Priority"><span class="id" title="module">Priority</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

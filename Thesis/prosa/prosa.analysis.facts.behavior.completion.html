@@ -1,0 +1,775 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.facts.behavior.completion</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.facts.behavior.completion</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#"><span class="id" title="library">prosa.analysis.facts.behavior.service</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#"><span class="id" title="library">prosa.analysis.facts.behavior.arrivals</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.schedule_prefix.html#"><span class="id" title="library">prosa.analysis.definitions.schedule_prefix</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.definitions.job_properties.html#"><span class="id" title="library">prosa.analysis.definitions.job_properties</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab24"></a><h1 class="section">Completion</h1>
+
+<div class="paragraph"> </div>
+
+ In this file, we establish basic facts about job completions. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="CompletionFacts" class="idref" href="#CompletionFacts"><span class="id" title="section">CompletionFacts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job type,...
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">JobCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:3" class="idref" href="#H0:3"><span class="id" title="binder">JobArrival</span></a> <a id="H0:3" class="idref" href="#H0:3"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...any kind of processor model,... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:4" class="idref" href="#PState:4"><span class="id" title="binder">PState</span></a>: <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and a given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CompletionFacts.sched" class="idref" href="#CompletionFacts.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> be any job that is to be scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CompletionFacts.j" class="idref" href="#CompletionFacts.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that after job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> completes, it remains completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="completion_monotonic" class="idref" href="#completion_monotonic"><span class="id" title="lemma">completion_monotonic</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:7" class="idref" href="#t:7"><span class="id" title="binder">t</span></a> <a id="t':8" class="idref" href="#t':8"><span class="id" title="binder">t'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:7"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':8"><span class="id" title="variable">t'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:7"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':8"><span class="id" title="variable">t'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">t'</span> <span class="id" title="var">LE</span>. <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> /<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> ⇒ <span class="id" title="var">COMP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> 0 <span class="id" title="var">t</span>); <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_monotonic"><span class="id" title="lemma">service_monotonic</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We prove that if <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is not completed by <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.susp.last_execution.html#LastExecution.TimeAfterLastExecution.Lemmas.SameLastExecution.t'"><span class="id" title="variable">t'</span></a></span>, then it's also not
+      completed by any earlier instant. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="incompletion_monotonic" class="idref" href="#incompletion_monotonic"><span class="id" title="lemma">incompletion_monotonic</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:9" class="idref" href="#t:9"><span class="id" title="binder">t</span></a> <a id="t':10" class="idref" href="#t':10"><span class="id" title="binder">t'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:9"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':10"><span class="id" title="variable">t'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':10"><span class="id" title="variable">t'</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:9"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">t'</span> <span class="id" title="var">LE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#contra"><span class="id" title="lemma">contra</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#completion_monotonic"><span class="id" title="lemma">completion_monotonic</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We observe that being incomplete is the same as not having received
+     sufficient service yet... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="less_service_than_cost_is_incomplete" class="idref" href="#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:11" class="idref" href="#t:11"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:11"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:11"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>. <span class="id" title="tactic">by</span> <span class="id" title="tactic">split</span>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a>; [<span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">ltnNge</span> // | <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">ltnNge</span> //].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...which is also the same as having positive remaining cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="incomplete_is_positive_remaining_cost" class="idref" href="#incomplete_is_positive_remaining_cost"><span class="id" title="lemma">incomplete_is_positive_remaining_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:12" class="idref" href="#t:12"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:12"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'&lt;-&gt;'_x"><span class="id" title="notation">↔</span></a> <a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:12"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>. <span class="id" title="tactic">by</span> <span class="id" title="tactic">split</span>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> -<a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a> <span class="id" title="lemma">subn_gt0</span> //.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Trivially, it follows that an incomplete job has a positive cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="incomplete_implies_positive_cost" class="idref" href="#incomplete_implies_positive_cost"><span class="id" title="lemma">incomplete_implies_positive_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:13" class="idref" href="#t:13"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:13"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.job_properties.html#job_cost_positive"><span class="id" title="definition">job_cost_positive</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">INCOMP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>: (<span class="id" title="lemma">leq_trans</span> <span class="id" title="var">_</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_subr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#incomplete_is_positive_remaining_cost"><span class="id" title="lemma">incomplete_is_positive_remaining_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">exact</span> <span class="id" title="var">INCOMP</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In the remainder of this section, we assume that schedules are
+      "well-formed": jobs are scheduled neither before their arrival
+      nor after their completion. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CompletionFacts.H_jobs_must_arrive_to_execute" class="idref" href="#CompletionFacts.H_jobs_must_arrive_to_execute"><span class="id" title="variable">H_jobs_must_arrive_to_execute</span></a> : <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CompletionFacts.H_completed_jobs" class="idref" href="#CompletionFacts.H_completed_jobs"><span class="id" title="variable">H_completed_jobs</span></a> : <a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We observe that a job that is completed at the instant of its
+      arrival has a cost of zero. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="completed_on_arrival_implies_zero_cost" class="idref" href="#completed_on_arrival_implies_zero_cost"><span class="id" title="lemma">completed_on_arrival_implies_zero_cost</span></a> :<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a>) <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.service.html#no_service_before_arrival"><span class="id" title="lemma">no_service_before_arrival</span></a> // <span class="id" title="lemma">leqn0</span> ⇒ /<span class="id" title="lemma">eqP</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Further, we note that if a job receives service at some time t, then its
+      remaining cost at this time is positive. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="serviced_implies_positive_remaining_cost" class="idref" href="#serviced_implies_positive_remaining_cost"><span class="id" title="lemma">serviced_implies_positive_remaining_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:16" class="idref" href="#t:16"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:16"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&gt;</span> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:16"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">SERVICE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.behavior.completion.html#incomplete_is_positive_remaining_cost"><span class="id" title="lemma">incomplete_is_positive_remaining_cost</span></a> -<a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.H_completed_jobs"><span class="id" title="variable">H_completed_jobs</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_at_implies_scheduled_at"><span class="id" title="lemma">service_at_implies_scheduled_at</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consequently, if we have a have processor model where scheduled jobs
+      necessarily receive service, we can conclude that scheduled jobs have
+      remaining positive cost. 
+<div class="paragraph"> </div>
+
+ Assume a scheduled job always receives some positive service. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="CompletionFacts.H_scheduled_implies_serviced" class="idref" href="#CompletionFacts.H_scheduled_implies_serviced"><span class="id" title="variable">H_scheduled_implies_serviced</span></a>: <a class="idref" href="prosa.model.processor.platform_properties.html#ideal_progress_proc_model"><span class="id" title="definition">ideal_progress_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then a scheduled job has positive remaining cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="scheduled_implies_positive_remaining_cost" class="idref" href="#scheduled_implies_positive_remaining_cost"><span class="id" title="lemma">scheduled_implies_positive_remaining_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:18" class="idref" href="#t:18"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:18"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:18"><span class="id" title="variable">t</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> ⇒ <span class="id" title="var">t</span> <span class="id" title="var">SCHEDULED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#serviced_implies_positive_remaining_cost"><span class="id" title="lemma">serviced_implies_positive_remaining_cost</span></a>; <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a>; <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.H_scheduled_implies_serviced"><span class="id" title="variable">H_scheduled_implies_serviced</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We also prove that a completed job cannot be scheduled... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="completed_implies_not_scheduled" class="idref" href="#completed_implies_not_scheduled"><span class="id" title="lemma">completed_implies_not_scheduled</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:19" class="idref" href="#t:19"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:19"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:19"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">COMP</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#contra"><span class="id" title="lemma">contra</span></a> <span class="id" title="keyword">with</span> (<span class="id" title="var">b</span> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#negPn"><span class="id" title="lemma">negPn</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">SCHED</span>. <span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.H_completed_jobs"><span class="id" title="variable">H_completed_jobs</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and that a scheduled job cannot be completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="scheduled_implies_not_completed" class="idref" href="#scheduled_implies_not_completed"><span class="id" title="lemma">scheduled_implies_not_completed</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:20" class="idref" href="#t:20"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:20"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:20"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">REMPOS</span> := <a class="idref" href="prosa.analysis.facts.behavior.completion.html#scheduled_implies_positive_remaining_cost"><span class="id" title="lemma">scheduled_implies_positive_remaining_cost</span></a> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <span class="id" title="lemma">subn_gt0</span> <span class="id" title="tactic">in</span> <span class="id" title="var">REMPOS</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionFacts"><span class="id" title="section">CompletionFacts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we establish some facts that are really about service,
+    but are also related to completion and rely on some of the above lemmas.
+    Hence they are in this file rather than in the service facts file. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ServiceAndCompletionFacts" class="idref" href="#ServiceAndCompletionFacts"><span class="id" title="section">ServiceAndCompletionFacts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job type,...
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:21" class="idref" href="#Job:21"><span class="id" title="binder">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:22" class="idref" href="#H:22"><span class="id" title="binder">JobCost</span></a> <a id="H:22" class="idref" href="#H:22"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...any kind of processor model,... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:23" class="idref" href="#PState:23"><span class="id" title="binder">PState</span></a>: <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and a given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ServiceAndCompletionFacts.sched" class="idref" href="#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that completed jobs do not execute. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ServiceAndCompletionFacts.H_completed_jobs" class="idref" href="#ServiceAndCompletionFacts.H_completed_jobs"><span class="id" title="variable">H_completed_jobs</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> be any job that is to be scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ServiceAndCompletionFacts.j" class="idref" href="#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that a scheduled job receives exactly one time unit of service. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ServiceAndCompletionFacts.H_unit_service" class="idref" href="#ServiceAndCompletionFacts.H_unit_service"><span class="id" title="variable">H_unit_service</span></a>: <a class="idref" href="prosa.model.processor.platform_properties.html#unit_service_proc_model"><span class="id" title="definition">unit_service_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+To begin with, we establish that the cumulative service never exceeds a
+     job's total cost if service increases only by one at each step since
+     completed jobs don't execute. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_at_most_cost" class="idref" href="#service_at_most_cost"><span class="id" title="lemma">service_at_most_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:28" class="idref" href="#t:28"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:28"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">elim</span>: <span class="id" title="var">t</span> ⇒ [|<span class="id" title="var">t</span>]; <span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service0"><span class="id" title="lemma">service0</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_last_plus_before"><span class="id" title="lemma">service_last_plus_before</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_eqVlt</span> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a> [/<span class="id" title="lemma">eqP</span> <span class="id" title="var">EQ</span>|<span class="id" title="var">LT</span>].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#not_scheduled_implies_no_service"><span class="id" title="lemma">not_scheduled_implies_no_service</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addn0</span> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#completed_implies_not_scheduled"><span class="id" title="lemma">completed_implies_not_scheduled</span></a> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <span class="id" title="var">EQ</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span> <span class="id" title="notation">+</span> 1);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">addn1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_add2l</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.H_unit_service"><span class="id" title="variable">H_unit_service</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+This lets us conclude that <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.service"><span class="id" title="definition">service</span></a></span> and <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.remaining_cost"><span class="id" title="definition">remaining_cost</span></a></span> are complements
+     of one another. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="service_cost_invariant" class="idref" href="#service_cost_invariant"><span class="id" title="lemma">service_cost_invariant</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:29" class="idref" href="#t:29"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">(</span><a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:29"><span class="id" title="variable">t</span></a><span class="id" title="notation">)</span> <span class="id" title="notation">+</span> <span class="id" title="notation">(</span><a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:29"><span class="id" title="variable">t</span></a><span class="id" title="notation">)</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <span class="id" title="lemma">subnKC</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#service_at_most_cost"><span class="id" title="lemma">service_at_most_cost</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that the service received by job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> in any interval is no larger
+     than its cost. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="cumulative_service_le_job_cost" class="idref" href="#cumulative_service_le_job_cost"><span class="id" title="lemma">cumulative_service_le_job_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:30" class="idref" href="#t:30"><span class="id" title="binder">t</span></a> <a id="t':31" class="idref" href="#t':31"><span class="id" title="binder">t'</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#service_during"><span class="id" title="definition">service_during</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:30"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':31"><span class="id" title="variable">t'</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">t'</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">case</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#orP"><span class="id" title="lemma">orP</span></a>: (<span class="id" title="lemma">leq_total</span> <span class="id" title="var">t</span> <span class="id" title="var">t'</span>) ⇒ [<span class="id" title="var">tt'</span>|<span class="id" title="var">tt'</span>]; <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#service_during_geq"><span class="id" title="lemma">service_during_geq</span></a> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t'</span>); <span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#service_at_most_cost"><span class="id" title="lemma">service_at_most_cost</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a>. <span class="id" title="tactic">rewrite</span> -(<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_during_cat"><span class="id" title="lemma">service_during_cat</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> 0 <span class="id" title="var">t</span> <span class="id" title="var">t'</span>) // <span class="id" title="lemma">leq_addl</span> //.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If a job isn't complete at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, it can't be completed at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">+</span>
+     <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.remaining_cost"><span class="id" title="definition">remaining_cost</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> <span class="inlinecode">-</span> <span class="inlinecode">1</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="job_doesnt_complete_before_remaining_cost" class="idref" href="#job_doesnt_complete_before_remaining_cost"><span class="id" title="lemma">job_doesnt_complete_before_remaining_cost</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:32" class="idref" href="#t:32"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:32"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:32"><span class="id" title="variable">t</span></a> <span class="id" title="notation">+</span> <a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:32"><span class="id" title="variable">t</span></a> <span class="id" title="notation">-</span> 1).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#incomplete_is_positive_remaining_cost"><span class="id" title="lemma">incomplete_is_positive_remaining_cost</span></a> ⇒ <span class="id" title="var">REMCOST</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a> -(<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_cat"><span class="id" title="lemma">service_cat</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span>);<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">last</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -<span class="id" title="lemma">addnBA</span> //; <span class="id" title="tactic">apply</span>: <span class="id" title="lemma">leq_addr</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span> <span class="id" title="notation">+</span> <a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span> <span class="id" title="notation">-</span> 1).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -!<span class="id" title="lemma">addnBA</span> //; <span class="id" title="tactic">rewrite</span> <span class="id" title="lemma">leq_add2l</span>; <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.service.html#cumulative_service_le_delta"><span class="id" title="lemma">cumulative_service_le_delta</span></a>; <span class="id" title="tactic">exact</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;- <span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#service_cost_invariant"><span class="id" title="lemma">service_cost_invariant</span></a> // -<span class="id" title="lemma">subn_gt0</span> <span class="id" title="lemma">subKn</span> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: <span class="id" title="var">REMCOST</span>. <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#remaining_cost"><span class="id" title="definition">remaining_cost</span></a> <span class="id" title="lemma">subn_gt0</span> ⇒ <span class="id" title="var">SERVICE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_ltn_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="ServiceAndCompletionFacts.GuaranteedService" class="idref" href="#ServiceAndCompletionFacts.GuaranteedService"><span class="id" title="section">GuaranteedService</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume a scheduled job always receives some positive service. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ServiceAndCompletionFacts.GuaranteedService.H_scheduled_implies_serviced" class="idref" href="#ServiceAndCompletionFacts.GuaranteedService.H_scheduled_implies_serviced"><span class="id" title="variable">H_scheduled_implies_serviced</span></a>: <a class="idref" href="prosa.model.processor.platform_properties.html#ideal_progress_proc_model"><span class="id" title="definition">ideal_progress_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Assume that jobs are not released early. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:34" class="idref" href="#H0:34"><span class="id" title="binder">JobArrival</span></a> <a id="H0:34" class="idref" href="#H0:34"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="ServiceAndCompletionFacts.GuaranteedService.H_jobs_must_arrive" class="idref" href="#ServiceAndCompletionFacts.GuaranteedService.H_jobs_must_arrive"><span class="id" title="variable">H_jobs_must_arrive</span></a>: <a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We show that if job j is scheduled, then it must be pending. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="scheduled_implies_pending" class="idref" href="#scheduled_implies_pending"><span class="id" title="lemma">scheduled_implies_pending</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:36" class="idref" href="#t:36"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:36"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:36"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.GuaranteedService.H_jobs_must_arrive"><span class="id" title="variable">H_jobs_must_arrive</span></a> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#scheduled_implies_not_completed"><span class="id" title="lemma">scheduled_implies_not_completed</span></a> ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts.GuaranteedService"><span class="id" title="section">GuaranteedService</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ServiceAndCompletionFacts"><span class="id" title="section">ServiceAndCompletionFacts</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In this section, we establish facts that on jobs with non-zero costs that
+    must arrive to execute. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="PositiveCost" class="idref" href="#PositiveCost"><span class="id" title="section">PositiveCost</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs with cost and arrival-time attributes,...
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:37" class="idref" href="#Job:37"><span class="id" title="binder">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:38" class="idref" href="#H:38"><span class="id" title="binder">JobCost</span></a> <a id="H:38" class="idref" href="#H:38"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:39" class="idref" href="#H0:39"><span class="id" title="binder">JobArrival</span></a> <a id="H0:39" class="idref" href="#H0:39"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...any kind of processor model,... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="PState:40" class="idref" href="#PState:40"><span class="id" title="binder">PState</span></a>: <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.Job"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and a given schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="PositiveCost.sched" class="idref" href="#PositiveCost.sched"><span class="id" title="variable">sched</span></a>: <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> be any job that is to be scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="PositiveCost.j" class="idref" href="#PositiveCost.j"><span class="id" title="variable">j</span></a>: <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We assume that job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> has positive cost, from which we can
+     infer that there always is a time in which <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is pending, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="PositiveCost.H_positive_cost" class="idref" href="#PositiveCost.H_positive_cost"><span class="id" title="variable">H_positive_cost</span></a>: <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">&gt;</span> 0.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and that jobs must arrive to execute. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Hypothesis</span> <a id="PositiveCost.H_jobs_must_arrive" class="idref" href="#PositiveCost.H_jobs_must_arrive"><span class="id" title="variable">H_jobs_must_arrive</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_must_arrive_to_execute"><span class="id" title="definition">jobs_must_arrive_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.sched"><span class="id" title="variable">sched</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Then, we prove that the job with a positive cost
+     must be scheduled to be completed. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="completed_implies_scheduled_before" class="idref" href="#completed_implies_scheduled_before"><span class="id" title="lemma">completed_implies_scheduled_before</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:45" class="idref" href="#t:45"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:45"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">∃</span></a> <a id="t':46" class="idref" href="#t':46"><span class="id" title="binder">t'</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#a883bdd010993579f99d60b3775bcf54"><span class="id" title="notation">,</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':46"><span class="id" title="variable">t'</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:45"><span class="id" title="variable">t</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a> <a class="idref" href="prosa.behavior.service.html#scheduled_at"><span class="id" title="definition">scheduled_at</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t':46"><span class="id" title="variable">t'</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">t</span> <span class="id" title="var">COMPLETE</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">POSITIVE_SERVICE</span>: 0 <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> <span class="id" title="var">t</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a>); <span class="id" title="tactic">auto</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span>: <a class="idref" href="prosa.analysis.facts.behavior.service.html#positive_service_implies_scheduled_since_arrival"><span class="id" title="lemma">positive_service_implies_scheduled_since_arrival</span></a>; <span class="id" title="tactic">assumption</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We also prove that the job is pending at the moment of its arrival. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="job_pending_at_arrival" class="idref" href="#job_pending_at_arrival"><span class="id" title="lemma">job_pending_at_arrival</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a> (<a class="idref" href="prosa.behavior.job.html#job_arrival"><span class="id" title="definition">job_arrival</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost.j"><span class="id" title="variable">j</span></a>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span>/<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a>; <span class="id" title="tactic">split</span>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">first</span> <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.arrival_sequence.html#has_arrived"><span class="id" title="definition">has_arrived</span></a> //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.service.html#no_service_before_arrival"><span class="id" title="lemma">no_service_before_arrival</span></a> // -<span class="id" title="lemma">ltnNge</span> //.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#PositiveCost"><span class="id" title="section">PositiveCost</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="CompletedJobs" class="idref" href="#CompletedJobs"><span class="id" title="section">CompletedJobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any kinds of jobs and any kind of processor state. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:47" class="idref" href="#Job:47"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<a id="PState:48" class="idref" href="#PState:48"><span class="id" title="binder">PState</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#Job:47"><span class="id" title="variable">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any schedule... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="CompletedJobs.sched" class="idref" href="#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.PState"><span class="id" title="variable">PState</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and suppose that jobs have a cost, an arrival time, and a notion of
+     readiness. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:50" class="idref" href="#H:50"><span class="id" title="binder">JobCost</span></a> <a id="H:50" class="idref" href="#H:50"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:51" class="idref" href="#H0:51"><span class="id" title="binder">JobArrival</span></a> <a id="H0:51" class="idref" href="#H0:51"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="jr:52" class="idref" href="#jr:52"><span class="id" title="binder">jr</span></a> : <a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We observe that a given job is ready only if it is also incomplete... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="ready_implies_incomplete" class="idref" href="#ready_implies_incomplete"><span class="id" title="lemma">ready_implies_incomplete</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:53" class="idref" href="#j:53"><span class="id" title="binder">j</span></a> <a id="t:54" class="idref" href="#t:54"><span class="id" title="binder">t</span></a>, <a class="idref" href="prosa.behavior.ready.html#job_ready"><span class="id" title="method">job_ready</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:53"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:54"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:53"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:54"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">READY</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<a class="idref" href="prosa.analysis.facts.behavior.arrivals.html#any_ready_job_is_pending"><span class="id" title="lemma">any_ready_job_is_pending</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">READY</span>).<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> ⇒ /<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#andP"><span class="id" title="lemma">andP</span></a> [<span class="id" title="var">_</span> <span class="id" title="var">INCOMPLETE</span>].<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and lift this observation also to the level of whole schedules. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="completed_jobs_are_not_ready" class="idref" href="#completed_jobs_are_not_ready"><span class="id" title="lemma">completed_jobs_are_not_ready</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.ready.html#jobs_must_be_ready_to_execute"><span class="id" title="definition">jobs_must_be_ready_to_execute</span></a> /<a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">READY_IF_SCHED</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>: (<span class="id" title="var">READY_IF_SCHED</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>) ⇒ <span class="id" title="var">READY</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#less_service_than_cost_is_incomplete"><span class="id" title="lemma">less_service_than_cost_is_incomplete</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#ready_implies_incomplete"><span class="id" title="lemma">ready_implies_incomplete</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Furthermore, in a valid schedule, completed jobs don't execute. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="valid_schedule_implies_completed_jobs_dont_execute" class="idref" href="#valid_schedule_implies_completed_jobs_dont_execute"><span class="id" title="lemma">valid_schedule_implies_completed_jobs_dont_execute</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="arr_seq:55" class="idref" href="#arr_seq:55"><span class="id" title="binder">arr_seq</span></a>, <br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#valid_schedule"><span class="id" title="definition">valid_schedule</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#arr_seq:55"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">arr_seq</span> [??].<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">apply</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#completed_jobs_are_not_ready"><span class="id" title="lemma">completed_jobs_are_not_ready</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We further observe that completed jobs don't execute if scheduled jobs
+     always receive non-zero service and cumulative service never exceeds job
+     costs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="ideal_progress_completed_jobs" class="idref" href="#ideal_progress_completed_jobs"><span class="id" title="lemma">ideal_progress_completed_jobs</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.processor.platform_properties.html#ideal_progress_proc_model"><span class="id" title="definition">ideal_progress_proc_model</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.PState"><span class="id" title="variable">PState</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">(</span></a><span class="id" title="keyword">∀</span> <a id="j:56" class="idref" href="#j:56"><span class="id" title="binder">j</span></a> <a id="t:57" class="idref" href="#t:57"><span class="id" title="binder">t</span></a>, <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:56"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:57"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.behavior.job.html#job_cost"><span class="id" title="definition">job_cost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:56"><span class="id" title="variable">j</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">)</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.ready.html#completed_jobs_dont_execute"><span class="id" title="definition">completed_jobs_dont_execute</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">IDEAL</span> <span class="id" title="var">SERVICE_BOUND</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">UB</span> := <span class="id" title="var">SERVICE_BOUND</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">have</span> <span class="id" title="var">POS</span> := <span class="id" title="var">IDEAL</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">SCHED</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">apply</span> <span class="id" title="lemma">leq_trans</span> <span class="id" title="keyword">with</span> (<span class="id" title="var">n</span> := <a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span><span class="id" title="notation">.+1</span>) ⇒ //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> -<a class="idref" href="prosa.analysis.facts.behavior.service.html#service_last_plus_before"><span class="id" title="lemma">service_last_plus_before</span></a> /<a class="idref" href="prosa.behavior.service.html#service_at"><span class="id" title="definition">service_at</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> -{1}(<span class="id" title="lemma">addn0</span> (<a class="idref" href="prosa.behavior.service.html#service"><span class="id" title="definition">service</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs.sched"><span class="id" title="variable">sched</span></a> <span class="id" title="var">j</span> <span class="id" title="var">t</span>)) <span class="id" title="lemma">ltn_add2l</span>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletedJobs"><span class="id" title="section">CompletedJobs</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We add the above lemma into a "Hint Database" basic_facts, so Coq
+    will be able to apply it automatically. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Global Hint Resolve</span> <span class="id" title="var">valid_schedule_implies_completed_jobs_dont_execute</span> : <span class="id" title="var">basic_facts</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next, we relate the completion of jobs in schedules with identical prefixes. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="CompletionInTwoSchedules" class="idref" href="#CompletionInTwoSchedules"><span class="id" title="section">CompletionInTwoSchedules</span></a>.<br/>
+</div>
+
+<div class="doc">
+Consider any processor model and any type of jobs with costs, arrival times, and a notion of readiness. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:58" class="idref" href="#Job:58"><span class="id" title="binder">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>} {<a id="PState:59" class="idref" href="#PState:59"><span class="id" title="binder">PState</span></a>: <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#Job:58"><span class="id" title="variable">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="jc:60" class="idref" href="#jc:60"><span class="id" title="binder">jc</span></a> : <a class="idref" href="prosa.behavior.job.html#JobCost"><span class="id" title="class">JobCost</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionInTwoSchedules.Job"><span class="id" title="variable">Job</span></a>} {<a id="ja:61" class="idref" href="#ja:61"><span class="id" title="binder">ja</span></a> : <a class="idref" href="prosa.behavior.job.html#JobArrival"><span class="id" title="class">JobArrival</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionInTwoSchedules.Job"><span class="id" title="variable">Job</span></a>} {<a id="jr:62" class="idref" href="#jr:62"><span class="id" title="binder">jr</span></a> : <a class="idref" href="prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionInTwoSchedules.Job"><span class="id" title="variable">Job</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionInTwoSchedules.PState"><span class="id" title="variable">PState</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+If two schedules share a common prefix, then (in the prefix) jobs
+      complete in one schedule iff they complete in the other. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Lemma</span> <a id="identical_prefix_completed_by" class="idref" href="#identical_prefix_completed_by"><span class="id" title="lemma">identical_prefix_completed_by</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="sched1:63" class="idref" href="#sched1:63"><span class="id" title="binder">sched1</span></a> <a id="sched2:64" class="idref" href="#sched2:64"><span class="id" title="binder">sched2</span></a> <a id="h:65" class="idref" href="#h:65"><span class="id" title="binder">h</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.schedule_prefix.html#identical_prefix"><span class="id" title="definition">identical_prefix</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched1:63"><span class="id" title="variable">sched1</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched2:64"><span class="id" title="variable">sched2</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#h:65"><span class="id" title="variable">h</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:66" class="idref" href="#j:66"><span class="id" title="binder">j</span></a> <a id="t:67" class="idref" href="#t:67"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:67"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#h:65"><span class="id" title="variable">h</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched1:63"><span class="id" title="variable">sched1</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:66"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:67"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched2:64"><span class="id" title="variable">sched2</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:66"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:67"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">sched1</span> <span class="id" title="var">sched2</span> <span class="id" title="var">h</span> <span class="id" title="var">PREFIX</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">LE_h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#completed_by"><span class="id" title="definition">completed_by</span></a>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">rewrite</span> (<a class="idref" href="prosa.analysis.facts.behavior.service.html#identical_prefix_service"><span class="id" title="lemma">identical_prefix_service</span></a> <span class="id" title="var">sched1</span> <span class="id" title="var">sched2</span>) //.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">apply</span> (<a class="idref" href="prosa.analysis.definitions.schedule_prefix.html#identical_prefix_inclusion"><span class="id" title="lemma">identical_prefix_inclusion</span></a> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">h</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+For convenience, we restate the previous lemma in terms of <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.pending"><span class="id" title="definition">pending</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Corollary</span> <a id="identical_prefix_pending" class="idref" href="#identical_prefix_pending"><span class="id" title="lemma">identical_prefix_pending</span></a>:<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="sched1:68" class="idref" href="#sched1:68"><span class="id" title="binder">sched1</span></a> <a id="sched2:69" class="idref" href="#sched2:69"><span class="id" title="binder">sched2</span></a> <a id="h:70" class="idref" href="#h:70"><span class="id" title="binder">h</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.definitions.schedule_prefix.html#identical_prefix"><span class="id" title="definition">identical_prefix</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched1:68"><span class="id" title="variable">sched1</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched2:69"><span class="id" title="variable">sched2</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#h:70"><span class="id" title="variable">h</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="j:71" class="idref" href="#j:71"><span class="id" title="binder">j</span></a> <a id="t:72" class="idref" href="#t:72"><span class="id" title="binder">t</span></a>,<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:72"><span class="id" title="variable">t</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#h:70"><span class="id" title="variable">h</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched1:68"><span class="id" title="variable">sched1</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:71"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:72"><span class="id" title="variable">t</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#sched2:69"><span class="id" title="variable">sched2</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#j:71"><span class="id" title="variable">j</span></a> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#t:72"><span class="id" title="variable">t</span></a>.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Proof</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="tactic">move</span>⇒ <span class="id" title="var">sched1</span> <span class="id" title="var">sched2</span> <span class="id" title="var">h</span> <span class="id" title="var">PREFIX</span> <span class="id" title="var">j</span> <span class="id" title="var">t</span> <span class="id" title="var">LE_h</span>.<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">now</span> <span class="id" title="tactic">rewrite</span> /<a class="idref" href="prosa.behavior.service.html#pending"><span class="id" title="definition">pending</span></a> (<a class="idref" href="prosa.analysis.facts.behavior.completion.html#identical_prefix_completed_by"><span class="id" title="lemma">identical_prefix_completed_by</span></a> <span class="id" title="var">_</span> <span class="id" title="var">sched2</span> <span class="id" title="var">h</span>).<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.facts.behavior.completion.html#CompletionInTwoSchedules"><span class="id" title="section">CompletionInTwoSchedules</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.task.preemption.floating_nonpreemptive</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.task.preemption.floating_nonpreemptive</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="prosa.model.preemption.limited_preemptive.html#"><span class="id" title="library">prosa.model.preemption.limited_preemptive</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.preemption.parameters.html#"><span class="id" title="library">prosa.model.task.preemption.parameters</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab200"></a><h1 class="section">Task Model with Floating Non-Preemptive Regions</h1>
+
+<div class="paragraph"> </div>
+
+ In this file, we instantiate the specific task model of (usually)
+    preemptive tasks with "floating" non-preemptive regions, i.e., with jobs
+    that exhibit non-preemptive segments of bounded length at unpredictable
+    points during their execution.  
+<div class="paragraph"> </div>
+
+<a id="lab201"></a><h2 class="section">Model Validity</h2>
+
+<div class="paragraph"> </div>
+
+ To begin with, we introduce requirements that the function
+    <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpr_segment"><span class="id" title="definition">task_max_nonpr_segment</span></a></span> must satisfy to be coherent with the floating
+    non-preemptive regions model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ValidModelWithFloatingNonpreemptiveRegions" class="idref" href="#ValidModelWithFloatingNonpreemptiveRegions"><span class="id" title="section">ValidModelWithFloatingNonpreemptiveRegions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+</div>
+
+<div class="doc">
+... with a bound on the maximum non-preemptive segment length ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskMaxNonpreemptiveSegment</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of limited-preemptive jobs associated with these tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+</div>
+
+<div class="doc">
+... with execution costs and specific preemption points. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobCost</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobPreemptionPoints</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ValidModelWithFloatingNonpreemptiveRegions.arr_seq" class="idref" href="#ValidModelWithFloatingNonpreemptiveRegions.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#ValidModelWithFloatingNonpreemptiveRegions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We require <span class="inlinecode"><a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="projection">task_max_nonpreemptive_segment</span></a></span> <span class="inlinecode">(<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="projection">job_task</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a>)</span> to be an upper
+      bound of the length of the maximum nonpreemptive segment of job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="job_respects_task_max_np_segment" class="idref" href="#job_respects_task_max_np_segment"><span class="id" title="definition">job_respects_task_max_np_segment</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="j:8" class="idref" href="#j:8"><span class="id" title="binder">j</span></a> : <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#ValidModelWithFloatingNonpreemptiveRegions.Job"><span class="id" title="variable">Job</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.arrival_sequence.html#arrives_in"><span class="id" title="definition">arrives_in</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#ValidModelWithFloatingNonpreemptiveRegions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#j:8"><span class="id" title="variable">j</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.parameter.html#job_max_nonpreemptive_segment"><span class="id" title="definition">job_max_nonpreemptive_segment</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#j:8"><span class="id" title="variable">j</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.preemption.parameters.html#task_max_nonpreemptive_segment"><span class="id" title="definition">task_max_nonpreemptive_segment</span></a> (<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#j:8"><span class="id" title="variable">j</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+A model with floating nonpreemptive regions is valid if it is both valid
+      a the job level and jobs respect the upper bound of their task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_model_with_floating_nonpreemptive_regions" class="idref" href="#valid_model_with_floating_nonpreemptive_regions"><span class="id" title="definition">valid_model_with_floating_nonpreemptive_regions</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.preemption.limited_preemptive.html#valid_limited_preemptions_job_model"><span class="id" title="definition">valid_limited_preemptions_job_model</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#ValidModelWithFloatingNonpreemptiveRegions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#job_respects_task_max_np_segment"><span class="id" title="definition">job_respects_task_max_np_segment</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#ValidModelWithFloatingNonpreemptiveRegions"><span class="id" title="section">ValidModelWithFloatingNonpreemptiveRegions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab202"></a><h2 class="section">Run-to-Completion Threshold</h2>
+
+<div class="paragraph"> </div>
+
+ In this section, we instantiate the task-level run-to-completion threshold
+    for the model with floating non-preemptive regions. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="TaskRTCThresholdFloatingNonPreemptiveRegions" class="idref" href="#TaskRTCThresholdFloatingNonPreemptiveRegions"><span class="id" title="section">TaskRTCThresholdFloatingNonPreemptiveRegions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks with a WCET bound.
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:9" class="idref" href="#Task:9"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:10" class="idref" href="#H:10"><span class="id" title="binder">TaskCost</span></a> <a id="H:10" class="idref" href="#H:10"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+In the model with floating non-preemptive regions, there is no static
+      information about the placement of preemption points in all jobs, i.e.,
+      it is impossible to predict when exactly a job will be preemptable. Thus,
+      the only safe run-to-completion threshold is <span class="inlinecode"><a class="idref" href="prosa.classic.model.policy_tdma.html#PolicyTDMA.PropertiesTDMA.TimeSlot.task"><span class="id" title="variable">task</span></a></span> <span class="inlinecode"><span class="id" title="var">cost</span></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global</span> <span class="id" title="var">Program</span> <span class="id" title="keyword">Instance</span> <a id="fully_preemptive" class="idref" href="#fully_preemptive"><span class="id" title="instance">fully_preemptive</span></a> : <a class="idref" href="prosa.model.task.preemption.parameters.html#TaskRunToCompletionThreshold"><span class="id" title="class">TaskRunToCompletionThreshold</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#TaskRTCThresholdFloatingNonPreemptiveRegions.Task"><span class="id" title="variable">Task</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.preemption.parameters.html#task_rtct"><span class="id" title="definition">task_rtct</span></a> (<a id="tsk:11" class="idref" href="#tsk:11"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#TaskRTCThresholdFloatingNonPreemptiveRegions.Task"><span class="id" title="variable">Task</span></a>) := <a class="idref" href="prosa.model.task.concept.html#task_cost"><span class="id" title="definition">task_cost</span></a> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#tsk:11"><span class="id" title="variable">tsk</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.preemption.floating_nonpreemptive.html#TaskRTCThresholdFloatingNonPreemptiveRegions"><span class="id" title="section">TaskRTCThresholdFloatingNonPreemptiveRegions</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

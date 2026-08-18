@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>probsa.rt.model.assumptions.pr_respects_policy</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library probsa.rt.model.assumptions.pr_respects_policy</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">prosa.model</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa/prosa.model.schedule.priority_driven.html#"><span class="id" title="library">schedule.priority_driven</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">From</span> <span class="id" title="var">probsa.rt.behavior</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="probsa.rt.behavior.job.html#"><span class="id" title="library">job</span></a> <a class="idref" href="probsa.rt.behavior.arrival_sequence.html#"><span class="id" title="library">arrival_sequence</span></a> <a class="idref" href="probsa.rt.behavior.schedule.html#"><span class="id" title="library">schedule</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="PrRespectsPolicyAtPreemptionPoint" class="idref" href="#PrRespectsPolicyAtPreemptionPoint"><span class="id" title="section">PrRespectsPolicyAtPreemptionPoint</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="c3d482fd3513878b11e14abf9e72362d" class="idref" href="#c3d482fd3513878b11e14abf9e72362d"><span class="id" title="binder">Ω</span></a>} {<a id="64252de629bdd27d41a7716d98f42d82" class="idref" href="#64252de629bdd27d41a7716d98f42d82"><span class="id" title="binder">μ</span></a> : <a class="idref" href="probsa.util.notation.html#measure"><span class="id" title="definition">measure</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#c3d482fd3513878b11e14abf9e72362d"><span class="id" title="variable">Ω</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:3" class="idref" href="#Task:3"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa/prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="FP:4" class="idref" href="#FP:4"><span class="id" title="binder">FP</span></a> : <a class="idref" href="prosa/prosa.model.priority.classes.html#FP_policy"><span class="id" title="class">FP_policy</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#Task:3"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:5" class="idref" href="#Job:5"><span class="id" title="binder">Job</span></a> : <span class="id" title="abbreviation">finType</span>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_cost:6" class="idref" href="#job_cost:6"><span class="id" title="binder">job_cost</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobCostRV"><span class="id" title="class">JobCostRV</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#Job:5"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#c7ac2f366e408ac98b488c061aa863b4"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#f156f963ac8f6a21a888bc9ce763e137"><span class="id" title="variable">μ</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_arrival:7" class="idref" href="#job_arrival:7"><span class="id" title="binder">job_arrival</span></a> : <a class="idref" href="probsa.rt.behavior.job.html#JobArrivalRV"><span class="id" title="class">JobArrivalRV</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#Job:5"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#c7ac2f366e408ac98b488c061aa863b4"><span class="id" title="variable">Ω</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#f156f963ac8f6a21a888bc9ce763e137"><span class="id" title="variable">μ</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<a id="job_task:8" class="idref" href="#job_task:8"><span class="id" title="binder">job_task</span></a> : <a class="idref" href="prosa/prosa.model.task.concept.html#JobTask"><span class="id" title="class">JobTask</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#Job:5"><span class="id" title="variable">Job</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.Task"><span class="id" title="variable">Task</span></a>}.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="PrRespectsPolicyAtPreemptionPoint.sched" class="idref" href="#PrRespectsPolicyAtPreemptionPoint.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="probsa.rt.behavior.schedule.html#pr_schedule"><span class="id" title="definition">pr_schedule</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#f156f963ac8f6a21a888bc9ce763e137"><span class="id" title="variable">μ</span></a> (<a class="idref" href="prosa/prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Let</span> <a id="PrRespectsPolicyAtPreemptionPoint.JobReadyRV" class="idref" href="#PrRespectsPolicyAtPreemptionPoint.JobReadyRV"><span class="id" title="variable">JobReadyRV</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="d0b23ea306fcd36def43b57e5859d86f" class="idref" href="#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#c7ac2f366e408ac98b488c061aa863b4"><span class="id" title="variable">Ω</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="prosa/prosa.behavior.ready.html#JobReady"><span class="id" title="class">JobReady</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.Job"><span class="id" title="variable">Job</span></a> (<a class="idref" href="prosa/prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.Job"><span class="id" title="variable">Job</span></a>)<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<span class="id" title="keyword">fun</span> <a id="j:11" class="idref" href="#j:11"><span class="id" title="binder">j</span></a> ⇒ <a class="idref" href="probsa.probability.nrvar.html#odflt0"><span class="id" title="definition">odflt0</span></a> (<a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.job_cost"><span class="id" title="variable">job_cost</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#j:11"><span class="id" title="variable">j</span></a>) <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="variable">ω</span></a>) (<span class="id" title="keyword">fun</span> <a id="j:12" class="idref" href="#j:12"><span class="id" title="binder">j</span></a> ⇒ <a class="idref" href="probsa.probability.nrvar.html#odflt0"><span class="id" title="definition">odflt0</span></a> (<a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.job_arrival"><span class="id" title="variable">job_arrival</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#j:12"><span class="id" title="variable">j</span></a>) <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#d0b23ea306fcd36def43b57e5859d86f"><span class="id" title="variable">ω</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="pr_respects_policy_at_preemption_point" class="idref" href="#pr_respects_policy_at_preemption_point"><span class="id" title="definition">pr_respects_policy_at_preemption_point</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(<a id="job_ready:13" class="idref" href="#job_ready:13"><span class="id" title="binder">job_ready</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.JobReadyRV"><span class="id" title="variable">JobReadyRV</span></a>) (<a id="job_preemptable:14" class="idref" href="#job_preemptable:14"><span class="id" title="binder">job_preemptable</span></a> : <a class="idref" href="prosa/prosa.model.preemption.parameter.html#JobPreemptable"><span class="id" title="class">JobPreemptable</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="ba3ff4210dbd4f9a32b01eab604071ba" class="idref" href="#ba3ff4210dbd4f9a32b01eab604071ba"><span class="id" title="binder">ω</span></a> : <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#c7ac2f366e408ac98b488c061aa863b4"><span class="id" title="variable">Ω</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@<a class="idref" href="prosa/prosa.model.schedule.priority_driven.html#respects_policy_at_preemption_point"><span class="id" title="definition">respects_policy_at_preemption_point</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="var">_</span> <span class="id" title="var">_</span> <span class="id" title="var">_</span> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#job_preemptable:14"><span class="id" title="variable">job_preemptable</span></a> (<a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#job_ready:13"><span class="id" title="variable">job_ready</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#ba3ff4210dbd4f9a32b01eab604071ba"><span class="id" title="variable">ω</span></a>) (<a class="idref" href="probsa.rt.behavior.arrival_sequence.html#arr_seq"><span class="id" title="definition">arr_seq</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#ba3ff4210dbd4f9a32b01eab604071ba"><span class="id" title="variable">ω</span></a>) (<a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#ba3ff4210dbd4f9a32b01eab604071ba"><span class="id" title="variable">ω</span></a>) <span class="id" title="var">_</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="probsa.rt.model.assumptions.pr_respects_policy.html#PrRespectsPolicyAtPreemptionPoint"><span class="id" title="section">PrRespectsPolicyAtPreemptionPoint</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

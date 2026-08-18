@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.task.arrival.request_bound_functions</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.task.arrival.request_bound_functions</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.util.rel.html#"><span class="id" title="library">prosa.util.rel</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.arrivals.html#"><span class="id" title="library">prosa.model.task.arrivals</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab186"></a><h1 class="section">Request Bound Functions (RBF)</h1>
+
+<div class="paragraph"> </div>
+
+ In the following, we define the notion of Request Bound Functions
+    (RBF), which can be used to reason about the job cost arrivals. In
+    contrast to arrival curves which constrain the number of arrivals
+    per time interval, request bound functions bound the sum of costs
+    of arriving jobs. 
+<div class="paragraph"> </div>
+
+<a id="lab187"></a><h2 class="section">Task Parameters for the Request Bound Functions</h2>
+
+<div class="paragraph"> </div>
+
+ The request bound functions give an upper bound and, optionally, a
+    lower bound on the cost of new job arrivals during any given
+    interval. 
+<div class="paragraph"> </div>
+
+ We let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#max_request_bound"><span class="id" title="projection">max_request_bound</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span> denote a bound on the maximum
+    cost of arrivals of jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in any interval of length
+    <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MaxRequestBound" class="idref" href="#MaxRequestBound"><span class="id" title="record">MaxRequestBound</span></a> (<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="max_request_bound" class="idref" href="#max_request_bound"><span class="id" title="projection">max_request_bound</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#Task:1"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Conversely, we let <span class="inlinecode"><a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#min_request_bound"><span class="id" title="projection">min_request_bound</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span> denote a bound on the
+    minimum cost of arrivals of jobs of task <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> in any interval of
+    length <span class="inlinecode"><a class="idref" href="prosa.results.fifo.rta.html#e5d4172e5127088bebfebfa9e54437a0"><span class="id" title="variable">Δ</span></a></span>. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Class</span> <a id="MinRequestBound" class="idref" href="#MinRequestBound"><span class="id" title="record">MinRequestBound</span></a> (<a id="Task:4" class="idref" href="#Task:4"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>) := <a id="min_request_bound" class="idref" href="#min_request_bound"><span class="id" title="projection">min_request_bound</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#Task:4"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab188"></a><h2 class="section">Parameter Semantics</h2>
+
+<div class="paragraph"> </div>
+
+ In the following, we precisely define the semantics of the request
+    bound functions. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="RequestBoundFunctions" class="idref" href="#RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:7" class="idref" href="#Task:7"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:8" class="idref" href="#Job:8"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:9" class="idref" href="#H:9"><span class="id" title="binder">JobTask</span></a> <a id="H:9" class="idref" href="#H:9"><span class="id" title="binder">Job</span></a> <a id="H:9" class="idref" href="#H:9"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">JobCost</span></a> <a id="H0:10" class="idref" href="#H0:10"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctions.arr_seq" class="idref" href="#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab189"></a><h3 class="section">Definition of Request Bound Functions</h3>
+
+<div class="paragraph"> </div>
+
+ First, what constitutes a valid request bound function for a task? 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Section</span> <a id="RequestBoundFunctions.RequestBoundFunctions" class="idref" href="#RequestBoundFunctions.RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a given bound <span class="inlinecode"><span class="id" title="var">request_bound</span></span> is a valid request
+        bound function iff <span class="inlinecode"><span class="id" title="var">request_bound</span></span> is a monotonic function
+        that equals 0 for the empty interval <span class="inlinecode"><span class="id" title="keyword">delta</span></span> <span class="inlinecode">=</span> <span class="inlinecode">0</span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_request_bound_function" class="idref" href="#valid_request_bound_function"><span class="id" title="definition">valid_request_bound_function</span></a> (<a id="request_bound:12" class="idref" href="#request_bound:12"><span class="id" title="binder">request_bound</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#request_bound:12"><span class="id" title="variable">request_bound</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> 0 <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#ba2b0e492d2b4675a0acf3ea92aabadd"><span class="id" title="notation">∧</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.util.rel.html#monotone"><span class="id" title="definition">monotone</span></a> <span class="id" title="definition">leq</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#request_bound:12"><span class="id" title="variable">request_bound</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that <span class="inlinecode"><span class="id" title="var">request_bound</span></span> is an upper request bound for task
+        <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> iff, for any interval <code>[t1, t2)</code>, <span class="inlinecode"><span class="id" title="var">request_bound</span></span> <span class="inlinecode">(<a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span> <span class="inlinecode">-</span>
+        <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t1"><span class="id" title="variable">t1</span></a>)</span> bounds the sum of costs of jobs of <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> that arrive in
+        that interval. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_max_request_bound" class="idref" href="#respects_max_request_bound"><span class="id" title="definition">respects_max_request_bound</span></a> (<a id="tsk:13" class="idref" href="#tsk:13"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.Task"><span class="id" title="variable">Task</span></a>) (<a id="max_request_bound:14" class="idref" href="#max_request_bound:14"><span class="id" title="binder">max_request_bound</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:15" class="idref" href="#t1:15"><span class="id" title="binder">t1</span></a> <a id="t2:16" class="idref" href="#t2:16"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:15"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:16"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrivals.html#cost_of_task_arrivals"><span class="id" title="definition">cost_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:13"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:15"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:16"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#max_request_bound:14"><span class="id" title="variable">max_request_bound</span></a> (<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:16"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:15"><span class="id" title="variable">t1</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We analogously define the lower request bound. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="respects_min_request_bound" class="idref" href="#respects_min_request_bound"><span class="id" title="definition">respects_min_request_bound</span></a> (<a id="tsk:17" class="idref" href="#tsk:17"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.Task"><span class="id" title="variable">Task</span></a>) (<a id="min_request_bound:18" class="idref" href="#min_request_bound:18"><span class="id" title="binder">min_request_bound</span></a> : <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="t1:19" class="idref" href="#t1:19"><span class="id" title="binder">t1</span></a> <a id="t2:20" class="idref" href="#t2:20"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>),<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:19"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:20"><span class="id" title="variable">t2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#min_request_bound:18"><span class="id" title="variable">min_request_bound</span></a> (<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:20"><span class="id" title="variable">t2</span></a> <span class="id" title="notation">-</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:19"><span class="id" title="variable">t1</span></a>) <span class="id" title="notation">≤</span> <a class="idref" href="prosa.model.task.arrivals.html#cost_of_task_arrivals"><span class="id" title="definition">cost_of_task_arrivals</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:17"><span class="id" title="variable">tsk</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t1:19"><span class="id" title="variable">t1</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#t2:20"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions.RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctions"><span class="id" title="section">RequestBoundFunctions</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab190"></a><h2 class="section">Model Validity</h2>
+
+<div class="paragraph"> </div>
+
+ Based on the just-established semantics, we define the properties of a
+    valid request bound model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="RequestBoundFunctionsModel" class="idref" href="#RequestBoundFunctionsModel"><span class="id" title="section">RequestBoundFunctionsModel</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:21" class="idref" href="#Task:21"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:22" class="idref" href="#Job:22"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:23" class="idref" href="#H:23"><span class="id" title="binder">JobTask</span></a> <a id="H:23" class="idref" href="#H:23"><span class="id" title="binder">Job</span></a> <a id="H:23" class="idref" href="#H:23"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:24" class="idref" href="#H0:24"><span class="id" title="binder">JobCost</span></a> <a id="H0:24" class="idref" href="#H0:24"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any job arrival sequence... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctionsModel.arr_seq" class="idref" href="#RequestBoundFunctionsModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and all kinds of request bounds. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:26" class="idref" href="#H1:26"><span class="id" title="binder">MaxRequestBound</span></a> <a id="H1:26" class="idref" href="#H1:26"><span class="id" title="binder">Task</span></a>}<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`{<a id="H2:27" class="idref" href="#H2:27"><span class="id" title="binder">MinRequestBound</span></a> <a id="H2:27" class="idref" href="#H2:27"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.ts"><span class="id" title="variable">ts</span></a></span> be an arbitrary task set. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="RequestBoundFunctionsModel.ts" class="idref" href="#RequestBoundFunctionsModel.ts"><span class="id" title="variable">ts</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskSet"><span class="id" title="definition">TaskSet</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that <span class="inlinecode"><span class="id" title="var">request_bound</span></span> is a valid arrival curve for a task set
+      if it is valid for any task in the task set 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="valid_taskset_request_bound_function" class="idref" href="#valid_taskset_request_bound_function"><span class="id" title="definition">valid_taskset_request_bound_function</span></a> (<a id="request_bound:29" class="idref" href="#request_bound:29"><span class="id" title="binder">request_bound</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Task"><span class="id" title="variable">Task</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.time.html#duration"><span class="id" title="definition">duration</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.behavior.job.html#work"><span class="id" title="definition">work</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:30" class="idref" href="#tsk:30"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:30"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#valid_request_bound_function"><span class="id" title="definition">valid_request_bound_function</span></a> (<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#request_bound:29"><span class="id" title="variable">request_bound</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:30"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Finally, we lift the per-task semantics of the respective
+      request bound functions to the entire task set.  
+</div>
+<div class="code">
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_max_request_bound" class="idref" href="#taskset_respects_max_request_bound"><span class="id" title="definition">taskset_respects_max_request_bound</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:31" class="idref" href="#tsk:31"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:31"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#respects_max_request_bound"><span class="id" title="definition">respects_max_request_bound</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:31"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#max_request_bound"><span class="id" title="definition">max_request_bound</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:31"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="taskset_respects_min_request_bound" class="idref" href="#taskset_respects_min_request_bound"><span class="id" title="definition">taskset_respects_min_request_bound</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> (<a id="tsk:32" class="idref" href="#tsk:32"><span class="id" title="binder">tsk</span></a> : <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.Task"><span class="id" title="variable">Task</span></a>), <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:32"><span class="id" title="variable">tsk</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">\</span></a><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b09457274bcb94927e289b8a9e9cd3f7"><span class="id" title="notation">in</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.ts"><span class="id" title="variable">ts</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Logic.html#::type_scope:x_'-&gt;'_x"><span class="id" title="notation">→</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#respects_min_request_bound"><span class="id" title="definition">respects_min_request_bound</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel.arr_seq"><span class="id" title="variable">arr_seq</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:32"><span class="id" title="variable">tsk</span></a> (<a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#min_request_bound"><span class="id" title="definition">min_request_bound</span></a> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#tsk:32"><span class="id" title="variable">tsk</span></a>).<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.task.arrival.request_bound_functions.html#RequestBoundFunctionsModel"><span class="id" title="section">RequestBoundFunctionsModel</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.model.processor.ideal</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.model.processor.ideal</h1>
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">mathcomp</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">all_ssreflect</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.behavior.all.html#"><span class="id" title="library">prosa.behavior.all</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab155"></a><h1 class="section">The Ideal Uniprocessor Model</h1>
+
+<div class="paragraph"> </div>
+
+ In this module, we define a central piece of the Prosa model: the notion of
+    an ideal uniprocessor state. The word "ideal" here refers to the complete
+    absence of runtime overheads or any other complications. In an ideal
+    uniprocessor schedule, there are only two possible cases: at a given time,
+    either a specific job is scheduled and makes unit-progress, or the
+    processor is idle. To model this, we simply reuse the standard <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span>
+    type from the Coq standard library. 
+</div>
+<div class="code">
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="State" class="idref" href="#State"><span class="id" title="section">State</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="State.Job" class="idref" href="#State.Job"><span class="id" title="variable">Job</span></a>: <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We connect the notion of an ideal processor state with
+      the generic interface for the processor-state abstraction in Prosa by
+      declaring a so-called instance of the <span class="inlinecode"><a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="record">ProcessorState</span></a></span> typeclass. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Global</span> <span class="id" title="var">Program</span> <span class="id" title="keyword">Instance</span> <a id="processor_state" class="idref" href="#processor_state"><span class="id" title="instance">processor_state</span></a> : <a class="idref" href="prosa.behavior.schedule.html#ProcessorState"><span class="id" title="class">ProcessorState</span></a> <a class="idref" href="prosa.model.processor.ideal.html#State.Job"><span class="id" title="variable">Job</span></a> :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+We define the ideal "processor state" as an <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.model.processor.varspeed.html#State.Job"><span class="id" title="variable">Job</span></a></span>,
+          which means that it is either <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> (where <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is a
+          <span class="inlinecode"><a class="idref" href="prosa.model.processor.varspeed.html#State.Job"><span class="id" title="variable">Job</span></a></span>) or <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a></span> (which we use to indicate an idle
+          instant). 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.schedule.html#State"><span class="id" title="method">State</span></a> := <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#option"><span class="id" title="inductive">option</span></a> <a class="idref" href="prosa.model.processor.ideal.html#State.Job"><span class="id" title="variable">Job</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+As this is a uniprocessor model, cores are implicitly defined
+          as the <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a></span> type containing a single element as a placeholder.  We say that a given job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> is scheduled in a
+          given state <span class="inlinecode"><a class="idref" href="prosa.util.seqset.html#Lemmas.s"><span class="id" title="variable">s</span></a></span> iff <span class="inlinecode"><a class="idref" href="prosa.util.seqset.html#Lemmas.s"><span class="id" title="variable">s</span></a></span> is <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.schedule.html#scheduled_on"><span class="id" title="method">scheduled_on</span></a> <a id="j:2" class="idref" href="#j:2"><span class="id" title="binder">j</span></a> <a id="s:3" class="idref" href="#s:3"><span class="id" title="binder">s</span></a> (<span class="id" title="var">_</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a>) := <a class="idref" href="prosa.model.processor.ideal.html#s:3"><span class="id" title="variable">s</span></a> <span class="id" title="notation">==</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="prosa.model.processor.ideal.html#j:2"><span class="id" title="variable">j</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+
+<div class="doc">
+Similarly, we say that a given job <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span> receives service in a
+          given state <span class="inlinecode"><a class="idref" href="prosa.util.seqset.html#Lemmas.s"><span class="id" title="variable">s</span></a></span> iff <span class="inlinecode"><a class="idref" href="prosa.util.seqset.html#Lemmas.s"><span class="id" title="variable">s</span></a></span> is <span class="inlinecode"><a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a></span> <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.bounded_pi.html#AbstractRTAforFPwithArrivalCurves.FillingOutHypothesesOfAbstractRTATheorem.SolutionOfResponseTimeRecurrenceExists.j"><span class="id" title="variable">j</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.behavior.schedule.html#service_on"><span class="id" title="method">service_on</span></a> <a id="j:4" class="idref" href="#j:4"><span class="id" title="binder">j</span></a> <a id="s:5" class="idref" href="#s:5"><span class="id" title="binder">s</span></a> (<span class="id" title="var">_</span> : <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#unit"><span class="id" title="inductive">unit</span></a>) := <a class="idref" href="prosa.model.processor.ideal.html#s:5"><span class="id" title="variable">s</span></a> <span class="id" title="notation">==</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <a class="idref" href="prosa.model.processor.ideal.html#j:4"><span class="id" title="variable">j</span></a>;<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Next</span> <span class="id" title="keyword">Obligation</span>. <span class="id" title="tactic">by</span> <span class="id" title="tactic">rewrite</span> /<span class="id" title="definition">nat_of_bool</span>; <span class="id" title="tactic">case</span>: <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#ifP"><span class="id" title="lemma">ifP</span></a> <span class="id" title="var">H</span> ⇒ // ? /<span class="id" title="var">negP</span>[]. <span class="id" title="keyword">Qed</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.processor.ideal.html#State"><span class="id" title="section">State</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab156"></a><h2 class="section">Idle Instants</h2>
+
+<div class="paragraph"> </div>
+
+ In this section, we define the notion of idleness for ideal uniprocessor
+    schedules. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="IsIdle" class="idref" href="#IsIdle"><span class="id" title="section">IsIdle</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:6" class="idref" href="#Job:6"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="IsIdle.arr_seq" class="idref" href="#IsIdle.arr_seq"><span class="id" title="variable">arr_seq</span></a> : <a class="idref" href="prosa.behavior.arrival_sequence.html#arrival_sequence"><span class="id" title="definition">arrival_sequence</span></a> <a class="idref" href="prosa.model.processor.ideal.html#IsIdle.Job"><span class="id" title="variable">Job</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any ideal uniprocessor schedule of such jobs. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="IsIdle.sched" class="idref" href="#IsIdle.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">processor_state</span></a> <a class="idref" href="prosa.model.processor.ideal.html#IsIdle.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that the processor is idle at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span> iff there is no job being scheduled. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="is_idle" class="idref" href="#is_idle"><span class="id" title="definition">is_idle</span></a> (<a id="t:9" class="idref" href="#t:9"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.model.processor.ideal.html#IsIdle.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.model.processor.ideal.html#t:9"><span class="id" title="variable">t</span></a> <span class="id" title="notation">==</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#None"><span class="id" title="constructor">None</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.model.processor.ideal.html#IsIdle"><span class="id" title="section">IsIdle</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

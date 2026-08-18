@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.task_schedule</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.task_schedule</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.task.concept.html#"><span class="id" title="library">prosa.model.task.concept</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.analysis.facts.model.ideal_schedule.html#"><span class="id" title="library">prosa.analysis.facts.model.ideal_schedule</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Due to historical reasons this file defines the notion of a
+    schedule of a task for the ideal uni-processor model. This is not
+    a fundamental limitation and the notion can be further generalized
+    to an arbitrary model. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.processor.ideal.html#"><span class="id" title="library">prosa.model.processor.ideal</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab21"></a><h1 class="section">Schedule of task</h1>
+ In this section we define properties of the schedule of a task. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="ScheduleOfTask" class="idref" href="#ScheduleOfTask"><span class="id" title="section">ScheduleOfTask</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of tasks ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Task:1" class="idref" href="#Task:1"><span class="id" title="binder">Task</span></a> : <a class="idref" href="prosa.model.task.concept.html#TaskType"><span class="id" title="definition">TaskType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">TaskCost</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Task</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+ ... and any type of jobs associated with these tasks. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:3" class="idref" href="#Job:3"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">JobTask</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Job</span></a> <a id="H0:4" class="idref" href="#H0:4"><span class="id" title="binder">Task</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">JobArrival</span></a> <a id="H1:5" class="idref" href="#H1:5"><span class="id" title="binder">Job</span></a>}.<br/>
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">JobCost</span></a> <a id="H2:6" class="idref" href="#H2:6"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.sched"><span class="id" title="variable">sched</span></a></span> be any ideal uni-processor schedule. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.sched" class="idref" href="#ScheduleOfTask.sched"><span class="id" title="variable">sched</span></a> : <a class="idref" href="prosa.behavior.schedule.html#schedule"><span class="id" title="definition">schedule</span></a> (<a class="idref" href="prosa.model.processor.ideal.html#processor_state"><span class="id" title="instance">ideal.processor_state</span></a> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#ScheduleOfTask.Job"><span class="id" title="variable">Job</span></a>).<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Let <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> be any task. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Variable</span> <a id="ScheduleOfTask.tsk" class="idref" href="#ScheduleOfTask.tsk"><span class="id" title="variable">tsk</span></a> : <a class="idref" href="prosa.analysis.definitions.task_schedule.html#ScheduleOfTask.Task"><span class="id" title="variable">Task</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Next we define whether a task is scheduled at time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_scheduled_at" class="idref" href="#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> (<a id="t:9" class="idref" href="#t:9"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">if</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#ScheduleOfTask.sched"><span class="id" title="variable">sched</span></a> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#t:9"><span class="id" title="variable">t</span></a> <span class="id" title="keyword">is</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#Some"><span class="id" title="constructor">Some</span></a> <span class="id" title="var">j</span> <span class="id" title="keyword">then</span><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="idref" href="prosa.model.task.concept.html#job_task"><span class="id" title="definition">job_task</span></a> <span class="id" title="var">j</span> <span class="id" title="notation">==</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#ScheduleOfTask.tsk"><span class="id" title="variable">tsk</span></a><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">else</span> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...which also corresponds to the instantaneous service it receives. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_service_at" class="idref" href="#task_service_at"><span class="id" title="definition">task_service_at</span></a> (<a id="t:10" class="idref" href="#t:10"><span class="id" title="binder">t</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_scheduled_at"><span class="id" title="definition">task_scheduled_at</span></a> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#t:10"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Based on the notion of instantaneous service, we define the
+       cumulative service received by <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> during any interval <code>[t1, t2)</code>... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_service_during" class="idref" href="#task_service_during"><span class="id" title="definition">task_service_during</span></a> (<a id="t1:11" class="idref" href="#t1:11"><span class="id" title="binder">t1</span></a> <a id="t2:12" class="idref" href="#t2:12"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="notation">\</span><span class="id" title="notation">sum_</span><span class="id" title="notation">(</span><a class="idref" href="prosa.analysis.definitions.task_schedule.html#t1:11"><span class="id" title="variable">t1</span></a> <span class="id" title="notation">≤</span> <a id="t:15" class="idref" href="#t:15"><span class="id" title="binder">t</span></a> <span class="id" title="notation">&lt;</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#t2:12"><span class="id" title="variable">t2</span></a><span class="id" title="notation">)</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_service_at"><span class="id" title="definition">task_service_at</span></a> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#t:13"><span class="id" title="variable">t</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+...and the cumulative service received by <span class="inlinecode"><a class="idref" href="prosa.results.fixed_priority.rta.limited_preemptive.html#RTAforFixedPreemptionPointsModelwithArrivalCurves.tsk"><span class="id" title="variable">tsk</span></a></span> up to time <span class="inlinecode"><a class="idref" href="prosa.util.unit_growth.html#Lemmas.ExistsIntermediateValuePredicates.t2"><span class="id" title="variable">t2</span></a></span>,
+       i.e., in the interval <code>[0, t2)</code>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="task_service" class="idref" href="#task_service"><span class="id" title="definition">task_service</span></a> (<a id="t2:16" class="idref" href="#t2:16"><span class="id" title="binder">t2</span></a> : <a class="idref" href="prosa.behavior.time.html#instant"><span class="id" title="definition">instant</span></a>) := <a class="idref" href="prosa.analysis.definitions.task_schedule.html#task_service_during"><span class="id" title="definition">task_service_during</span></a> 0 <a class="idref" href="prosa.analysis.definitions.task_schedule.html#t2:16"><span class="id" title="variable">t2</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.task_schedule.html#ScheduleOfTask"><span class="id" title="section">ScheduleOfTask</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>

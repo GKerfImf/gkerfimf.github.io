@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>prosa.analysis.definitions.always_higher_priority</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<h1 class="libtitle">Library prosa.analysis.definitions.always_higher_priority</h1>
+
+<div class="code">
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="prosa.model.priority.classes.html#"><span class="id" title="library">prosa.model.priority.classes</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+<a id="lab9"></a><h1 class="section">Always Higher Priority</h1>
+ In this section, we define what it means for a job to always have
+    a higher priority than another job. 
+</div>
+<div class="code">
+<span class="id" title="keyword">Section</span> <a id="AlwaysHigherPriority" class="idref" href="#AlwaysHigherPriority"><span class="id" title="section">AlwaysHigherPriority</span></a>.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+Consider any type of jobs ... 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> {<a id="Job:1" class="idref" href="#Job:1"><span class="id" title="binder">Job</span></a> : <a class="idref" href="prosa.behavior.job.html#JobType"><span class="id" title="definition">JobType</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+... and any JLDP policy. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Context</span> `{<a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">JLDP_policy</span></a> <a id="H:2" class="idref" href="#H:2"><span class="id" title="binder">Job</span></a>}.<br/>
+
+<br/>
+</div>
+
+<div class="doc">
+We say that a job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> always has higher priority than job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>
+      if, at any time <span class="inlinecode"><a class="idref" href="prosa.implementation.definitions.ideal_uni_scheduler.html#UniprocessorScheduler.NonPreemptiveSectionAware.JobAllocation.t"><span class="id" title="variable">t</span></a></span>, the priority of job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j1"><span class="id" title="variable">j1</span></a></span> is strictly higher than
+      the priority of job <span class="inlinecode"><a class="idref" href="prosa.classic.model.schedule.uni.schedule.html#UniprocessorSchedule.Schedule.Lemmas.OnlyOneJobScheduled.j2"><span class="id" title="variable">j2</span></a></span>. 
+</div>
+<div class="code">
+&nbsp;&nbsp;<span class="id" title="keyword">Definition</span> <a id="always_higher_priority" class="idref" href="#always_higher_priority"><span class="id" title="definition">always_higher_priority</span></a> (<a id="j1:3" class="idref" href="#j1:3"><span class="id" title="binder">j1</span></a> <a id="j2:4" class="idref" href="#j2:4"><span class="id" title="binder">j2</span></a> : <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#AlwaysHigherPriority.Job"><span class="id" title="variable">Job</span></a>) :=<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="id" title="keyword">∀</span> <a id="t:5" class="idref" href="#t:5"><span class="id" title="binder">t</span></a>, <a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#t:5"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#j1:3"><span class="id" title="variable">j1</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#j2:4"><span class="id" title="variable">j2</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.Init.Datatypes.html#::bool_scope:x_'&amp;&amp;'_x"><span class="id" title="notation">&amp;&amp;</span></a> <a class="idref" href="http://coq.inria.fr/distrib/V8.13.2/stdlib//Coq.ssr.ssrbool.html#b3ebd0deddd84fd60e149cb5ef719351"><span class="id" title="notation">~~</span></a> <a class="idref" href="prosa.model.priority.classes.html#hep_job_at"><span class="id" title="definition">hep_job_at</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#t:5"><span class="id" title="variable">t</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#j2:4"><span class="id" title="variable">j2</span></a> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#j1:3"><span class="id" title="variable">j1</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="prosa.analysis.definitions.always_higher_priority.html#AlwaysHigherPriority"><span class="id" title="section">AlwaysHigherPriority</span></a>.<br/>
+</div>
+</div>
+
+<div id="footer">
+<hr/><a href="index.html">Index</a><hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
